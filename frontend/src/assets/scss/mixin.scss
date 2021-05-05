@@ -1,0 +1,116 @@
+
+@mixin border-1px($color) {
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        border: 1px solid $color;
+    }
+}
+@mixin border-none() {
+    &::after {
+        display: none;
+    }
+    &::before {
+         display: none;
+    }
+}
+// @mixin border-1px-top($color) {
+//     position: relative;
+//     &:before {
+//         content: '';
+//         position: absolute;
+//         bottom: 0;
+//         left: 0;
+//         display: block;
+//         width: 100%;
+//         border: 1px solid $color;
+//     }
+// }
+// border-none()
+//   &::before
+//     display: none
+//   &::after
+//     display: none
+// .border-top-1px, .border-right-1px, .border-bottom-1px, .border-left-1px
+//   position: relative
+//   &::before, &::after
+//     content: ""
+//     display: block
+//     position: absolute
+//     transform-origin: 0 0
+
+// .border-top-1px
+//   &::before
+//     border-top: 1PX solid $color-row-line
+//     left: 0
+//     top: 0
+//     width: 100%
+//     transform-origin: 0 top
+
+// .border-right-1px
+//   &::after
+//     border-right: 1PX solid $color-col-line
+//     top: 0
+//     right: 0
+//     height: 100%
+//     transform-origin: right 0
+
+// .border-bottom-1px
+//   &::after
+//     border-bottom: 1PX solid $color-row-line
+//     left: 0
+//     bottom: 0
+//     width: 100%
+//     transform-origin: 0 bottom
+
+// .border-left-1px
+//   &::before
+//     border-left: 1PX solid $color-col-line
+//     top: 0
+//     left: 0
+//     height: 100%
+//     transform-origin: left 0
+
+// .cube-safe-area-pb
+//   safe-area-mixin(padding-bottom, bottom, true)
+
+// @media (min-resolution: 2dppx)
+//   .border-top-1px
+//     &::before
+//       width: 200%
+//       transform: scale(.5)
+//   .border-right-1px
+//     &::after
+//       height: 200%
+//       transform: scale(.5)
+//   .border-bottom-1px
+//     &::after
+//       width: 200%
+//       transform: scale(.5)
+//   .border-left-1px
+//     &::before
+//       height: 200%
+//       transform: scale(.5)
+
+// @media (min-resolution: 3dppx)
+//   .border-top-1px
+//     &::before
+//       width: 300%
+//       transform: scale(.333)
+//   .border-right-1px
+//     &::after
+//       height: 300%
+//       transform: scale(.333)
+//   .border-bottom-1px
+//     &::after
+//       width: 300%
+//       transform: scale(.333)
+//   .border-left-1px
+//     &::before
+//       height: 300%
+//       transform: scale(.333)

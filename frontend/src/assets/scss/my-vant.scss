@@ -1,0 +1,53 @@
+@import './color.scss';
+
+
+[class*='van-hairline']::after {
+  border-color: #d2d1d5;
+}
+[class*='van-nav-bar__content']{
+  height: 40px;
+}
+[class*='van-nav-bar__title']{
+  color: #fbfbfc;
+  
+}
+[class='van-tab']{
+  color: $fontGray;
+}
+[class*='van-tab--active']{
+  color: $blueBgc;
+}
+[class*='van-tabs__line']{
+  background-color: $blueBgc;
+}
+// [class='van-hairline--bottom']::after{
+//   border: 1px solid $fontGray;
+// }
+[class='van-badge']{
+  background-color: $blueBgc;
+}
+
+[class='van-badge--dot']{
+  background-color: $blueBgc;
+}
+[class='van-search']{
+  background-color: $lightBgc;
+}
+[class='van-nav-bar']{
+  background-color: $lightBgc;
+}
+[class='van-field__control']{
+  color: $fontWhite;
+}
+[class='van-dialog']{
+  background-color: $lightBgc;
+  color: $fontGray;
+  .van-button {
+    background-color: $lightBgc;
+    color: $fontGray;
+  }
+}
+
+// .van-dialog
+
+

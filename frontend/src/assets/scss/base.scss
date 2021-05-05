@@ -1,0 +1,138 @@
+@import './color.scss';
+
+html,
+body {
+  line-height: 1;
+  font-weight: 200;
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'STHeitiSC-Light',
+    'HElvetica-Light', 'Helvetica Neue', Verdana, Geneva, Tahoma, sans-serif;
+  background-color: $deepBgc;
+  color: $fontWhite;
+  // font-family:
+  // -apple-system,   //针对 Web 页面
+  // BlinkMacSystemFont,  //针对 Mac Chrome 页面
+  // font-family: "SF Pro Display", "PingFang SC Regular"
+}
+
+.clearfix {
+  &:before,
+  &:after {
+    display: table;
+    line-height: 0;
+    content: '';
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
+  .border-1px {
+    &::after {
+      -webkit-transform: scaleY(0.7);
+      transform: scaleY(0.7);
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+  .border-1px {
+    &::after {
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+  .border-1px {
+    &::after {
+      -webkit-transform: scaleY(0.33);
+      transform: scaleY(0.33);
+    }
+  }
+}
+
+.border-top-1px,
+.border-right-1px,
+.border-bottom-1px,
+.border-left-1px {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    transform-origin: 0 0;
+  }
+}
+
+.border-top-1px {
+  &::before {
+    border-top: 1px solid $border;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transform-origin: 0 top;
+  }
+}
+
+// .border-right-1px
+//   &::after
+//     border-right: 1PX solid #d2d1d5
+//     top: 0
+//     right: 0
+//     height: 100%
+//     transform-origin: right 0
+
+.border-bottom-1px {
+  &::after {
+    border-bottom: 1px solid $border;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: 0 bottom;
+  }
+}
+
+.border-none {
+  &::after {
+    display: none;
+  }
+  &::before {
+    display: none;
+  }
+}
+
+@media (min-resolution: 2dppx) {
+  .border-top-1px {
+    &::before {
+      width: 200%;
+      transform: scale(0.5);
+    }
+  }
+
+  .border-bottom-1px {
+    &::after {
+      width: 200%;
+      transform: scale(0.5);
+    }
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .border-top-1px {
+    &::before {
+      width: 300%;
+    }
+  }
+
+  .border-bottom-1px {
+    &::after {
+      width: 300%;
+      transform: scale(0.333);
+    }
+  }
+}
