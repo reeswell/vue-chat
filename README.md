@@ -8,7 +8,7 @@ Vue2全家桶+MongoDB+Koa2+socket.io+vant 2+ES6/7
 
 ### 项目启动
 
-[演示视频]()
+[演示视频](https://www.bilibili.com/video/BV1bp4y147S5/)
 
 启动环境：node、mongodb
 
