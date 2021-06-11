@@ -82,7 +82,6 @@ npm run serve
 - [socket.io](https://www.w3cschool.cn/socket/socket-buvk2eib.html)
 - [Vchat](https://github.com/wuyawei/Vchat)
 
-<<<<<<< HEAD
 # License
 
 [MIT](https://github.com/xxydrr/vue-koa-vue/blob/main/LICENSE)
