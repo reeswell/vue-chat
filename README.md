@@ -1,9 +1,9 @@
 # 前言
 
+
 继上个纯前端模仿telegram聊天系统后我决定加上后端功能，这次考虑使用更加简洁界面和更加优雅的实现把UI界面也重构了。主要技术栈为Vue2+MongoDB+Koa2。考虑到前端技术的发展飞快，我也考虑用Vue3+TS重构。希望更多小伙伴能参与到这个项目中来！
 
 - [开源地址](https://github.com/xxydrr/vue-koa-chat)
-
 
 ### 技术栈
 
@@ -43,6 +43,10 @@ npm run serve
 - [x] 查看好友/群组信息
 - [ ] 持续完善...
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d2e7c5c (修改样式小bug)
 
 ### 项目截图
 
@@ -61,15 +65,22 @@ npm run serve
 - 我的页面加入游戏功能
 - 我的页面加入stories功能
 - 视频语音webRTC（暂时没有思路）
-
 ### 说明
 
+<<<<<<< HEAD
+### 说明
+
+=======
+>>>>>>> d2e7c5c (修改样式小bug)
 欢迎有对项目有扩展想法的伙伴能参与到这个项目来❤️❤️❤️
 
 如果项目对您有帮助，您可以 "Star" 支持一下 感谢！🌹🌹🌹
 
 我的vue2 + vuex 聊天系统入门项目。[地址](https://github.com/xxydrr/vue-telegram)
+<<<<<<< HEAD
 
+=======
+>>>>>>> d2e7c5c (修改样式小bug)
 ### 参考资料
 
 -  [MongoDB](https://docs.mongodb.com/manual/reference/)
@@ -78,6 +89,9 @@ npm run serve
 - [socket.io](https://www.w3cschool.cn/socket/socket-buvk2eib.html)
 - [Vchat](https://github.com/wuyawei/Vchat)
 
+<<<<<<< HEAD
 # License
 
 [MIT](https://github.com/xxydrr/vue-koa-vue/blob/main/LICENSE)
+=======
+>>>>>>> d2e7c5c (修改样式小bug)

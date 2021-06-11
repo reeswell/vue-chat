@@ -11,7 +11,7 @@
         <template v-if="v.type === 'org' && v.roomId.split('-').length > 1">
           <span>现在可以开始聊天了</span>
         </template>
-        <template v-else>
+        <template v-if="v.type === 'org' && v.roomId.split('-').length == 1">
           <span>
             系统消息：<span class="org-hightlight">{{ v.nickname }}</span
             >加入群聊！</span
