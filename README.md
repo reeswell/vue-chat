@@ -1,9 +1,9 @@
 # 前言
 
 
-继上个纯前端模仿telegram聊天系统后我决定加上后端功能，这次考虑使用更加简洁界面和更加优雅的实现把UI界面也重构了。主要技术栈为Vue2+MongoDB+Koa2。考虑到前端技术的发展飞快，我也考虑用Vue3+TS重构。希望更多小伙伴能参与到这个项目中来！
-
-- [开源地址](https://github.com/xxydrr/vue-koa-chat)
+继上个纯前端模仿telegram聊天系统后我决定加上后端功能，这次考虑使用更加简洁界面和更加优雅的实现把UI界面也重构了。主要技术栈为Vue2+MongoDB+Koa2。考虑到前端技术的发展飞快，我也考虑用Vue3重构完成。希望更多小伙伴能参与到这个项目中来！
+vue2版本
+- [vue3版本](https://github.com/xxydrr/vue-koa-chat)
 
 ### 技术栈
 
