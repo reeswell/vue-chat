@@ -16,8 +16,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex'
-import {reactive, toRefs, onMounted, computed, onBeforeMount, watch} from 'vue'
+import {reactive, toRefs, computed, watch} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 export default {
@@ -115,6 +114,9 @@ export default {
     }
     i {
       font-size: 18px;
+    }
+    :deep(.van-badge) {
+      background-color: $redBadge;
     }
   }
 }
