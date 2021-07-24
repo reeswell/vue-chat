@@ -75,7 +75,7 @@ app
   .use(Field)
   .use(ActionSheet)
   .use(Loading)
-Loading
+
 app.use(Lazyload, {
   preLoad: 1, // proportion of pre-loading height, 个人理解是图片加载前目标元素位置范围
   error: require('./assets/imgs/error-img.png'),
