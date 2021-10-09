@@ -26,7 +26,7 @@
       <van-cell title="年龄" is-link :value="userInfo.age" @click="goAge" />
       <van-cell title="城市" is-link @click="showPopup" :value="area"></van-cell>
       <div class="sign-out" @click="logout">退出登录</div>
-
+     <!-- eslint-disable-next-line -->
       <van-popup v-model:show="show" position="bottom" :style="{height: '38%'}">
         <van-area
           :area-list="areaList"
@@ -46,7 +46,8 @@
 import {reactive, toRefs, nextTick, ref, computed, inject, onBeforeMount} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {uploadFile} from '@/api/upload'
+import {updateUserInfo, updateUserConversations} from '@/api/user'
 import {Dialog} from 'vant'
 import AreaList from '@/utils/area'
 
@@ -107,7 +108,7 @@ export default {
       const formdata = new window.FormData()
       formdata.append('file', file.file)
 
-      const {data} = await api.uploadFile(formdata)
+      const {data} = await uploadFile(formdata)
       state.urlName = data
       state.imgSrc = state.IMG_URL + data
       nextTick(() => {
@@ -143,9 +144,9 @@ export default {
           avatar: state.urlName,
           unlink
         }
-        const {data} = await api.updateUserInfo(obj)
+        const {data} = await updateUserInfo(obj)
         const parma = {id: data.id}
-        await api.updateUserConversations(parma)
+        await updateUserConversations(parma)
 
         store.dispatch('setUserInfo', data)
         const roomArr = state.getAllChatListRoomId

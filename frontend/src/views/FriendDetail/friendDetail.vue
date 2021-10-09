@@ -12,7 +12,7 @@
         ><span>{{ friendsInfo.age }}</span>
       </p>
     </div>
-    <div class="button-type" v-if="friendsInfo !== null && friendsInfo.userName !== userInfo.userName">
+    <div class="button-type" v-if="friendsInfo !== null && friendsInfo.username !== userInfo.username">
       <van-button @click="mesCheck" type="primary">加为好友</van-button>
     </div>
   </div>
@@ -22,7 +22,7 @@
 import {reactive, toRefs, computed, onBeforeMount} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {previewUser} from '@/api/user'
 export default {
   name: 'FriendDetail',
   setup() {
@@ -50,7 +50,7 @@ export default {
     }
     const getUserInfo = async () => {
       const params = {id: route.params.id}
-      const res = await api.previewUser(params)
+      const res = await previewUser(params)
       console.log(res)
       state.friendsInfo = res.data
       store.dispatch('setFriendsInfo', state.friendsInfo)

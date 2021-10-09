@@ -11,7 +11,7 @@
         </div>
         <div class="list-right">
           <div class="first-line">
-            <p class="name">{{ friendsInfo.userName }}</p>
+            <p class="name">{{ friendsInfo.username }}</p>
           </div>
           <p class="lastmsg">{{ friendsInfo.nickname }}</p>
         </div>
@@ -24,7 +24,8 @@
 import {reactive, toRefs, computed, inject} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {checkIsFriends} from '@/api/friendly'
+import {addFriends} from '@/api/user'
 export default {
   name: 'searchFriend',
   setup() {
@@ -50,7 +51,7 @@ export default {
       const data = {
         roomId: route.params.id
       }
-      const res = await api.checkIsFriends(data)
+      const res = await checkIsFriends(data)
       const isMyFriend = res.data.isFriends
       return isMyFriend
     }
@@ -66,7 +67,7 @@ export default {
     const showSearch = async () => {
       const data = {keyword: state.keyword}
       try {
-        const res = await api.addFriends(data)
+        const res = await addFriends(data)
         state.friendsInfo = res.data
       } catch (error) {
         console.log(error)

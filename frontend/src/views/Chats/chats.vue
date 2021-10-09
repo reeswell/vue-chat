@@ -33,7 +33,7 @@
                 </div>
                 <div class="list-right van-hairline--bottom">
                   <div class="first-line">
-                    <p class="name">{{ i.userName }}</p>
+                    <p class="name">{{ i.username }}</p>
                     <span class="time" v-if="i.newMesTime">{{ i.newMesTime }}</span>
                     <van-badge :content="i.unread > 0 ? i.unread : null" color="#3477f5"> </van-badge>
                   </div>
@@ -180,7 +180,7 @@ export default {
     }
     const readFlag = id => {
       // 设置服务器信息为已读状态也本地设置为已读
-      socket.emit('setReadStatus', {roomId: id, userName: state.userInfo.userName})
+      socket.emit('setReadStatus', {roomId: id, username: state.userInfo.username})
       store.commit('setUnRead', {roomId: id, clear: true})
     }
     const tabScroll = () => {

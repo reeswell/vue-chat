@@ -5,14 +5,17 @@
         <van-icon name="clear" size="24" class="icon" />
       </template>
     </van-nav-bar>
+   
+    <template
+      v-if="groupInfo !== null"
+    >
     <div
       v-for="img in imageList"
       v-lazy:background-image="IMG_URL + img"
       :key="img"
       class="lazy"
-      v-if="groupInfo !== null"
     ></div>
-
+    </template>
     <div class="groupInfo-container" v-if="groupInfo !== null">
       <van-cell title="群ID" :value="groupInfo.groupCode" />
 
@@ -22,7 +25,7 @@
         <!-- 使用 title 插槽来自定义标题 -->
         <template #title>
           <span class="custom-title">管理员</span>
-          <van-tag v-for="(item, index) in managers" :key="item._id"
+          <van-tag v-for="item in managers" :key="item._id"
             ><img v-lazy="IMG_URL + item.userId.avatar" alt="" width="20" height="20" class="img"
           /></van-tag>
         </template>
@@ -58,7 +61,7 @@
 import {reactive, toRefs, computed, onBeforeMount} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {getGroupInfo,quitGroup} from '@/api/group'
 import {Dialog} from 'vant'
 export default {
   name: 'GroupInfo',
@@ -101,7 +104,7 @@ export default {
     const getGroupInfo = async () => {
       const params = {id: route.params.id}
 
-      const res = await api.getGroupInfo(params)
+      const res = await getGroupInfo(params)
       state.groupInfo = res.data
       state.groupUsers = res.users
       state.imageList.push(state.groupInfo.img)
@@ -123,7 +126,7 @@ export default {
           // 删除groupUser && 删除会话列表
           const id = route.params.id
           const obj = {userId: state.userInfo.id, groupId: id}
-          const {msg} = api.quitGroup(obj)
+          const {msg} = quitGroup(obj)
           store.dispatch('getUserInfo')
           router.push({name: 'Chat'})
         })

@@ -2,7 +2,6 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import api from './api/index' // 导入ajax接口
 import {
   Form,
   Lazyload,
@@ -27,7 +26,8 @@ import {
   Area,
   Field,
   ActionSheet,
-  Loading
+  Loading,
+  CellGroup,
 } from 'vant'
 
 import Socketio from '@/plugins/Socket.io'
@@ -47,7 +47,7 @@ app.use(Socketio, {
   }
 })
 
-app.config.globalProperties.$api = api // 将ajax挂载到vue的原型上
+
 app.config.productionTip = false
 
 app
@@ -75,7 +75,7 @@ app
   .use(Field)
   .use(ActionSheet)
   .use(Loading)
-
+  .use(CellGroup)
 app.use(Lazyload, {
   preLoad: 1, // proportion of pre-loading height, 个人理解是图片加载前目标元素位置范围
   error: require('./assets/imgs/error-img.png'),

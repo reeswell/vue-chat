@@ -36,13 +36,13 @@ export default {
 
     const joinRoom = () => {
       const user = state.userInfo
-      if (!user.userName) {
+      if (!user.username) {
         return
       }
 
       state.conversationsList.forEach(item => {
         const val = {
-          userName: user.userName,
+          username: user.username,
           time: formatTime(new Date()),
           avatar: user.avatar,
           roomId: item.id
@@ -77,7 +77,7 @@ export default {
       })
       socket.on('getHisMeg', mes => {
         // 获取未读消息数量
-        const data = mes.filter(item => item.read.indexOf(state.userInfo.userName) === -1)
+        const data = mes.filter(item => item.read.indexOf(state.userInfo.username) === -1)
         if (data.length) {
           store.commit('setUnRead', {roomId: data[0].roomId, count: data.length})
         }

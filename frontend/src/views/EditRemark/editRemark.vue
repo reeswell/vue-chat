@@ -17,6 +17,7 @@ import {reactive, toRefs, computed, onBeforeMount} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 import {Toast} from 'vant'
+import {modifyFriendRemark} from '@/api/user'
 export default {
   name: 'EditName',
   setup() {
@@ -42,7 +43,7 @@ export default {
       const id = route.params.id
       state.allChatList.forEach(item => {
         if (item.friendId === id) {
-          state.value = item.userName
+          state.value = item.username
         }
       })
     }
@@ -54,7 +55,7 @@ export default {
           friendId: id,
           remark: state.value
         }
-        const {msg} = await api.modifyFriendRemark(obj)
+        const {msg} = await modifyFriendRemark(obj)
         store.dispatch('getUserInfo')
         Toast(msg)
 

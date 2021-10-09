@@ -26,6 +26,9 @@
 .van-badge{
   background-color: $blueBgc;
 }
+ 
+
+
 
 .van-badge--dot{
   background-color: $blueBgc;
@@ -71,4 +74,8 @@
 }
 input {
   border: 0;
+}
+input:-internal-autofill-selected {
+  -webkit-text-fill-color: #FFFFFF !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }

@@ -6,7 +6,7 @@
         <img v-lazy="IMG_URL + userInfo.avatar" alt="" />
       </div>
       <div class="info-detail">
-        <p class="name">账号: {{ userInfo.userName }}</p>
+        <p class="name">账号: {{ userInfo.username }}</p>
         <p class="phone">手机号: {{ userInfo.mobilePhone }}</p>
         <p class="email">邮箱: {{ userInfo.email }}</p>
       </div>

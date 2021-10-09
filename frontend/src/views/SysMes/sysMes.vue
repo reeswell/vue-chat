@@ -64,7 +64,7 @@ export default {
       if (!state.getSysUnRead.length || state.getSysUnRead[0].count === 0) return
       console.log('333333')
       store.commit('setUnRead', {roomId: state.sysInfo.id, clear: true})
-      socket.emit('setReadStatus', {roomId: state.sysInfo.id, userName: state.userInfo.userName})
+      socket.emit('setReadStatus', {roomId: state.sysInfo.id, username: state.userInfo.username})
       socket.emit('getSysMeg', {roomId: state.sysInfo.id, offset: state.offset, limit: state.limit})
     }
     const onClickLeft = () => {

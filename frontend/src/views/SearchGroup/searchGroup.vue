@@ -11,7 +11,7 @@
         </div>
         <div class="list-right">
           <div class="first-line">
-            <p class="name">{{ groupInfo.userName }}</p>
+            <p class="name">{{ groupInfo.username }}</p>
           </div>
           <p class="lastmsg">{{ groupInfo.nickname }}</p>
         </div>
@@ -24,7 +24,7 @@
 import {reactive, toRefs, computed} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {huntGroups} from '@/api/group'
 export default {
   name: 'SearchGroup',
   setup() {
@@ -50,7 +50,7 @@ export default {
       console.log('showSearch')
       const data = {keyword: state.keyword}
       try {
-        const res = await api.huntGroups(data)
+        const res = await huntGroups(data)
         state.groupInfo = res.data
       } catch (error) {
         console.log(error)

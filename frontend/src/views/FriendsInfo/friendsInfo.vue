@@ -26,7 +26,8 @@
 import {reactive, toRefs, computed, inject, onBeforeMount} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {deleteDialog,previewUser,getUserInfo} from '@/api/user'
+import {deleteFriend} from '@/api/friendly'
 import {Dialog} from 'vant'
 export default {
   name: 'FriendsInfo',
@@ -58,8 +59,8 @@ export default {
       const roomId = arr[0].id
       const obj = {userId: state.userInfo.id, friendId, roomId}
       try {
-        const {msg} = await api.deleteDialog(obj)
-        const res = await api.deleteFriend(obj)
+        const {msg} = await deleteDialog(obj)
+        const res = await deleteFriend(obj)
         toast(msg)
         const roomArr = [roomId]
         socket.emit('update', roomArr)
@@ -87,16 +88,16 @@ export default {
     }
     const getFriendInfo = async () => {
       const params = {id: route.params.id}
-      const res = await api.previewUser(params)
+      const res = await previewUser(params)
       state.friendsInfo = res.data
       store.dispatch('setFriendsInfo', state.friendsInfo)
     }
     const getUserChatLsit = async () => {
-      const {data} = await api.getUserInfo()
+      const {data} = await getUserInfo()
       const chatList = data.conversationsList
       chatList.forEach(item => {
         if (item.friendId === state.friendsInfo.id) {
-          state.remark = item.userName
+          state.remark = item.username
         }
       })
     }

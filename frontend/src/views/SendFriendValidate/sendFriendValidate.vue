@@ -64,7 +64,7 @@ export default {
       const friend = state.friendsInfo
       const user = state.userInfo
       const obj = {
-        userName: user.userName,
+        username: user.username,
         mes: state.introduce,
         time: tools.formatTime(new Date()),
         avatar: user.avatar,
@@ -75,7 +75,7 @@ export default {
         other: friend.id,
         otherName: friend.nickname,
         otherAvatar: friend.avatar,
-        otherUserName: friend.userName,
+        otherUserName: friend.username,
         friendRoom: user.id + '-' + friend.id,
         roomId: friend.id + '-' + state.sysInfo.id.split('-')[1],
         state: 'friend',

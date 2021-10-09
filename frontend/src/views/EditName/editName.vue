@@ -16,7 +16,7 @@
 import {reactive, toRefs} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {updateUserInfo} from '@/api/user'
 export default {
   name: 'EditName',
   setup() {
@@ -34,7 +34,7 @@ export default {
         const obj = {
           nickname: state.value
         }
-        const {data} = await api.updateUserInfo(obj)
+        const {data} = await updateUserInfo(obj)
         store.dispatch('setUserInfo', data)
         router.push({name: 'Edit'})
       } catch (error) {

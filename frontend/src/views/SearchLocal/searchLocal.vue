@@ -8,7 +8,7 @@
             <van-image round :src="IMG_URL + item.avatar" class="avatar" />
           </div>
           <div class="list-right">
-            {{ item.userName }}
+            {{ item.username }}
           </div>
         </li>
       </ul>
@@ -34,7 +34,7 @@ export default {
     })
     const result = computed(() => {
       if (state.keyword) {
-        return store.state.allChatList.filter(item => item.userName.includes(state.keyword))
+        return store.state.allChatList.filter(item => item.username.includes(state.keyword))
       }
     })
     const onSearch = () => {

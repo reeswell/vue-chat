@@ -45,7 +45,7 @@ import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 import {Toast} from 'vant'
 
-import api from '@/api'
+import {sendSMSCode,updatedUserPhone} from '@/api/user'
 let timer
 const reg = /^1[3|4|5|7|8]\d{9}$/
 export default {
@@ -76,7 +76,7 @@ export default {
         if (!phoneValid || !phoneValid2) return
         if (state.mobilePhone !== store.state.userInfo.mobilePhone) return Toast('原手机号码不正确')
         const obj = {mobilePhone: state.mobilePhone, newMobilePhone: state.newMobilePhone, smsCode: state.smsCode}
-        const {data} = await api.updatedUserPhone(obj)
+        const {data} = await updatedUserPhone(obj)
         clearInterval(timer)
 
         store.dispatch('setUserInfo', data)
@@ -87,9 +87,8 @@ export default {
     }
     const sendSMSCode = async () => {
       try {
-        const res = await api.sendSMSCode(state.mobilePhone)
+        const res = await sendSMSCode(state.mobilePhone)
         if (res.code === 200) {
-          // 免费短信服务次数用完，就以弹框方式发送
           Toast(res.msg)
           state.smsCode = res.smsCode
           state.cDTime = 60 // 首先恢复为 60 s

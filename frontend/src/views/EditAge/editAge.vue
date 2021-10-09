@@ -17,7 +17,7 @@
 import {reactive, toRefs, computed} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {updateUserInfo} from '@/api/user'
 const reg = /^(?:[1-9][0-9]?|1[01][0-9]|120)$/
 export default {
   name: 'EditAge',
@@ -39,7 +39,7 @@ export default {
         const obj = {
           age: state.value
         }
-        const {data} = await api.updateUserInfo(obj)
+        const {data} = await updateUserInfo(obj)
         store.dispatch('setUserInfo', data)
         router.push({name: 'Edit'})
       } catch (error) {

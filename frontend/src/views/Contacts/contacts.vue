@@ -15,7 +15,7 @@
                     <van-image round :src="IMG_URL + i.avatar" class="avatar" />
                   </div>
                   <div class="list-right">
-                    {{ i.userName }}
+                    {{ i.username }}
                   </div>
                 </li>
               </van-swipe-cell>

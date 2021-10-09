@@ -71,7 +71,12 @@ const errorHandle = (status, other) => {
 }
 
 // 创建axios实例
-const instance = axios.create({timeout: 1000 * 12, withCredentials: true})
+const instance = axios.create({
+  timeout: 5000,
+  withCredentials: true,
+  baseURL: process.env.VUE_APP_BASE_API,
+  timeout: 5000
+})
 // 设置post请求头
 // instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 /**
@@ -95,40 +100,22 @@ instance.interceptors.request.use(
 
 // 响应拦截器
 instance.interceptors.response.use(
-  response =>
-    // 请求成功
-    {
-      if (response.status === 200) {
-        // 你只需改动的是这个 succeeCode ，因为每个项目的后台返回的code码各不相同
-
-        if (response.data.code === 200) {
-          return response.data
-        } else {
-          tip(response.data.msg)
-          return Promise.reject(response)
-        }
-      } else {
-        return Promise.reject(response)
-      }
-    },
+  response => {
+    const res = response.data
+    // 你只需改动的是这个 succeeCode ，因为每个项目的后台返回的code码各不相同
+    if (res.code === 200) {
+      return res
+    } else if (res.startsWith('<svg xmlns')) {
+      return res
+    } else {
+      tip(res.msg)
+      return Promise.reject(res)
+    }
+  },
   // 请求失败
   error => {
-    const {response} = error
-    if (response) {
-      // 请求已发出，但是不在2xx的范围
-      errorHandle(response.status, response.data.message)
-      return Promise.reject(response)
-    } else {
-      // 处理断网的情况
-      // eg:请求超时或断网时，更新state的network状态
-      // network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏
-      // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
-      if (!window.navigator.onLine) {
-        tip('你的网络已断开，请检查网络')
-      } else {
-        return Promise.reject(error)
-      }
-    }
+    tip(error.message)
+    return Promise.reject(error)
   }
 )
 

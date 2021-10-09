@@ -10,160 +10,112 @@
     </div>
     <transition name="login-slide">
       <div class="form-container" v-if="switchFlag === 'login'">
-        <!-- 手机号码 -->
-        <div class="input-wrapper" :class="[focusIndex === 1 ? 'focus-a' : '']">
-          <van-icon name="manager" class="icon" />
+        <van-form @submit="handleLogin">
+          <van-cell-group inset>
+            <van-field
+              left-icon="manager"
+              v-model="username"
+              name="username"
+              placeholder="用户名/手机号码"
+            />
+            <van-field
+              left-icon="lock"
+              v-model="password"
+              type="password"
+              name="password"
+              placeholder="密码"
+            />
+            <!-- 图形验证码 -->
+            <van-field v-model="verifyCode" clearable placeholder="请输入图形校验码" >
+              <template #right-icon>
+                <img v-lazy="picCode" title="看不清？点击刷新" @click="updatePicCode" width="80" height="40" />
+              </template>
+            </van-field>
 
-          <input
-            type="text"
-            class="mobile-phone"
-            @focus="handleFocus(1)"
-            @blur="handleBlur"
-            v-model="userName"
-            maxlength="11"
-            placeholder="用户名/手机号码"
-            autocomplete="off"
-          />
-        </div>
-        <!-- 密码 -->
-        <div class="input-wrapper" :class="[focusIndex === 2 ? 'focus-a' : '']">
-          <van-icon name="lock" class="icon" />
+          </van-cell-group>
 
-          <input
-            type="password"
-            class="u-password"
-            @focus="handleFocus(2)"
-            @blur="handleBlur"
-            v-model="password"
-            maxlength="10"
-            placeholder="密码"
-            autocomplete="off"
-          />
-        </div>
-        <!-- 图形验证码 -->
-        <div class="input-wrapper" :class="[focusIndex === 3 ? 'focus-a' : '']">
-          <input
-            type="text"
-            class="verify-code"
-            @focus="handleFocus(3)"
-            @blur="handleBlur"
-            v-model="verifyCode"
-            maxlength="4"
-            placeholder="验证码"
-            autocomplete="off"
-          />
-          <div @click="updatePicCode">
-            <img class="pic-code" v-lazy="picCode" title="看不清？点击刷新" />
+          <div style="margin: 16px">
+            <!-- 登录按钮 -->
+            <van-button
+              v-if="!isLoading"
+              round
+              size="large"
+              color="#007aff"
+              native-type="submit"
+              text="登录"
+              class="login-btn"
+            />
+            <van-button
+              v-else
+              size="large"
+              loading
+              loading-type="spinner"
+              loading-text="正在登录 ..."
+              color="#007aff"
+              class="login-btn"
+            />
           </div>
-        </div>
-        <!-- 登录按钮 -->
-        <van-button
-          v-if="!isLoading"
-          round
-          size="large"
-          color="#007aff"
-          @click="handleLogin"
-          text="登录"
-          class="login-btn"
-        />
-        <van-button
-          v-else
-          size="large"
-          loading
-          loading-type="spinner"
-          loading-text="正在登录 ..."
-          color="#007aff"
-          class="login-btn"
-        />
+        </van-form>
       </div>
     </transition>
 
     <!-- 注册 -->
     <transition name="reg-slide">
       <div class="form-container" v-if="switchFlag === 'register'">
-        <!-- 用户名 -->
+        <van-form @submit="handleRegister">
+          <van-cell-group inset>
+            <van-field
+              left-icon="manager"
+              v-model="username"
+              name="validateUsername"
+              placeholder="用户名"
+            />
+            <van-field
+              left-icon="lock"
+              v-model="password"
+              type="password"
+              name="validatePassword"
+              placeholder="密码"
+            />
 
-        <div class="input-wrapper" :class="[focusIndex === 1 ? 'focus-a' : '']">
-          <!-- <van-icon name="user" class="icon" /> -->
-          <van-icon name="manager" class="icon" />
+            <van-field
+              type="tel"
+              left-icon="phone"
+              name="validatePhone"
+              v-model="phone"
+              placeholder="手机号码"
+            />
+            <van-field v-model="smsCode" center clearable placeholder="请输入短信验证码" >
+              <template #button>
+                <van-button size="small" type="primary" v-if="!countdownText" @click="handleSendSMSCode"
+                  >发送验证码</van-button
+                >
+                <van-button type="primary" size="small" v-else>{{ countdownText }}s后再试</van-button>
+              </template>
+            </van-field>
+          </van-cell-group>
 
-          <input
-            type="text"
-            class="u-name"
-            @focus="handleFocus(1)"
-            @blur="handleBlur"
-            v-model="userName"
-            maxlength="12"
-            placeholder="用户名"
-            autocomplete="off"
-          />
-        </div>
-        <!-- 密码 -->
-        <div class="input-wrapper" :class="[focusIndex === 2 ? 'focus-a' : '']">
-          <van-icon name="lock" class="icon" />
-          <input
-            type="password"
-            class="u-password"
-            @focus="handleFocus(2)"
-            @blur="handleBlur"
-            v-model="password"
-            maxlength="10"
-            placeholder="密码"
-            autocomplete="off"
-          />
-        </div>
-        <!-- 手机号 -->
-        <div class="input-wrapper" :class="[focusIndex === 3 ? 'focus-a' : '']">
-          <!-- <van-icon name="phone-circle" class="icon" /> -->
-          <van-icon name="phone" class="icon" />
-          <input
-            type="text"
-            class="mobile-phone"
-            @focus="handleFocus(3)"
-            @blur="handleBlur"
-            v-model="mobilePhone"
-            maxlength="11"
-            placeholder="手机号码"
-            autocomplete="off"
-          />
-        </div>
-        <!-- 短信验证码 -->
-        <div class="input-wrapper" :class="[focusIndex === 4 ? 'focus-a' : '']">
-          <van-icon name="comment-circle" class="icon" />
-          <input
-            type="text"
-            class="sms"
-            @focus="handleFocus(4)"
-            @blur="handleBlur"
-            v-model="smsCode"
-            maxlength="6"
-            placeholder="短信验证码"
-            autocomplete="off"
-          />
-          <van-button type="primary" class="send-sms" size="small" v-if="!countdownText" @click="handleSendSMSCode"
-            >获取验证码</van-button
-          >
-          <van-button type="primary" class="send-sms" size="small" v-else>{{ countdownText }}s后再试</van-button>
-        </div>
-        <!-- 注册按钮 -->
-        <van-button
-          v-if="!isLoading"
-          round
-          size="large"
-          color="#007aff"
-          @click="handleRegister"
-          text="注册"
-          class="login-btn"
-        />
-        <van-button
-          v-else
-          size="large"
-          loading
-          loading-type="spinner"
-          loading-text="正在注册 ..."
-          color="#007aff"
-          class="login-btn"
-        />
+          <div style="margin: 16px">
+            <van-button
+              v-if="!isLoading"
+              round
+              size="large"
+              color="#007aff"
+              native-type="submit"
+              text="注册"
+              class="login-btn"
+            />
+            <van-button
+              v-else
+              size="large"
+              loading
+              loading-type="spinner"
+              loading-text="正在注册 ..."
+              color="#007aff"
+              class="login-btn"
+            />
+          </div>
+        </van-form>
       </div>
     </transition>
   </div>
@@ -174,7 +126,7 @@ let timer
 import {reactive, toRefs, nextTick, onMounted, computed} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {register, login, sendSMSCode} from '@/api/user'
 
 import {Toast} from 'vant'
 
@@ -184,12 +136,12 @@ export default {
     const router = useRouter()
     const store = useStore()
 
+ 
     const state = reactive({
       switchFlag: 'login', // 登录: 1, 注册: 2
-      focusIndex: 0, // 输入框聚焦索引
-      userName: '', // 用户名
+      username: '', // 用户名
       password: '', // 密码
-      mobilePhone: '', // 手机号
+      phone: '', // 手机号
       verifyCode: '', // 图形验证码
       smsCode: '', // 短信验证码
       isLoading: false, // 登录 或 注册按钮状态
@@ -201,19 +153,12 @@ export default {
     onMounted(() => {
       nextTick(() => updatePicCode())
     })
-    const handleFocus = index => {
-      state.focusIndex = index
-    }
-    // 处理输入框失焦
-    const handleBlur = () => {
-      state.focusIndex = 0
-    }
+
     const switchForm = flag => {
       flag === 'login' ? (state.isActive = true) : (state.isActive = false)
       state.switchFlag = flag
       state.switchFlag === 'login' && nextTick(() => updatePicCode())
-      state.focusIndex = 0 // 重置表单索引
-      let resetData = ['userName', 'password', 'verifyCode', 'mobilePhone', 'smsCode']
+      let resetData = ['username', 'password', 'verifyCode', 'phone', 'smsCode']
       for (let item of resetData) {
         state[item] = ''
       }
@@ -225,16 +170,15 @@ export default {
         Toast(text)
         return false
       }
-
       switch (flag) {
         case 1:
-          if (!state.userName) return toast('请输入用户名')
+          if (!state.username) return toast('请输入用户名')
           if (!state.password) return toast('请输入密码')
           if (!state.verifyCode) return toast('请输入验证码')
           break
         case 2:
-          if (!state.userName) return toast('请输入用户名')
-          if (state.userName.length > 12 || state.userName.length < 3) return toast('请输入3-12位的用户名')
+          if (!state.username) return toast('请输入用户名')
+          if (state.username.length > 12 || state.username.length < 3) return toast('请输入3-12位的用户名')
           if (!state.password) return toast('请输入密码')
           if (state.mobilePhone.length != 11 || !/^[1][3,4,5,7,8][0-9]{9}$/.test(state.mobilePhone))
             return toast('请输入正确的手机号码')
@@ -245,13 +189,12 @@ export default {
     }
     // 注册
     const handleRegister = async () => {
-      if (!checkForm(2)) return
+       if (!checkForm(2)) return
       state.isLoading = true // 按钮加载状态
-      const {userName, password, mobilePhone, smsCode} = state
-      const data = {userName, password, mobilePhone, smsCode}
-      // console.log(data);
+      const {username, password, phone, smsCode} = state
+      const data = {username, password, phone, smsCode}
       try {
-        const res = await api.register(data)
+        const res = await register(data)
         state.isLoading = false
         state.countdownText = ''
         clearInterval(timer)
@@ -263,12 +206,12 @@ export default {
     }
     // 登录
     const handleLogin = async () => {
-      if (!checkForm(1)) return
+       if (!checkForm(1)) return
       state.isLoading = true // 按钮加载状态
-      const {userName, password, verifyCode} = state
-      const data = {userName, password, verifyCode}
+      const {username, password, verifyCode} = state
+      const data = {username, password, verifyCode}
       try {
-        const res = await api.login(data)
+        const res = await login(data)
         // console.log(res)
         store.dispatch('setUserInfo', res.data)
         store.dispatch('getUserInfo') //保存个人信息在localstorage
@@ -284,12 +227,12 @@ export default {
     // 发送短信验证码
     const handleSendSMSCode = async () => {
       // 手机号码错误
-      if (state.mobilePhone.length != 11 || !/^[1][3,4,5,7,8][0-9]{9}$/.test(state.mobilePhone))
+      if (state.phone.length != 11 || !/^[1][3,4,5,7,8][0-9]{9}$/.test(state.phone))
         return Toast('请输入正确的手机号码')
 
       try {
-        const obj = {mobilePhone: state.mobilePhone}
-        const res = await api.sendSMSCode(obj)
+        const obj = {phone: state.phone}
+        const res = await sendSMSCode(obj)
 
         if (res.code === 200) {
           // 免费短信服务次数用完，就以弹框方式发送
@@ -322,20 +265,17 @@ export default {
       }
     }
     // 更新图形验证码
-    const updatePicCode = () => {
-      state.picCode = api.sendPicCode()
+    const updatePicCode = async () => {
+      state.picCode = `${process.env.VUE_APP_BASE_API}/user/sendPicCode?mt=${Math.random()}`
     }
 
     return {
       ...toRefs(state),
-      handleFocus,
-      handleBlur,
       switchForm,
-      checkForm,
       handleRegister,
       handleLogin,
       handleSendSMSCode,
-      updatePicCode
+      updatePicCode,
     }
   }
 }
@@ -395,79 +335,17 @@ export default {
     box-sizing: border-box;
     border-radius: 10px;
     padding: 14px;
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      padding-top: 0;
-      .icon {
-        display: inline-block;
-        margin-right: 10px;
-        font-size: 20px;
-        color: $fontWhite;
-      }
-      input {
-        background-color: $lightBgc;
-      }
-      .u-name,
-      .u-password,
-      .verify-code,
-      .mobile-phone,
-      .sms {
-        flex: 1;
-        width: 0;
-        height: 60px;
-        font-size: 20px;
-        letter-spacing: 2px;
-        line-height: 60px;
-        color: $fontWhite;
-        caret-color: $blueBgc;
-        -webkit-caret-color: $blueBgc;
-        -moz-caret-color: $blueBgc;
-        -o-caret-color: $blueBgc;
-        -ms-caret-color: $blueBgc;
-        &::-webkit-input-placeholder {
-          color: $fontGray;
-          font-size: 14px;
-          letter-spacing: 2px;
-        }
-      }
-
-      .pic-code {
-        flex-basis: 30%;
-      }
-      &::before {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        content: '';
-        height: 1px;
-        background: $fontGray;
-      }
-      &::after {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        content: '';
-        height: 2px;
-        background: $blueBgc;
-        transform: scaleX(0);
-        transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-      }
+    .van-hairline--top-bottom::after {
+      border-width: 0;
     }
-    .focus-a::after {
-      transform: scaleX(1);
+    .van-cell--borderless::after,
+    .van-cell:last-child::after {
+      display: block;
     }
-    .login-btn {
-      margin-top: 14px;
-      height: 48px;
-      line-height: 48px;
-      text-align: center;
-      color: #fff;
-      background: $blueBgc;
-    }
+  }
+  .van-cell {
+    background-color: $lightBgc;
+    color: $fontWhite;
   }
 }
 </style>

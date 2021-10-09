@@ -10,7 +10,9 @@ import {
   friendsListCache,
   groupsListCache
 } from '@/utils/cache'
-import api from '@/api/index'
+import {getUserInfo,getOfficialInfo} from '@/api/user'
+import {findMyFriendsList} from '@/api/friendly'
+import {findMyGroupList} from '@/api/group'
 
 export default createStore({
   state: {
@@ -49,7 +51,7 @@ export default createStore({
     },
     getConversationsList(state) {
       // const roomId = state.sysInfo.id
-      const result = state.conversationsList.filter(item => item.userName !== 'vueChat')
+      const result = state.conversationsList.filter(item => item.username !== 'vueChat')
       return result
     },
     getAllChatListUnread(state) {
@@ -129,7 +131,7 @@ export default createStore({
           conversationsListCache.setCache(state.conversationsList)
         }
       }
-      state.allChatList = state.conversationsList.filter(item => item.userName !== 'vueChat' && item.type !== 'me')
+      state.allChatList = state.conversationsList.filter(item => item.username !== 'vueChat' && item.type !== 'me')
       allChatListCache.setCache(state.allChatList)
     },
 
@@ -216,7 +218,7 @@ export default createStore({
     },
     async getUserInfo({commit, dispatch}) {
       try {
-        const {code, data} = await api.getUserInfo()
+        const {code, data} = await getUserInfo()
         if (code !== 200) return
         commit(types.USER_INFO, data)
         commit(types.CONVERSATIONS_LIST, data.conversationsList)
@@ -228,9 +230,9 @@ export default createStore({
     async getMyContactList({state, dispatch}) {
       try {
         const friendObj = {userId: state.userInfo.id}
-        const groupObj = {userName: state.userInfo.userName}
-        const {data} = await api.findMyFriendsList(friendObj)
-        const res = await api.findMyGroupList(groupObj)
+        const groupObj = {username: state.userInfo.username}
+        const {data} = await findMyFriendsList(friendObj)
+        const res = await findMyGroupList(groupObj)
         if (data.length) {
           dispatch('setFriendsList', data)
         }
@@ -243,7 +245,7 @@ export default createStore({
     },
     async getSysInfo({commit, state}) {
       try {
-        const {code, data} = await api.getOfficialInfo()
+        const {code, data} = await getOfficialInfo()
         if (code !== 200) return
         const id = state.userInfo.id + '-' + data.id
         state.sysInfo = Object.assign({}, data, {type: 'sysInfo'}, {id})

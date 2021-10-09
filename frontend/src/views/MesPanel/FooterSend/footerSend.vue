@@ -13,8 +13,8 @@
     <div class="local-link" @click="show = true">
       <i class="icon-attachment"></i>
     </div>
-    <van-action-sheet
-      v-model:show="show"
+    <!-- eslint-disable-next-line -->
+    <van-action-sheet v-model:show="show"
       :actions="actions"
       cancel-text="取消"
       close-on-click-action
@@ -36,7 +36,8 @@ import {formatTime} from '@/utils/tools'
 import {reactive, toRefs, ref, watch, computed, inject} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {uploadFile} from '@/api/upload'
+import {checkIsFriends} from '@/api/friendly'
 import {Toast, Notify} from 'vant'
 
 export default {
@@ -73,7 +74,7 @@ export default {
       try {
         const formdata = new FormData()
         formdata.append('file', file)
-        const result = await api.uploadFile(formdata)
+        const result = await uploadFile(formdata)
         if (result.code === 200) {
           send(result.data, 'file')
         } else {
@@ -107,7 +108,7 @@ export default {
       const data = {
         roomId: route.params.id
       }
-      const res = await api.checkIsFriends(data)
+      const res = await checkIsFriends(data)
       state.isMyFriend = res.data.isFriends
       return state.isMyFriend
     }
@@ -124,7 +125,7 @@ export default {
       }
       const formdata = new FormData()
       formdata.append('file', file)
-      const result = await api.uploadFile(formdata)
+      const result = await uploadFile(formdata)
       if (result.code === 200) {
         send(result.data, 'img')
       } else {
@@ -145,12 +146,12 @@ export default {
         }
       }
       const val = {
-        userName: state.userInfo.userName,
+        username: state.userInfo.username,
         mes: state.message,
         time: formatTime(new Date()),
         avatar: state.userInfo.avatar,
         nickname: state.userInfo.nickname,
-        read: [state.userInfo.userName],
+        read: [state.userInfo.username],
         roomId: route.params.id,
         style: 'mess',
         self: state.userInfo.id

@@ -37,7 +37,7 @@ import {reactive, toRefs, computed} from 'vue'
 import {useRouter} from 'vue-router'
 import {Toast} from 'vant'
 
-import api from '@/api'
+import {updatedUserPassword} from '@/api/user'
 const reg = /^[\w_-]{6,16}$/
 export default {
   name: 'EditPassword',
@@ -65,7 +65,7 @@ export default {
       try {
         if (!passwordValid && !passwordValid2 && !surePwdValid) return
         const obj = {password: state.password, newPassword: state.newPassword}
-        const {msg} = await api.updatedUserPassword(obj)
+        const {msg} = await updatedUserPassword(obj)
         Toast(msg)
         setTimeout(() => router.push({name: 'Manager'}), 2000)
       } catch (error) {

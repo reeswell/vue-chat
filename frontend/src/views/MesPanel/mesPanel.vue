@@ -43,7 +43,7 @@ import MesList from './MesList/mesList'
 import {reactive, toRefs, ref, computed, onMounted, inject, onBeforeMount} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {getGroupInfo} from '@/api/group'
 export default {
   name: 'MesPanel',
   components: {FooterSend, MesList, emoji, loading},
@@ -92,7 +92,7 @@ export default {
       socket.on('mes', mes => {
         if (mes.roomId === route.params.id) {
           state.chatList.push(Object.assign({}, mes, {type: 'other'}))
-          socket.emit('setReadStatus', {roomId: mes.roomId, userName: state.userInfo.userName})
+          socket.emit('setReadStatus', {roomId: mes.roomId, username: state.userInfo.username})
           store.commit('setUnRead', {roomId: mes.roomId, clear: true})
         }
       })
@@ -102,7 +102,7 @@ export default {
         }
         state.chatList = mes.map(item => {
           if (item.type !== 'org') {
-            if (item.userName === state.userInfo.userName) {
+            if (item.username === state.userInfo.username) {
               item.type = 'mine'
             } else {
               item.type = 'other'
@@ -115,7 +115,7 @@ export default {
     const init = () => {
       state.Loading = true
       // 设置服务器信息为已读状态也本地设置为已读,获取聊天记录
-      socket.emit('setReadStatus', {roomId: route.params.id, userName: state.userInfo.userName})
+      socket.emit('setReadStatus', {roomId: route.params.id, username: state.userInfo.username})
       store.commit('setUnRead', {roomId: route.params.id, clear: true})
       socket.emit('getHisMeg', {roomId: route.params.id, offset: 1, limit: 100})
       state.Loading = false
@@ -131,7 +131,7 @@ export default {
       }
       const arr = state.allChatList.filter(item => item.id === id)
       state.avatar = arr[0].avatar
-      state.name = arr[0].userName
+      state.name = arr[0].username
       state.friendId = arr[0].friendId
     }
 
@@ -141,7 +141,7 @@ export default {
       if (params.id === state.userInfo.id) return
       const userId = state.userInfo.id
 
-      const res = await api.getGroupInfo(params)
+      const res = await getGroupInfo(params)
       const groupUsers = res.users
       const holderId = groupUsers.filter(item => item.holder === 1)[0].userId['_id']
 

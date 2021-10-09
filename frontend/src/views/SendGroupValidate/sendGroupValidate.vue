@@ -65,7 +65,7 @@ export default {
       const group = state.groupInfo
       const user = state.userInfo
       const obj = {
-        userName: user.userName,
+        username: user.username,
         mes: state.introduce,
         time: tools.formatTime(new Date()),
         avatar: user.avatar,

@@ -43,7 +43,9 @@
 import {reactive, toRefs, computed} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
-import api from '@/api'
+import {createGroup} from '@/api/group'
+import {addConversationList} from '@/api/user'
+
 import {Toast} from 'vant'
 const groupnameReg = /^[\u4e00-\u9fa5_a-zA-Z0-9!！￥@#$,，.。？?、/;:：；|~·]{2,10}$/
 const groupCodeReg = /^[0-9a-zA-Z_]{6,12}$/
@@ -77,22 +79,22 @@ export default {
         groupImage: state.groupInfo.groupImage,
         groupName: state.groupInfo.groupName,
         groupDesc: state.groupInfo.groupDesc,
-        userName: store.state.userInfo.userName,
+        username: store.state.userInfo.username,
         type: state.radio
       }
       try {
-        const {data} = await api.createGroup(obj)
+        const {data} = await createGroup(obj)
         console.log(data)
         const r = {
-          userName: store.state.userInfo.userName,
+          username: store.state.userInfo.username,
           obj: {
-            userName: state.groupInfo.groupName,
+            username: state.groupInfo.groupName,
             avatar: state.groupInfo.groupImage,
             id: data._id,
             type: state.radio
           }
         }
-        await api.addConversationList(r)
+        await addConversationList(r)
         store.dispatch('setConversationsList', r.obj)
         Toast('创建成功')
         router.push({name: 'Chat'})
