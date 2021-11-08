@@ -1,19 +1,25 @@
 # 
 
-# vue3优化测试版本
+# vue3 + koa2优化1.0版本
 
-## Project setup
+该版本为优化版本，目前还在开发测试中。需要稳定版本的请拉取main分支或者vue2分支。
+
+### 项目启动
+
+启动环境：node、mongodb
+
 ```
-npm install
+git clone -b 1.0 https://github.com/xxydrr/vue3-chat.git
+npm i //安装前端依赖
+npm run serve 启动前端服务
+
+cd server
+npm i //安装后端依赖
+mongod  //启动数据库
+npm run init  //初始化一个系统账号
+npm run dev   //启动服务器
+
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
