@@ -16,7 +16,7 @@ Vue2全家桶+MongoDB+Koa2+socket.io+vant 2+ES6/7
 启动环境：node、mongodb
 
 ```
-git clone https://github.com/xxydrr/vue-koa-chat 
+git clone -b vue2 https://github.com/xxydrr/vue-koa-chat 
 
 cd backend
 npm install //安装后端依赖
