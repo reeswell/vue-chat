@@ -1,6 +1,6 @@
 # 前言
-
-继上个纯前端模仿telegram聊天系统后我决定加上后端功能，这次考虑使用更加简洁界面实现把UI界面也重构了。主要技术栈为Vue3+MongoDB+Koa2。Vue3全家桶 + Vant3重构完成
+该项目是我的毕业设计项目
+继上个纯前端模仿telegram聊天系统后我决定加上后端功能，这次考虑使用更加简洁界面实现把UI界面也重构了。主要技术栈为Vue3+MongoDB+Koa2。Vue3全家桶 + Vant3重构完成。
 
 - [开源地址](https://github.com/xxydrr/vue3-chat)
 - [vue2版本](https://github.com/xxydrr/vue3-chat/tree/vue2)
