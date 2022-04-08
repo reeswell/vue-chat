@@ -1,6 +1,6 @@
 # 前言
 该项目是我的毕业设计。
-主要技术栈为Vue3+MongoDB+Koa2。Vue3全家桶 + Vant3重构完成。
+主要技术栈为Vue3+MongoDB+Koa2。
 自己回头看了一下代码写得真烂🤡🤡🤡,正在找时间准备重构...
 
 - [开源地址](https://github.com/xxydrr/vue3-chat)
