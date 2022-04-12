@@ -9,7 +9,7 @@
     <van-overlay :show="show" @click="show = false" class="box-wrapper">
       <div class="right-box" v-show="show" @click.stop="onClickRight">
         <ul>
-          <li @click.stop="addFriends"><i class="icon-person_add" /></i>&nbsp;添加好友</li>
+          <li @click.stop="addFriends"><i class="icon-person_add" ></i>&nbsp;添加好友</li>
           <li @click.stop="addGroup"><i class="icon-group_add"></i>&nbsp;添加群组</li>
           <li @click.stop="createGroup"><van-icon name="friends" />&nbsp;创建群组</li>
         </ul>
@@ -27,9 +27,11 @@
           <van-tab v-for="(item,index) in contactsList" :title=" item.name" :key="index">
 
             <div class="dialogue-container">
-
-            <van-swipe-cell 
-            v-for="(i,index) in item.List" :key="index" v-if="item.List.length">
+              <template
+              v-if="item.List.length"
+              >
+                 <van-swipe-cell 
+            v-for="(i,index) in item.List" :key="index" >
               <li class="seesion-list first-li" @click="goMesPanel(i.id)">
                 <div class="list-left">
                   <van-image round width="56px" height="56px" :src="IMG_URL+i.avatar" class="avatar" />
@@ -48,6 +50,8 @@
                 <van-button square type="primary" text="标为已读" @click="readFlag(i.id)"/>
               </template>
             </van-swipe-cell>
+              </template>
+           
             </div>
           </van-tab>
     </van-tabs>
@@ -163,7 +167,7 @@ export default {
       this.$store.commit('setUnRead', {roomId: id, clear: true})
     },
     tabScroll() {
-    //  do noting
+      //  do noting
     }
   }
 }
