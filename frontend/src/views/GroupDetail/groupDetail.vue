@@ -1,13 +1,17 @@
 <template>
   <div class="groupDetail">
     <van-nav-bar left-text="返回" left-arrow @click-left="onClickLeft" />
-    <div
+    <template
+      v-if="groupInfo !== null"
+    >
+        <div
       v-for="img in imageList"
       v-lazy:background-image="IMG_URL + img"
       :key="img"
       class="lazy"
-      v-if="groupInfo !== null"
     ></div>
+    </template>
+
 
     <div class="groupDetail-container" v-if="groupInfo !== null">
       <van-cell title="群名称" :value="groupInfo.title" />
@@ -16,7 +20,7 @@
         <!-- 使用 title 插槽来自定义标题 -->
         <template #title>
           <span class="custom-title">管理员</span>
-          <van-tag v-for="(item, index) in managers" :key="item._id"
+          <van-tag v-for="item in managers" :key="item._id"
             ><img :src="IMG_URL + item.userId.avatar" alt="" width="20" height="20" class="img"
           /></van-tag>
         </template>
