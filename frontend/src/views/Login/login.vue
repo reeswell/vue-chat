@@ -237,7 +237,6 @@ export default {
       this.isLoading = true // 按钮加载状态
       const {userName, password, mobilePhone, smsCode} = this.$data
       const data = {userName, password, mobilePhone, smsCode}
-      // console.log(data);
       try {
         const res = await this.$api.register(data)
         this.isLoading = false
@@ -246,7 +245,7 @@ export default {
         setTimeout(() => this.switchForm('login'), 1000)
       } catch (error) {
         this.isLoading = false
-        console.log(error)
+        console.error(error)
       }
     },
 
@@ -259,14 +258,13 @@ export default {
       const data = {userName, password, verifyCode}
       try {
         const res = await this.$api.login(data)
-        console.log(res)
         this.$store.dispatch('setUserInfo', res.data)
         this.$store.dispatch('getUserInfo') //保存个人信息在localstorage
         this.$store.dispatch('setUserToken', res.token)
 
         setTimeout(() => this.$router.push({name: 'Chat'}), 1000)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       } finally {
         this.isLoading = false // 重置按钮状态
       }
@@ -309,7 +307,7 @@ export default {
         }
         // 反馈消息
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
 

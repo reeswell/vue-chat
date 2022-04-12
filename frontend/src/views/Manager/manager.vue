@@ -58,16 +58,13 @@ export default {
       this.$router.push({name: 'Edit'})
     },
     goSysMes() {
-      console.log('gomes')
       this.$router.push({name: 'SysMes'})
     },
     goSelf() {
-      console.log('goSelf')
       const id = this.userInfo.id
       this.$router.push({name: 'MesPanel', params: {id: id}})
     },
     goSafe() {
-      console.log('goSafe')
       this.$router.push({name: 'AccountSafe'})
     }
   }

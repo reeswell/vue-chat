@@ -20,7 +20,7 @@ const deleteMessage = async (ctx) => {
     await mesModel.deleteOne(data);
     ctx.body = { code: 200, mes: "删除成功" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -52,7 +52,7 @@ const getMessage = async (obj, count = 0) => {
     // console.log("result", result);
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -75,7 +75,7 @@ const getHistoryMessage = async (obj, reverse) => {
       return { code: 200, data: mesDoc };
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -105,7 +105,7 @@ const setReadStatus = async (obj) => {
 
     return { code: 200, msg: "ok" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -130,7 +130,7 @@ const setMessageStatus = async (obj) => {
 
     return { code: 200, msg: "ok", data: result };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -141,7 +141,7 @@ const updateMesStatus = async (obj) => {
     if (mesDoc.nModified > 0) return { code: 200, msg: "ok" };
     return { code: -1, msg: "更新失败" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

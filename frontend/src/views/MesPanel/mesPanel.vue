@@ -132,7 +132,6 @@ export default {
       }
     },
     onRefresh() {
-      console.log('gogo')
       setTimeout(() => {
         Toast('刷新成功')
         this.isLoading = false
@@ -144,7 +143,6 @@ export default {
     },
     onClickRight() {
       const routeId = this.$route.params.id
-      console.log(routeId)
       if (routeId.split('-').length > 1) {
         return this.$router.push({name: 'FriendsInfo', params: {id: this.friendId}})
       }

@@ -56,7 +56,7 @@ export default {
 
         this.$router.push({name: 'Chat'})
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }

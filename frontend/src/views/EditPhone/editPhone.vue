@@ -81,13 +81,12 @@ export default {
         this.$store.dispatch('setUserInfo', data)
         this.$router.push({name: 'Manager'})
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     async sendSMSCode() {
       try {
         const res = await this.$api.sendSMSCode(this.mobilePhone)
-        console.log(res)
 
         if (res.code === 200) {
           // 免费短信服务次数用完，就以弹框方式发送
@@ -116,7 +115,7 @@ export default {
         }
         // 反馈消息
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }

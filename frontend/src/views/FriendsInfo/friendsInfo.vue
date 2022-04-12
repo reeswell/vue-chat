@@ -48,7 +48,6 @@ export default {
       this.$router.go(-1)
     },
     async blockFriend() {
-      console.log('blockFriend')
       const friendId = this.$route.params.id
       const arr = this.allChatList.filter(item => item.friendId === friendId)
       const roomId = arr[0].id
@@ -64,7 +63,7 @@ export default {
           this.$router.push({name: 'Chat'})
         }, 200)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     deleteIt() {
@@ -79,13 +78,12 @@ export default {
           this.blockFriend()
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
     },
     async getFriendInfo() {
       const params = {id: this.$route.params.id}
       const res = await this.$api.previewUser(params)
-      console.log(res)
       this.friendsInfo = res.data
       this.$store.dispatch('setFriendsInfo', this.friendsInfo)
     },

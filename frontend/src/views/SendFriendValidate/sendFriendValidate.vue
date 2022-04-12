@@ -51,7 +51,6 @@ export default {
       this.$router.go(-1)
     },
     onClickRight() {
-      console.log('onClickRight')
 
       const friend = this.friendsInfo
       const user = this.userInfo
@@ -74,7 +73,6 @@ export default {
         type: 'validate',
         status: '0'
       }
-      console.log(obj)
       this.$socket.emit('sendValidate', obj)
       this.$notify({type: 'success', message: '发送成功'})
       this.$router.push({name: 'Chat'})

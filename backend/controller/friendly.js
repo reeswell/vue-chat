@@ -19,7 +19,7 @@ const checkIsFriends = async (ctx) => {
       data: { isFriends: true },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 查看我的好友列表
@@ -51,13 +51,12 @@ const findMyFriendsList = async (ctx) => {
         roomId: item.self._id + "-" + userId,
       });
     });
-    // console.log(data);
     ctx.body = {
       code: 200,
       data: data,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -86,7 +85,7 @@ const addFriend = async (obj) => {
       other: newFriend.other,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -99,7 +98,7 @@ const deleteFriend = async (ctx) => {
       msg: "删除成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

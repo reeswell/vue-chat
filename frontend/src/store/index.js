@@ -225,7 +225,7 @@ const store = new Vuex.Store({
         commit(types.CONVERSATIONS_LIST, data.conversationsList)
         dispatch('getSysInfo')
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     async getMyContactList({state, dispatch}) {
@@ -241,7 +241,7 @@ const store = new Vuex.Store({
           dispatch('setGroupsList', res.data)
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     async getSysInfo({commit, state}) {
@@ -253,7 +253,7 @@ const store = new Vuex.Store({
         commit(types.SYS_INFO, state.sysInfo)
         commit(types.CONVERSATIONS_LIST, state.sysInfo)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
 

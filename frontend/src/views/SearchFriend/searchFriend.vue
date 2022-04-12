@@ -58,13 +58,12 @@ export default {
       this.$router.push({name: 'FriendDetail', params: {id: id}})
     },
     async showSearch() {
-      console.log('showSearch')
       const data = {keyword: this.keyword}
       try {
         const res = await this.$api.addFriends(data)
         this.friendsInfo = res.data
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }

@@ -81,7 +81,7 @@ export default {
         }
         this.$refs['uploadFile'].value = ''
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     emojiClick() {
@@ -100,7 +100,6 @@ export default {
       if (item.name === '图片') {
         this.$refs.chooseInmage.click()
       } else if (item.name === '文件') {
-        console.log('文件')
         this.$refs.uploadFile.click()
       }
     },

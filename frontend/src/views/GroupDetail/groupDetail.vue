@@ -50,16 +50,14 @@ export default {
       this.$router.go(-1)
     },
     mesCheck() {
-      console.log('mesCheck')
       this.$router.push({name: 'SendGroupValidate', params: {id: this.holderId}})
     },
     blockGroup() {
-      console.log('blockFriend')
+      // do noting
     },
     async getGroupInfo() {
       const params = {id: this.$route.params.id}
       const res = await this.$api.getGroupInfo(params)
-      console.log(res)
       this.groupInfo = res.data
       this.groupUsers = res.users
       this.imageList.push(this.groupInfo.img)

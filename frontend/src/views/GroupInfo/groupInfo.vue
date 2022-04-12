@@ -81,11 +81,10 @@ export default {
       this.$router.go(-1)
     },
     mesCheck() {
-      console.log('mesCheck')
       this.$router.push({name: 'SendGroupValidate', params: {id: this.holderId}})
     },
     blockGroup() {
-      console.log('blockFriend')
+      // do noting
     },
     previewUser(id) {
       if (id === this.userInfo.id) {
@@ -126,7 +125,7 @@ export default {
           this.$router.push({name: 'Chat'})
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
     }
   }

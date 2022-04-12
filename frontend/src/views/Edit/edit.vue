@@ -68,7 +68,6 @@ export default {
   created() {
     this.imgSrc = this.IMG_URL + this.userInfo.avatar
     this.area = this.userInfo.province + ' ' + this.userInfo.city
-    console.log(this.getAllChatListRoomId)
   },
   methods: {
     beforeRead(file) {
@@ -91,7 +90,7 @@ export default {
           this.$router.push({name: 'Login'})
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
     },
     async afterRead(file) {
@@ -128,7 +127,6 @@ export default {
       this.$refs.myArea.reset() // 重置城市列表
     },
     async saveNewUserInfo() {
-      console.log(this.area.split(' '))
       const unlink = this.userInfo.avatar
       try {
         const obj = {
@@ -146,7 +144,7 @@ export default {
 
         this.$router.push({name: 'Manager'})
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     onClickLeft() {

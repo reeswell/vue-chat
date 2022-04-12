@@ -36,7 +36,7 @@ export default {
         this.$store.dispatch('setUserInfo', data)
         this.$router.push({name: 'Edit'})
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }

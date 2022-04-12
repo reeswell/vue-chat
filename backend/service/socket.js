@@ -60,7 +60,7 @@ const appSocket = (server) => {
         await saveMessage(obj);
         socket.to(obj.roomId).emit("mes", obj);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     });
     // 获取历史消息
@@ -74,7 +74,7 @@ const appSocket = (server) => {
           console.log("查询历史记录失败");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     });
 
@@ -89,7 +89,7 @@ const appSocket = (server) => {
           console.log("查询官方历史记录失败");
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     });
 
@@ -162,7 +162,7 @@ const appSocket = (server) => {
 
             socket.emit("ValidateSuccess", { msg: "ok" });
           } catch (error) {
-            console.log(error);
+            console.error(error);
           }
         } else if (obj.state === "friend") {
           const {

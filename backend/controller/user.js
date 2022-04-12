@@ -63,7 +63,7 @@ const register = async (ctx) => {
       msg: "注册成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -122,7 +122,7 @@ const login = async (ctx) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -209,7 +209,7 @@ const sendSMSCode = async (ctx) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 更新个人信息
@@ -335,7 +335,7 @@ const updateUserInfo = async (ctx) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -367,7 +367,7 @@ const getUserInfo = async (ctx) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 获取个人以及好友列表信息 分组状态
@@ -397,7 +397,7 @@ const previewUser = async (ctx) => {
       msg: "查找成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -422,7 +422,7 @@ const addConversationList = async (ctx) => {
       msg: "添加成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 const serverAddConversationList = async (userName, obj) => {
@@ -443,7 +443,7 @@ const serverAddConversationList = async (userName, obj) => {
       msg: "添加成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -467,7 +467,7 @@ const removeConversationList = async (ctx) => {
       msg: "移除成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -499,7 +499,7 @@ const searchFriends = async (ctx) => {
       msg: "查找成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 删除对话 即好友或群组
@@ -524,7 +524,7 @@ const deleteDialog = async (ctx) => {
 
     ctx.body = { code: 200, msg: "删除好友成功！" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 const userCheckIsMyFriend = async (obj) => {
@@ -539,7 +539,7 @@ const userCheckIsMyFriend = async (obj) => {
     }
     return { code: -1, msg: "你们已经是好友" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 修改好友备注
@@ -561,7 +561,7 @@ const modifyFriendRemark = async (ctx) => {
     );
     ctx.body = { code: 200, msg: "修改备注成功！" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -585,7 +585,7 @@ const updateUserConversations = async (ctx) => {
 
     ctx.body = { code: 200, msg: "更新会话头像成功" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 const getOfficialInfo = async (ctx) => {
@@ -605,7 +605,7 @@ const getOfficialInfo = async (ctx) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -649,7 +649,7 @@ const updatedUserPhone = async (ctx) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 const updatedUserPassword = async (ctx) => {
@@ -689,7 +689,7 @@ const updatedUserPassword = async (ctx) => {
       msg: "修改密码成功！",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

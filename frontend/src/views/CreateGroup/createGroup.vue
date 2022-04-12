@@ -79,7 +79,6 @@ export default {
       }
       try {
         const {data} = await this.$api.createGroup(obj)
-        console.log(data)
         const r = {
           userName: this.$store.state.userInfo.userName,
           obj: {
@@ -94,11 +93,10 @@ export default {
         this.$toast('创建成功')
         this.$router.push({name: 'Chat'})
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     onClickLeft() {
-      console.log('返回')
       this.$router.go(-1)
     }
   }

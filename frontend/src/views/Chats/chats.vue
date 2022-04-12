@@ -107,7 +107,6 @@ export default {
         })
         arr[2].List = unReadArr
         arr[1].List = groupArr
-        console.log(chatList)
         this.groupUnread = groupUnread
 
         arr[0].List = chatList
@@ -164,7 +163,7 @@ export default {
       this.$store.commit('setUnRead', {roomId: id, clear: true})
     },
     tabScroll() {
-      console.log('66')
+    //  do noting
     }
   }
 }

@@ -55,30 +55,26 @@ export default {
     //获取系统消息
 
     getSysMeg(mes) {
-      console.log(mes)
       this.$store.dispatch('setSysNewsList', mes)
     }
   },
   methods: {
     init() {
       if (!this.getSysUnRead.length || this.getSysUnRead[0].count === 0) return
-      console.log('333333')
       this.$store.commit('setUnRead', {roomId: this.sysInfo.id, clear: true})
       this.$socket.emit('setReadStatus', {roomId: this.sysInfo.id, userName: this.userInfo.userName})
       this.$socket.emit('getSysMeg', {roomId: this.sysInfo.id, offset: this.offset, limit: this.limit})
     },
     onClickLeft() {
-      console.log('onClickLeft')
       this.$router.go(-1)
     },
     onClickRight() {
-      console.log('onClickRight')
+      // do noting
     },
     goMesPanel() {
-      console.log('goMesPanel')
+      // do noting
     },
     goDetail(id) {
-      console.log('goDetail')
       this.$router.push({name: 'ApplyDetail', params: {id: id}})
     }
   }

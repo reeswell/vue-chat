@@ -12,7 +12,7 @@ const initUser = async () => {
     await officialAccount.save();
     console.log("初始化官方账号成功");
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 module.exports = initUser;

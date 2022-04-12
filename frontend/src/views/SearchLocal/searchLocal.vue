@@ -37,10 +37,9 @@ export default {
   },
   methods: {
     onSearch() {
-      console.log('onSearch')
+      // do noting
     },
     onCancel() {
-      console.log('onCancel')
 
       this.value = ''
       this.$router.go(-1)

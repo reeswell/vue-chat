@@ -11,7 +11,7 @@ const getMyGroup = async (ctx) => {
     // if (!groupUserDoc.length) return (ctx.body = { code: -1, msg: "查找失败" });
     ctx.body = { code: 200, data: groupUserDoc };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 获取群聊详情
@@ -25,7 +25,7 @@ const getGroupInfo = async (ctx) => {
     }
     ctx.body = { code: 200, data: groupResult, users: groupUser };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 搜索群聊
@@ -51,7 +51,7 @@ const huntGroups = async (ctx) => {
       msg: "查找成功",
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 群聊添加新成员
@@ -82,7 +82,7 @@ const InsertGroupUsers = async (obj) => {
     }
     return { code: -1, msg: "添加失败" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 // 创建群聊
@@ -120,7 +120,7 @@ const createGroup = async (ctx) => {
     ctx.body = { code: 200, data: newGroup };
   } catch (error) {
     GroupModel.deleteOne({ _id: newGroup._id });
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -134,7 +134,7 @@ const getGroupUsers = async (ctx) => {
       return (ctx.body = { code: -1, msg: "查找失败" });
     ctx.body = { code: 200, data: groupUserDoc };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -159,7 +159,7 @@ const quitGroup = async (ctx) => {
     );
     ctx.body = { code: 200, msg: "退群成功" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

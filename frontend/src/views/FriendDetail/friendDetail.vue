@@ -42,16 +42,14 @@ export default {
       this.$router.go(-1)
     },
     mesCheck() {
-      console.log('mesCheck')
       this.$router.push({name: 'SendFriendValidate', params: {id: this.$route.params.id}})
     },
     blockFriend() {
-      console.log('blockFriend')
+      // do noting
     },
     async getUserInfo() {
       const params = {id: this.$route.params.id}
       const res = await this.$api.previewUser(params)
-      console.log(res)
       this.friendsInfo = res.data
       this.$store.dispatch('setFriendsInfo', this.friendsInfo)
     }
