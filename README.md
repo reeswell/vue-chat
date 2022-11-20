@@ -1,7 +1,7 @@
 # 前言
 该项目是我的毕业设计。
 主要技术栈为Vue3+MongoDB+Koa2。
-项目代码不再维护，欢迎关注我的新项目[story](https://github.com/xxydrr/story)
+该项目代码不再维护，欢迎关注我的新项目[story](https://github.com/xxydrr/story)
 
 - [开源地址](https://github.com/xxydrr/vue3-chat)
 - [vue2版本](https://github.com/xxydrr/vue3-chat/tree/vue2)
