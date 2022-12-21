@@ -2,11 +2,9 @@ const UserModel = require("../models/user");
 const MobilePhoneModel = require("../models/mobilePhone");
 const mesModel = require("../models/message");
 
-const fs = require("fs");
-const jwt = require("jsonwebtoken");
 const tools = require("../utils/tools");
+const { createToken } = require("../utils/jwt")
 const bcrypt = require("bcryptjs"); // 用于密码哈希的加密算法
-const { log } = require("debug");
 const SALT_WORK_FACTOR = 10; // 定义加密密码计算强度
 
 const register = async (ctx) => {
@@ -68,6 +66,9 @@ const register = async (ctx) => {
 };
 
 const login = async (ctx) => {
+  console.log('1111111');
+  console.log(ctx.session.picCode)
+
   const { userName, password, verifyCode } = ctx.request.body;
   if (!userName || !password || !verifyCode)
     return (ctx.body = {
@@ -79,6 +80,8 @@ const login = async (ctx) => {
       code: 5021,
       msg: "验证码已过期",
     });
+  console.log(ctx.session.picCode);
+
   if (ctx.session.picCode.toUpperCase() !== verifyCode.toUpperCase())
     return (ctx.body = {
       code: 5022,
@@ -97,9 +100,7 @@ const login = async (ctx) => {
     });
     // 登录账号
     const result = await userDoc.comparePassword(password, userDoc.password); // 进行密码比对是否一致
-    const token = jwt.sign({ _id: userDoc._id }, "chat_jwt", {
-      expiresIn: 60 * 60 * 24,
-    });
+    const token = createToken({ _id: userDoc._id })
     if (!result) return (ctx.body = { code: -2, msg: "用户名或者密码错误" });
     ctx.body = {
       code: 200,
@@ -611,6 +612,7 @@ const getOfficialInfo = async (ctx) => {
 
 const updatedUserPhone = async (ctx) => {
   const { mobilePhone, newMobilePhone, smsCode } = ctx.request.body;
+  console.log(ctx.session);
   if (smsCode !== ctx.session.smsCode)
     return (ctx.body = { code: -1, msg: "短信验证码不正确" });
   const data = ctx.state.user;

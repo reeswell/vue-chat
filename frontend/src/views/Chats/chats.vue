@@ -6,11 +6,11 @@
       </template>
     </van-nav-bar>
 
-    <van-overlay :show="show" @click="show = false" class="box-wrapper">
-      <div class="right-box" v-show="show" @click.stop="onClickRight">
+    <van-overlay :show="show" class="box-wrapper" @click="show = false">
+      <div v-show="show" class="right-box" @click.stop="onClickRight">
         <ul>
-          <li @click.stop="addFriends"><i class="icon-person_add"></i>&nbsp;添加好友</li>
-          <li @click.stop="addGroup"><i class="icon-group_add"></i>&nbsp;添加群组</li>
+          <li @click.stop="addFriends"><i class="icon-person_add" />&nbsp;添加好友</li>
+          <li @click.stop="addGroup"><i class="icon-group_add" />&nbsp;添加群组</li>
           <li @click.stop="createGroup"><van-icon name="friends" />&nbsp;创建群组</li>
         </ul>
       </div>
@@ -18,15 +18,15 @@
 
     <van-search v-model="value" placeholder="搜索" shape="round" @focus="goSearch" />
     <div class="chat-wrapper">
-      <div class="all-badge" v-if="getAllChatListUnread > 0"><van-badge dot /></div>
+      <div v-if="getAllChatListUnread > 0" class="all-badge"><van-badge dot /></div>
 
-      <div class="group-badge" v-if="groupUnread > 0"><van-badge :content="groupUnread" /></div>
-      <div class="unread-badge" v-if="getAllChatListUnread > 0"><van-badge :content="getAllChatListUnread" /></div>
+      <div v-if="groupUnread > 0" class="group-badge"><van-badge :content="groupUnread" /></div>
+      <div v-if="getAllChatListUnread > 0" class="unread-badge"><van-badge :content="getAllChatListUnread" /></div>
 
       <van-tabs v-model="active" animated sticky :scroll="tabScroll">
-        <van-tab v-for="(item, index) in contactsList" :title="item.name" :key="index">
-          <div class="dialogue-container">
-            <van-swipe-cell v-for="(i, index) in item.List" :key="index" v-if="item.List.length">
+        <van-tab v-for="(item, index) in contactsList" :key="index" :title="item.name">
+          <div v-if="item.List.length" class="dialogue-container">
+            <van-swipe-cell v-for="(i, index) in item.List" :key="index">
               <li class="seesion-list first-li" @click="goMesPanel(i.id)">
                 <div class="list-left">
                   <van-image round width="56px" height="56px" :src="IMG_URL + i.avatar" class="avatar" />
@@ -34,10 +34,10 @@
                 <div class="list-right van-hairline--bottom">
                   <div class="first-line">
                     <p class="name">{{ i.userName }}</p>
-                    <span class="time" v-if="i.newMesTime">{{ i.newMesTime }}</span>
-                    <van-badge :content="i.unread > 0 ? i.unread : null" color="#3477f5"> </van-badge>
+                    <span v-if="i.newMesTime" class="time">{{ i.newMesTime }}</span>
+                    <van-badge :content="i.unread > 0 ? i.unread : null" color="#3477f5" />
                   </div>
-                  <p class="lastmsg" v-if="i.newMes">{{ i.newMes }}</p>
+                  <p v-if="i.newMes" class="lastmsg">{{ i.newMes }}</p>
                 </div>
               </li>
               <template #right>
@@ -48,20 +48,20 @@
         </van-tab>
       </van-tabs>
     </div>
-    <footer-nav></footer-nav>
+    <footer-nav />
   </div>
 </template>
 
 <script>
-import {reactive, toRefs, inject, watch, computed} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { reactive, toRefs, inject, watch, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 import footerNav from '@/components/footerNav'
 
 export default {
   name: 'Chats',
-  components: {footerNav},
+  components: { footerNav },
 
   setup() {
     const router = useRouter()
@@ -103,16 +103,16 @@ export default {
       (list, oldList) => {
         const chatList = state.allChatList
         const arr = [
-          {name: 'all', List: []},
-          {name: 'group', List: []},
-          {name: 'unread', List: []}
+          { name: 'all', List: [] },
+          { name: 'group', List: [] },
+          { name: 'unread', List: [] }
         ]
-        let unReadArr = []
-        let groupArr = []
+        const unReadArr = []
+        const groupArr = []
         chatList.forEach((item, i) => {
           list.forEach(m => {
             if (item.id === m.roomId) {
-              chatList[i] = Object.assign({}, item, {unread: m.count})
+              chatList[i] = Object.assign({}, item, { unread: m.count })
             }
           })
         })
@@ -139,7 +139,7 @@ export default {
           v.List.forEach((r, x) => {
             list.forEach(m => {
               if (r.id === m.roomId) {
-                state.contactsList[i].List[x] = Object.assign({}, r, {unread: m.count})
+                state.contactsList[i].List[x] = Object.assign({}, r, { unread: m.count })
               }
             })
           })
@@ -154,34 +154,34 @@ export default {
       store.dispatch('getSysInfo')
     }
     const goSearch = () => {
-      router.push({name: 'SearchLocal'})
+      router.push({ name: 'SearchLocal' })
     }
     const onClickRight = () => {
       state.show = !state.show
     }
     const addFriends = () => {
       state.show = false
-      router.push({name: 'SearchFriend'})
+      router.push({ name: 'SearchFriend' })
     }
     const addGroup = () => {
       state.show = false
-      router.push({name: 'SearchGroup'})
+      router.push({ name: 'SearchGroup' })
     }
     const createGroup = () => {
       state.show = false
-      router.push({name: 'CreateGroup'})
+      router.push({ name: 'CreateGroup' })
     }
     const createChannel = () => {
       state.show = false
-      router.push({name: 'CreateChannel'})
+      router.push({ name: 'CreateChannel' })
     }
     const goMesPanel = id => {
-      router.push({name: 'MesPanel', params: {id: id}})
+      router.push({ name: 'MesPanel', params: { id: id }})
     }
     const readFlag = id => {
       // 设置服务器信息为已读状态也本地设置为已读
-      socket.emit('setReadStatus', {roomId: id, userName: state.userInfo.userName})
-      store.commit('setUnRead', {roomId: id, clear: true})
+      socket.emit('setReadStatus', { roomId: id, userName: state.userInfo.userName })
+      store.commit('setUnRead', { roomId: id, clear: true })
     }
     const tabScroll = () => {
       console.log('66')

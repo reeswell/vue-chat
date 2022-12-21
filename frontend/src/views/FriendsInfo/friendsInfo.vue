@@ -2,32 +2,33 @@
 <template>
   <div class="friend-detail">
     <van-nav-bar left-text="返回" left-arrow @click-left="onClickLeft" />
-    <div class="containter" v-if="friendsInfo !== null">
+    <div v-if="friendsInfo !== null" class="containter">
       <div class="person-wrapper">
-        <img v-lazy="IMG_URL + friendsInfo.avatar" class="img" />
+        <img v-lazy="IMG_URL + friendsInfo.avatar" class="img">
         <p class="info">
-          <span>{{ friendsInfo.city }}&nbsp;&nbsp;</span><span>{{ friendsInfo.gender }}&nbsp;&nbsp;</span
-          ><span>{{ friendsInfo.age }}岁</span>
+          <span>{{ friendsInfo.city }}&nbsp;&nbsp;</span><span>{{ friendsInfo.gender }}&nbsp;&nbsp;</span><span>{{ friendsInfo.age }}岁</span>
         </p>
         <p class="info phone">
           <span>{{ friendsInfo.mobilePhone }}</span>
         </p>
       </div>
     </div>
-    <van-cell title="设置备注" :value="remark" v-if="remark !== ''" is-link class="remark" @click="goRemark" />
+    <van-cell v-if="remark !== ''" title="设置备注" :value="remark" is-link class="remark" @click="goRemark" />
 
     <div class="button-type">
-      <van-button @click="deleteIt" type="danger">删除好友</van-button>
+      <van-button type="danger" @click="deleteIt">删除好友</van-button>
     </div>
   </div>
 </template>
 
 <script>
-import {reactive, toRefs, computed, inject, onBeforeMount} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
-import {Dialog} from 'vant'
+import { reactive, toRefs, computed, inject, onBeforeMount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { deleteDialog, previewUser, getUserInfo } from '@/api/user'
+import { deleteFriend } from '@/api/friendly'
+import { Dialog, Toast } from 'vant'
+
 export default {
   name: 'FriendsInfo',
   setup() {
@@ -51,21 +52,21 @@ export default {
     const onClickLeft = () => {
       router.go(-1)
     }
-    const blockFriend = async () => {
+    const blockFriend = async() => {
       console.log('blockFriend')
       const friendId = route.params.id
       const arr = state.allChatList.filter(item => item.friendId === friendId)
       const roomId = arr[0].id
-      const obj = {userId: state.userInfo.id, friendId, roomId}
+      const obj = { userId: state.userInfo.id, friendId, roomId }
       try {
-        const {msg} = await api.deleteDialog(obj)
-        const res = await api.deleteFriend(obj)
-        toast(msg)
+        const { msg } = await deleteDialog(obj)
+        await deleteFriend(obj)
+        Toast(msg)
         const roomArr = [roomId]
         socket.emit('update', roomArr)
         store.dispatch('getUserInfo')
         setTimeout(() => {
-          router.push({name: 'Chat'})
+          router.push({ name: 'Chat' })
         }, 200)
       } catch (error) {
         console.log(error)
@@ -85,14 +86,14 @@ export default {
           console.log(error)
         })
     }
-    const getFriendInfo = async () => {
-      const params = {id: route.params.id}
-      const res = await api.previewUser(params)
+    const getFriendInfo = async() => {
+      const params = { id: route.params.id }
+      const res = await previewUser(params)
       state.friendsInfo = res.data
       store.dispatch('setFriendsInfo', state.friendsInfo)
     }
-    const getUserChatLsit = async () => {
-      const {data} = await api.getUserInfo()
+    const getUserChatLsit = async() => {
+      const { data } = await getUserInfo()
       const chatList = data.conversationsList
       chatList.forEach(item => {
         if (item.friendId === state.friendsInfo.id) {
@@ -100,9 +101,9 @@ export default {
         }
       })
     }
-    const goRemark = async () => {
+    const goRemark = async() => {
       const id = state.friendsInfo.id
-      router.push({name: 'EditRemark', params: {id: id}})
+      router.push({ name: 'EditRemark', params: { id: id }})
     }
     onBeforeMount(() => {
       getFriendInfo()

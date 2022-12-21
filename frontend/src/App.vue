@@ -1,5 +1,5 @@
 <template>
-  <router-view class="view" v-slot="{Component}">
+  <router-view v-slot="{Component}" class="view">
     <transition :name="mainName">
       <component :is="Component" />
     </transition>
@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import {reactive, toRefs, watch, computed, onMounted, inject} from 'vue'
-import {useStore} from 'vuex'
+import { reactive, toRefs, watch, computed, onMounted, inject } from 'vue'
+import { useStore } from 'vuex'
 
-import {formatTime} from '@/utils/tools'
+import { formatTime } from '@/utils/tools'
 
 export default {
   name: 'App',
@@ -47,7 +47,7 @@ export default {
           avatar: user.avatar,
           roomId: item.id
         }
-        const room = {roomId: item.id, offset: 1, limit: 200}
+        const room = { roomId: item.id, offset: 1, limit: 200 }
 
         socket.emit('join', val)
         socket.emit('getHisMeg', room)
@@ -69,7 +69,6 @@ export default {
         console.log('连接失败')
       })
       socket.on('joined', OnlineUser => {
-        console.log('加入了', OnlineUser)
         store.dispatch('setOnlineUser', OnlineUser)
       })
       socket.on('leaved', OnlineUser => {
@@ -79,15 +78,15 @@ export default {
         // 获取未读消息数量
         const data = mes.filter(item => item.read.indexOf(state.userInfo.userName) === -1)
         if (data.length) {
-          store.commit('setUnRead', {roomId: data[0].roomId, count: data.length})
+          store.commit('setUnRead', { roomId: data[0].roomId, count: data.length })
         }
       })
       socket.on('mes', obj => {
-        store.commit('setUnRead', {roomId: obj.roomId, add: true, count: 1})
+        store.commit('setUnRead', { roomId: obj.roomId, add: true, count: 1 })
       })
       socket.on('takeValidate', obj => {
         console.log(obj)
-        store.commit('setUnRead', {roomId: obj.roomId, add: true, count: 1})
+        store.commit('setUnRead', { roomId: obj.roomId, add: true, count: 1 })
 
         if (obj.type === 'info' || obj.type === 'validate') {
           store.dispatch('getUserInfo')

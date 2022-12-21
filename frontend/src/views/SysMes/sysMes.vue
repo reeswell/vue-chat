@@ -1,10 +1,10 @@
 <template>
   <div class="sys-mes">
     <van-nav-bar title="通知" left-text="返回" left-arrow @click-left="onClickLeft" />
-    <div class="sys-notice" v-if="sysNewsList.length">
+    <div v-if="sysNewsList.length" class="sys-notice">
       <ul>
         <van-swipe-cell>
-          <li class="seesion-list first-li" v-for="(item, index) in sysNewsList" :key="index">
+          <li v-for="(item, index) in sysNewsList" :key="index" class="seesion-list first-li">
             <div class="list-left">
               <van-image round width="56px" height="56px" :src="IMG_URL + item.avatar" class="avatar" />
             </div>
@@ -16,10 +16,13 @@
               <p class="lastmsg">{{ item.mes }}</p>
             </div>
             <div class="my-button">
-              <van-button type="primary" size="mini" v-if="item.status === '0'" @click.stop="goDetail(item.self)"
-                >查看</van-button
-              >
-              <van-button type="default" size="mini" v-else>已查看</van-button>
+              <van-button
+                v-if="item.status === '0'"
+                type="primary"
+                size="mini"
+                @click.stop="goDetail(item.self)"
+              >查看</van-button>
+              <van-button v-else type="default" size="mini">已查看</van-button>
             </div>
           </li>
           <template #right>
@@ -32,9 +35,9 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed, onMounted, inject, onBeforeMount} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { reactive, toRefs, computed, onMounted, inject, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
   name: 'SysMes',
@@ -63,9 +66,9 @@ export default {
     const init = () => {
       if (!state.getSysUnRead.length || state.getSysUnRead[0].count === 0) return
       console.log('333333')
-      store.commit('setUnRead', {roomId: state.sysInfo.id, clear: true})
-      socket.emit('setReadStatus', {roomId: state.sysInfo.id, userName: state.userInfo.userName})
-      socket.emit('getSysMeg', {roomId: state.sysInfo.id, offset: state.offset, limit: state.limit})
+      store.commit('setUnRead', { roomId: state.sysInfo.id, clear: true })
+      socket.emit('setReadStatus', { roomId: state.sysInfo.id, userName: state.userInfo.userName })
+      socket.emit('getSysMeg', { roomId: state.sysInfo.id, offset: state.offset, limit: state.limit })
     }
     const onClickLeft = () => {
       console.log('onClickLeft')
@@ -74,7 +77,7 @@ export default {
 
     const goDetail = id => {
       console.log('goDetail')
-      router.push({name: 'ApplyDetail', params: {id: id}})
+      router.push({ name: 'ApplyDetail', params: { id: id }})
     }
 
     onBeforeMount(() => {
@@ -86,7 +89,7 @@ export default {
       })
     })
     onMounted(() => {
-      //获取系统消息
+      // 获取系统消息
       socket.on('getSysMeg', mes => {
         console.log(mes)
         store.dispatch('setSysNewsList', mes)

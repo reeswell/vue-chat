@@ -8,7 +8,7 @@ const SYS_NEWS_LIST = 'sysNewsList'
 const FRIENDS_LIST = 'friendsList'
 const GROUPS_LIST = 'groupsList'
 const ALL_CHAT_LIST = 'allChatList'
-/**S
+/** S
  * token 缓存
  */
 const tokenCache = {

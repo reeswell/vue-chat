@@ -2,12 +2,15 @@
   <div class="search-group">
     <van-search v-model="keyword" show-action placeholder="群id" @search="showSearch" @cancel="onCancel" />
 
-    <div class="search-result" v-if="groupInfo !== null">
+    <div v-if="groupInfo !== null" class="search-result">
       <div class="seesion-list" @click="previewGroup(groupInfo.id)">
         <div class="list-left">
-          <van-image round width="56px" height="56px" :src="IMG_URL + groupInfo.avatar"
-            ><template v-slot:error>加载失败</template></van-image
-          >
+          <van-image
+            round
+            width="56px"
+            height="56px"
+            :src="IMG_URL + groupInfo.avatar"
+          ><template #error>加载失败</template></van-image>
         </div>
         <div class="list-right">
           <div class="first-line">
@@ -21,10 +24,10 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
+import { reactive, toRefs, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { huntGroups } from '@/api/group'
 export default {
   name: 'SearchGroup',
   setup() {
@@ -43,14 +46,14 @@ export default {
     }
     const previewGroup = id => {
       const isGroup = state.allChatList.filter(item => item.id === id)
-      if (isGroup.length) return router.push({name: 'MesPanel', params: {id: id}})
-      router.push({name: 'GroupDetail', params: {id: id}})
+      if (isGroup.length) return router.push({ name: 'MesPanel', params: { id: id }})
+      router.push({ name: 'GroupDetail', params: { id: id }})
     }
-    const showSearch = async () => {
+    const showSearch = async() => {
       console.log('showSearch')
-      const data = {keyword: state.keyword}
+      const data = { keyword: state.keyword }
       try {
-        const res = await api.huntGroups(data)
+        const res = await huntGroups(data)
         state.groupInfo = res.data
       } catch (error) {
         console.log(error)

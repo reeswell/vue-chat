@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const db = "mongodb://127.0.0.1/vue3_js_chat";
+const db = "mongodb+srv://chat-app:chat-app@cluster0.3ztjrqi.mongodb.net/test";
 
 // 导出一个方法
 exports.connect = () => {

@@ -1,52 +1,52 @@
 <template>
   <div class="mes-panel">
-    <loading v-show="Loading"></loading>
+    <loading v-show="Loading" />
     <van-nav-bar
+      v-if="name !== ''"
       :title="name"
       left-text="返回"
       left-arrow
-      v-if="name !== ''"
       @click-left="onClickLeft"
       @click-right.stop="onClickRight"
     >
       <template #right>
         <van-image
+          v-if="avatar !== '' && !hide"
           round
           width="30px"
           height="30px"
           :src="IMG_URL + avatar"
           class="avatar"
-          v-if="avatar !== '' && !hide"
         />
       </template>
     </van-nav-bar>
 
-    <mes-list :chatList="chatList"></mes-list>
+    <mes-list :chat-list="chatList" />
     <transition name="emoji">
-      <div class="emoji-container" v-show="emojiFlag">
-        <emoji @chooseEmoji="receiveEmoji"></emoji>
+      <div v-show="emojiFlag" class="emoji-container">
+        <emoji @chooseEmoji="receiveEmoji" />
       </div>
     </transition>
-    <div class="footer-containter" v-if="isShowSend">
-      <footer-send @chatList="updateChatList" @emojiShow="emojiShow" ref="send"></footer-send>
+    <div v-if="isShowSend" class="footer-containter">
+      <footer-send ref="send" @chatList="updateChatList" @emojiShow="emojiShow" />
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
 import emoji from './Emoji/emoji'
 import FooterSend from './FooterSend/footerSend'
 import loading from '@/components/loading'
 
 import MesList from './MesList/mesList'
-import {reactive, toRefs, ref, computed, onMounted, inject, onBeforeMount} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
+import { reactive, toRefs, ref, computed, onMounted, inject, onBeforeMount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { getGroupInfo } from '@/api/group'
+import { Toast } from 'vant'
 export default {
   name: 'MesPanel',
-  components: {FooterSend, MesList, emoji, loading},
+  components: { FooterSend, MesList, emoji, loading },
   setup() {
     const socket = inject('socket')
     const route = useRoute()
@@ -86,14 +86,14 @@ export default {
     onMounted(() => {
       socket.on('org', mes => {
         if (mes.roomId === route.params.id) {
-          state.chatList.push(Object.assign({}, mes, {type: 'org'}))
+          state.chatList.push(Object.assign({}, mes, { type: 'org' }))
         }
       })
       socket.on('mes', mes => {
         if (mes.roomId === route.params.id) {
-          state.chatList.push(Object.assign({}, mes, {type: 'other'}))
-          socket.emit('setReadStatus', {roomId: mes.roomId, userName: state.userInfo.userName})
-          store.commit('setUnRead', {roomId: mes.roomId, clear: true})
+          state.chatList.push(Object.assign({}, mes, { type: 'other' }))
+          socket.emit('setReadStatus', { roomId: mes.roomId, userName: state.userInfo.userName })
+          store.commit('setUnRead', { roomId: mes.roomId, clear: true })
         }
       })
       socket.on('getHisMeg', mes => {
@@ -115,9 +115,9 @@ export default {
     const init = () => {
       state.Loading = true
       // 设置服务器信息为已读状态也本地设置为已读,获取聊天记录
-      socket.emit('setReadStatus', {roomId: route.params.id, userName: state.userInfo.userName})
-      store.commit('setUnRead', {roomId: route.params.id, clear: true})
-      socket.emit('getHisMeg', {roomId: route.params.id, offset: 1, limit: 100})
+      socket.emit('setReadStatus', { roomId: route.params.id, userName: state.userInfo.userName })
+      store.commit('setUnRead', { roomId: route.params.id, clear: true })
+      socket.emit('getHisMeg', { roomId: route.params.id, offset: 1, limit: 100 })
       state.Loading = false
 
       // 头部信息初始化
@@ -135,13 +135,13 @@ export default {
       state.friendId = arr[0].friendId
     }
 
-    const checkIsMyChannel = async () => {
-      const params = {id: route.params.id}
+    const checkIsMyChannel = async() => {
+      const params = { id: route.params.id }
       if (params.id.split('-').length > 1) return
       if (params.id === state.userInfo.id) return
       const userId = state.userInfo.id
 
-      const res = await api.getGroupInfo(params)
+      const res = await getGroupInfo(params)
       const groupUsers = res.users
       const holderId = groupUsers.filter(item => item.holder === 1)[0].userId['_id']
 
@@ -167,10 +167,10 @@ export default {
       const routeId = route.params.id
       console.log(routeId)
       if (routeId.split('-').length > 1) {
-        return router.push({name: 'FriendsInfo', params: {id: state.friendId}})
+        return router.push({ name: 'FriendsInfo', params: { id: state.friendId }})
       }
       const aa = '123'
-      router.push({name: 'GroupInfo', params: {id: routeId, aa}})
+      router.push({ name: 'GroupInfo', params: { id: routeId, aa }})
     }
     const updateChatList = val => {
       state.chatList.push(val)

@@ -2,12 +2,15 @@
 <template>
   <div class="search-friend">
     <van-search v-model="keyword" show-action placeholder="用户名/手机号" @search="showSearch" @cancel="onCancel" />
-    <div class="search-result" v-if="friendsInfo !== null">
+    <div v-if="friendsInfo !== null" class="search-result">
       <div class="seesion-list" @click="previewUser(friendsInfo.id)">
         <div class="list-left">
-          <van-image round width="56px" height="56px" :src="IMG_URL + friendsInfo.avatar"
-            ><template v-slot:error>加载失败</template></van-image
-          >
+          <van-image
+            round
+            width="56px"
+            height="56px"
+            :src="IMG_URL + friendsInfo.avatar"
+          ><template #error>加载失败</template></van-image>
         </div>
         <div class="list-right">
           <div class="first-line">
@@ -21,12 +24,13 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed, inject} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
+import { reactive, toRefs, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { addFriends } from '@/api/user'
+import { checkIsFriends } from '@/api/friendly'
 export default {
-  name: 'searchFriend',
+  name: 'SearchFriend',
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -46,27 +50,27 @@ export default {
     const onCancel = () => {
       router.go(-1)
     }
-    const checkIsMyfriends = async () => {
+    const checkIsMyFriends = async() => {
       const data = {
         roomId: route.params.id
       }
-      const res = await api.checkIsFriends(data)
+      const res = await checkIsFriends(data)
       const isMyFriend = res.data.isFriends
       return isMyFriend
     }
     const previewUser = async id => {
       if (id === state.userInfo.id) {
-        return router.push({name: 'MesPanel', params: {id: id}})
+        return router.push({ name: 'MesPanel', params: { id: id }})
       }
       const isFriend = state.allChatList.filter(item => item.friendId === id)
-      const isMyfriends = await checkIsMyfriends()
-      if (isFriend.length && isMyfriends) return router.push({name: 'MesPanel', params: {id: isFriend[0].id}})
-      router.push({name: 'FriendDetail', params: {id: id}})
+      const isMyFriends = await checkIsFriends()
+      if (isFriend.length && isMyFriends) return router.push({ name: 'MesPanel', params: { id: isFriend[0].id }})
+      router.push({ name: 'FriendDetail', params: { id: id }})
     }
-    const showSearch = async () => {
-      const data = {keyword: state.keyword}
+    const showSearch = async() => {
+      const data = { keyword: state.keyword }
       try {
-        const res = await api.addFriends(data)
+        const res = await addFriends(data)
         state.friendsInfo = res.data
       } catch (error) {
         console.log(error)
@@ -76,7 +80,7 @@ export default {
       ...toRefs(state),
 
       onCancel,
-      checkIsMyfriends,
+      checkIsMyFriends,
       previewUser,
       showSearch
     }

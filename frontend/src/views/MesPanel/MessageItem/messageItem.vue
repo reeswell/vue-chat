@@ -1,7 +1,7 @@
 <template>
   <div class="vchat-messageItem mes-box">
     <p v-if="type === 'other'" class="avatar">
-      <img v-lazy="IMG_URL + v.avatar" alt="" />
+      <img v-lazy="IMG_URL + v.avatar" alt="">
     </p>
     <div v-if="type === 'other' || type === 'mine'" class="messageInfo">
       <p class="info">
@@ -9,39 +9,40 @@
         <i>{{ v.time.split(' ')[1].split(':')[0] + ':' + v.time.split(' ')[1].split(':')[1] }}</i>
       </p>
       <p v-if="v.style === 'img'" class="image">
-        <img v-lazy="IMG_URL + v.emoji" alt="" title="双击查看原图" />
+        <img v-lazy="IMG_URL + v.emoji" alt="" title="双击查看原图">
       </p>
       <div v-if="v.style === 'file'" class="file">
-        <img v-lazy="fileImg" alt="" />
+        <img v-lazy="fileImg" alt="">
         <div>
           <p :title="v.mes">
             {{ v.mes.lastIndexOf('.') > 12 ? v.mes.slice(0, 12) + '...' + v.mes.slice(v.mes.lastIndexOf('.')) : v.mes }}
           </p>
-          <a :href="IMG_URL + v.emoji" download v-if="type === 'other'">下载</a>
+          <a v-if="type === 'other'" :href="IMG_URL + v.emoji" download>下载</a>
           <p v-if="type === 'mine'">发送成功</p>
         </div>
       </div>
-      <p class="mes" v-if="v.style === 'mess'">{{ v.mes }}</p>
+      <p v-if="v.style === 'mess'" class="mes">{{ v.mes }}</p>
     </div>
     <p v-if="type === 'mine'" class="avatar">
-      <img v-lazy="IMG_URL + userInfo.avatar" alt="" />
+      <img v-lazy="IMG_URL + userInfo.avatar" alt="">
     </p>
   </div>
 </template>
 
 <script>
-import {reactive, toRefs, computed, onBeforeMount} from 'vue'
-import {useRoute} from 'vue-router'
-import {useStore} from 'vuex'
+import { reactive, toRefs, computed, onBeforeMount } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 export default {
   name: 'MessageItem',
-  props: ['type', 'v'],
+  props: {
+    type: String,
+    v: String
+  },
   setup(props) {
     const route = useRoute()
     const store = useStore()
     const state = reactive({
-      type: props.type,
-      v: props.v,
       IMG_URL: process.env.VUE_APP_IMG_URL,
       name: '',
       isshowName: false,

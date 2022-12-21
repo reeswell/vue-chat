@@ -40,11 +40,12 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
-import {Toast} from 'vant'
+import { reactive, toRefs, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { addConversationList } from '@/api/user'
+import { createGroup } from '@/api/group'
+import { Toast } from 'vant'
 const groupnameReg = /^[\u4e00-\u9fa5_a-zA-Z0-9!！￥@#$,，.。？?、/;:：；|~·]{2,10}$/
 const groupCodeReg = /^[0-9a-zA-Z_]{6,12}$/
 export default {
@@ -81,8 +82,7 @@ export default {
         type: state.radio
       }
       try {
-        const {data} = await api.createGroup(obj)
-        console.log(data)
+        const { data } = await createGroup(obj)
         const r = {
           userName: store.state.userInfo.userName,
           obj: {
@@ -92,12 +92,12 @@ export default {
             type: state.radio
           }
         }
-        await api.addConversationList(r)
+        await addConversationList(r)
         store.dispatch('setConversationsList', r.obj)
         Toast('创建成功')
-        router.push({name: 'Chat'})
+        router.push({ name: 'Chat' })
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
     const onClickLeft = () => {

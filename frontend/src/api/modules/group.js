@@ -2,11 +2,11 @@ import http from '@/utils/http'
 import url from './url'
 const group = {
   createGroup(data) {
-    //新建群
+    // 新建群
     return http.post(`${url.group}/createGroup`, data)
   },
   findMyGroupList(data) {
-    //获取我的群
+    // 获取我的群
     return http.post(`${url.group}/getMyGroup`, data)
   },
   getGroupUsers(data) {

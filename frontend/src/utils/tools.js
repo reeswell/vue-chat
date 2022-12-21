@@ -10,7 +10,7 @@ function throttle(fn, delay, atleast = 0) {
   let previous = 0 // 记录上一次执行时间
 
   return (...args) => {
-    let now = +new Date() // 当前时间戳
+    const now = +new Date() // 当前时间戳
     if (!previous) previous = now // 赋值开始时间
 
     if (atleast && now - previous > atleast) {

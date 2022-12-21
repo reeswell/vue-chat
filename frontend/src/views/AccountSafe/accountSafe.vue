@@ -1,16 +1,16 @@
 <template>
   <div class="account-safe">
     <van-nav-bar left-text="返回" title="账户安全" left-arrow @click-left="onClickLeft" />
-    <van-cell title="修改手机号码" is-link :value="userInfo.mobilePhone" @click="goPhone" class="first-cell" />
+    <van-cell title="修改手机号码" is-link :value="userInfo.mobilePhone" class="first-cell" @click="goPhone" />
 
     <van-cell title="修改密码" is-link @click="goPassword" />
   </div>
 </template>
 
 <script>
-import {computed} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default {
   name: 'AccountSafe',
   setup() {
@@ -23,10 +23,10 @@ export default {
       router.go(-1)
     }
     const goPhone = () => {
-      router.push({name: 'EditPhone'})
+      router.push({ name: 'EditPhone' })
     }
     const goPassword = () => {
-      router.push({name: 'EditPassword'})
+      router.push({ name: 'EditPassword' })
     }
     return {
       userInfo,
