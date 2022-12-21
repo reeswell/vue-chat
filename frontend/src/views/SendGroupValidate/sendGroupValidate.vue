@@ -7,12 +7,15 @@
       @click-left="onClickLeft"
       @click-right="onClickRight"
     />
-    <div class="search-result van-hairline--bottom" v-if="groupInfo !== null">
+    <div v-if="groupInfo !== null" class="search-result van-hairline--bottom">
       <div class="seesion-list">
         <div class="list-left">
-          <van-image round width="56px" height="56px" :src="IMG_URL + groupInfo.img"
-            ><template v-slot:error>加载失败</template></van-image
-          >
+          <van-image
+            round
+            width="56px"
+            height="56px"
+            :src="IMG_URL + groupInfo.img"
+          ><template #error>加载失败</template></van-image>
         </div>
         <div class="list-right">
           <div class="first-line">
@@ -25,16 +28,16 @@
       </div>
     </div>
     <div class="tip">填写验证信息</div>
-    <textarea class="text" maxlength="30" v-model="introduce"></textarea>
+    <textarea v-model="introduce" class="text" maxlength="30" />
   </div>
 </template>
 
 <script>
 import * as tools from '@/utils/tools'
-import {reactive, toRefs, computed, inject} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import {Notify} from 'vant'
+import { reactive, toRefs, computed, inject } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { Notify } from 'vant'
 export default {
   name: 'SendGroupValidate',
   setup() {
@@ -85,8 +88,8 @@ export default {
       }
       console.log(obj)
       socket.emit('sendValidate', obj)
-      Notify({type: 'success', message: '发送成功'})
-      router.push({name: 'Chat'})
+      Notify({ type: 'success', message: '发送成功' })
+      router.push({ name: 'Chat' })
     }
     return {
       ...toRefs(state),

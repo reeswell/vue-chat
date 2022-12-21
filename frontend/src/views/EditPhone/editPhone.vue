@@ -6,28 +6,31 @@
 
       <div class="input-wrapper">
         <van-field
+          v-model="mobilePhone"
           type="text"
           class="mobile-phone"
-          v-model="mobilePhone"
           maxlength="11"
           placeholder="现在的手机号码"
           :error-message="!phoneValid ? '请输入正确的电话号码！' : ''"
           autocomplete="off"
         />
       </div>
-      <!-- 短信验证码 -->
       <div class="input-wrapper">
-        <input type="text" class="sms" v-model="smsCode" maxlength="6" placeholder="短信验证码" autocomplete="off" />
-        <van-button type="primary" class="send-sms" size="normal" v-if="!countdownText" @click="sendSMSCode"
-          >获取验证码</van-button
-        >
-        <van-button type="primary" class="send-sms" size="normal" v-else>{{ countdownText }}s后再试</van-button>
+        <input v-model="smsCode" type="text" class="sms" maxlength="6" placeholder="短信验证码" autocomplete="off">
+        <van-button
+          v-if="!countdownText"
+          type="primary"
+          class="send-sms"
+          size="normal"
+          @click="sendSMSCode"
+        >获取验证码</van-button>
+        <van-button v-else type="primary" class="send-sms" size="normal">{{ countdownText }}s后再试</van-button>
       </div>
       <div class="input-wrapper">
         <van-field
+          v-model="newMobilePhone"
           type="text"
           class="mobile-phone"
-          v-model="newMobilePhone"
           maxlength="11"
           placeholder="新手机号码"
           :error-message="!phoneValid2 ? '请输入正确的电话号码！' : ''"
@@ -40,12 +43,12 @@
 </template>
 
 <script>
-import {reactive, toRefs} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import {Toast} from 'vant'
+import { reactive, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { Toast } from 'vant'
+import { updatedUserPhone, sendSMSCode as sendSMSCodeApi } from '@/api/user'
 
-import api from '@/api'
 let timer
 const reg = /^1[3|4|5|7|8]\d{9}$/
 export default {
@@ -70,24 +73,24 @@ export default {
     const onClickLeft = () => {
       router.go(-1)
     }
-    const submit = async () => {
+    const submit = async() => {
       try {
         if (!state.smsCode) return Toast('请输入短信验证码')
         if (!phoneValid || !phoneValid2) return
         if (state.mobilePhone !== store.state.userInfo.mobilePhone) return Toast('原手机号码不正确')
-        const obj = {mobilePhone: state.mobilePhone, newMobilePhone: state.newMobilePhone, smsCode: state.smsCode}
-        const {data} = await api.updatedUserPhone(obj)
+        const obj = { mobilePhone: state.mobilePhone, newMobilePhone: state.newMobilePhone, smsCode: state.smsCode }
+        const { data } = await updatedUserPhone(obj)
         clearInterval(timer)
 
         store.dispatch('setUserInfo', data)
-        router.push({name: 'Manager'})
+        router.push({ name: 'Manager' })
       } catch (error) {
         console.log(error)
       }
     }
-    const sendSMSCode = async () => {
+    const sendSMSCode = async() => {
       try {
-        const res = await api.sendSMSCode(state.mobilePhone)
+        const res = await sendSMSCodeApi(state.mobilePhone)
         if (res.code === 200) {
           // 免费短信服务次数用完，就以弹框方式发送
           Toast(res.msg)

@@ -1,0 +1,41 @@
+{
+  "files.autoSave": "off",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ],
+  "eslint.run": "onSave",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.formatOnSave": false,
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      "wrap_attributes": "aligned-multiple",
+      "wrap-line-length": 160
+    },
+    "prettier": {
+      "printWidth": 120,
+      "tabWidth": 2,
+      "singleQuote": true,
+      "trailingComma": "none",
+      "semi": false,
+      "wrap_line_length": 120,
+      "wrap_attributes": "aligned-multiple",
+      "proseWrap": "always",
+      "arrowParens": "avoid",
+      "bracketSpacing": true,
+      "jsxBracketSameLine": true,
+      "useTabs": false,
+      "overrides": [
+        {
+          "files": ".prettierrc",
+          "options": {
+            "parser": "json"
+          }
+        }
+      ]
+    }
+  }
+}

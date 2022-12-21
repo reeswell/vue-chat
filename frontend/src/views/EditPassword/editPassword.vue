@@ -33,11 +33,11 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed} from 'vue'
-import {useRouter} from 'vue-router'
-import {Toast} from 'vant'
+import { reactive, toRefs, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { Toast } from 'vant'
+import { updatedUserPassword } from '@/api/user'
 
-import api from '@/api'
 const reg = /^[\w_-]{6,16}$/
 export default {
   name: 'EditPassword',
@@ -61,13 +61,13 @@ export default {
     const onClickLeft = () => {
       router.go(-1)
     }
-    const submit = async () => {
+    const submit = async() => {
       try {
         if (!passwordValid && !passwordValid2 && !surePwdValid) return
-        const obj = {password: state.password, newPassword: state.newPassword}
-        const {msg} = await api.updatedUserPassword(obj)
+        const obj = { password: state.password, newPassword: state.newPassword }
+        const { msg } = await updatedUserPassword(obj)
         Toast(msg)
-        setTimeout(() => router.push({name: 'Manager'}), 2000)
+        setTimeout(() => router.push({ name: 'Manager' }), 2000)
       } catch (error) {
         console.log(error)
       }

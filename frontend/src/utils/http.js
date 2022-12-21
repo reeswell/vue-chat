@@ -3,8 +3,8 @@
  * 请求拦截、响应拦截、错误统一处理
  */
 import axios from 'axios'
-import {Toast} from 'vant'
-import {tokenCache, userInfoCache, sysInfoCache, conversationsListCache, sysNewsListCache} from '@/utils/cache'
+import { Toast } from 'vant'
+import { tokenCache, userInfoCache, sysInfoCache, conversationsListCache, sysNewsListCache } from '@/utils/cache'
 /**
  * 提示函数
  * 禁止点击蒙层、显示一秒后关闭
@@ -42,36 +42,31 @@ const toLogin = () => {
 const errorHandle = (status, other) => {
   // 状态码判断
   switch (status) {
-    // 401: 未登录状态，跳转登录页
     case 401:
-      toLogin()
-      break
-    // 403 token过期
-    // 清除token并跳转登录页
-    case 403:
       tip('登录过期，请重新登录')
       tokenCache.deleteCache()
       userInfoCache.deleteCache()
       sysInfoCache.deleteCache()
       conversationsListCache.deleteCache()
       sysNewsListCache.deleteCache()
-      // store.commit('loginSuccess', null);
-
       setTimeout(() => {
         toLogin()
       }, 1000)
       break
-    // 404请求不存在
-    case 404:
-      tip('请求的资源不存在')
+    case 500:
+      tip('服务器错误')
       break
     default:
-      console.log(other)
+      console.error(other)
   }
 }
 
 // 创建axios实例
-const instance = axios.create({timeout: 1000 * 12, withCredentials: true})
+const instance = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  timeout: 1000 * 12,
+  withCredentials: true
+})
 // 设置post请求头
 // instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 /**
@@ -95,25 +90,23 @@ instance.interceptors.request.use(
 
 // 响应拦截器
 instance.interceptors.response.use(
-  response =>
-    // 请求成功
-    {
-      if (response.status === 200) {
-        // 你只需改动的是这个 succeeCode ，因为每个项目的后台返回的code码各不相同
+  response => {
+    if (response.status === 200) {
+      // 你只需改动的是这个 succeeCode ，因为每个项目的后台返回的code码各不相同
 
-        if (response.data.code === 200) {
-          return response.data
-        } else {
-          tip(response.data.msg)
-          return Promise.reject(response)
-        }
+      if (response.data.code === 200) {
+        return response.data
       } else {
+        tip(response.data.msg)
         return Promise.reject(response)
       }
-    },
+    } else {
+      return Promise.reject(response)
+    }
+  },
   // 请求失败
   error => {
-    const {response} = error
+    const { response } = error
     if (response) {
       // 请求已发出，但是不在2xx的范围
       errorHandle(response.status, response.data.message)

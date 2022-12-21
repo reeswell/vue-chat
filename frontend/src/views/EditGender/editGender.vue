@@ -18,10 +18,11 @@
 </template>
 
 <script>
-import {reactive, toRefs} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
+import { reactive, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { updateUserInfo } from '@/api/user'
+
 export default {
   name: 'EditGender',
   setup() {
@@ -33,14 +34,14 @@ export default {
     const onClickLeft = () => {
       router.go(-1)
     }
-    const save = async () => {
+    const save = async() => {
       try {
         const obj = {
           gender: state.radio
         }
-        const {data} = await api.updateUserInfo(obj)
+        const { data } = await updateUserInfo(obj)
         store.dispatch('setUserInfo', data)
-        router.push({name: 'Edit'})
+        router.push({ name: 'Edit' })
       } catch (error) {
         console.log(error)
       }

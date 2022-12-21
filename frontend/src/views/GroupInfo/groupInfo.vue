@@ -5,15 +5,13 @@
         <van-icon name="clear" size="24" class="icon" />
       </template>
     </van-nav-bar>
-    <div
-      v-for="img in imageList"
-      v-lazy:background-image="IMG_URL + img"
-      :key="img"
-      class="lazy"
+    <template
       v-if="groupInfo !== null"
-    ></div>
+    >
+      <div v-for="img in imageList" :key="img" v-lazy:background-image="IMG_URL + img" class="lazy" />
+    </template>
 
-    <div class="groupInfo-container" v-if="groupInfo !== null">
+    <div v-if="groupInfo !== null" class="groupInfo-container">
       <van-cell title="群ID" :value="groupInfo.groupCode" />
 
       <van-cell title="群名称" :value="groupInfo.title" />
@@ -22,9 +20,16 @@
         <!-- 使用 title 插槽来自定义标题 -->
         <template #title>
           <span class="custom-title">管理员</span>
-          <van-tag v-for="(item, index) in managers" :key="item._id"
-            ><img v-lazy="IMG_URL + item.userId.avatar" alt="" width="20" height="20" class="img"
-          /></van-tag>
+          <van-tag
+            v-for="item in managers"
+            :key="item._id"
+          ><img
+            v-lazy="IMG_URL + item.userId.avatar"
+            alt=""
+            width="20"
+            height="20"
+            class="img"
+          ></van-tag>
         </template>
       </van-cell>
     </div>
@@ -34,9 +39,9 @@
           <div class="dialogue-container">
             <ul>
               <li
-                class="seesion-list first-li"
                 v-for="(item, index) in groupUsers"
                 :key="index"
+                class="seesion-list first-li"
                 @click="previewUser(item.userId._id)"
               >
                 <div class="list-left">
@@ -55,11 +60,12 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed, onBeforeMount} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
-import {Dialog} from 'vant'
+import { reactive, toRefs, computed, onBeforeMount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+import { quitGroup, getGroupInfo as getGroupInfoApi } from '@/api/group'
+import { Dialog } from 'vant'
 export default {
   name: 'GroupInfo',
   setup() {
@@ -72,36 +78,36 @@ export default {
       managers: [],
       groupUsers: [],
       IMG_URL: process.env.VUE_APP_IMG_URL,
-      holderId: '',
-      allChatList: computed(() => {
-        store.state.allChatList
-      }),
-      userInfo: computed(() => {
-        store.state.userInfo
-      })
-    })
+      holderId: ''
 
+    })
+    const allChatList = computed(() =>
+      store.state.allChatList
+    )
+    const userInfo = computed(() =>
+      store.state.userInfo
+    )
     const onClickLeft = () => {
       router.go(-1)
     }
     const mesCheck = () => {
-      router.push({name: 'SendGroupValidate', params: {id: state.holderId}})
+      router.push({ name: 'SendGroupValidate', params: { id: state.holderId }})
     }
     const blockGroup = () => {
       console.log('blockGroup')
     }
     const previewUser = id => {
-      if (id === state.userInfo.id) {
-        return router.push({name: 'MesPanel', params: {id: id}})
+      if (id === userInfo.value.id) {
+        return router.push({ name: 'MesPanel', params: { id: id }})
       }
-      const isFriend = state.allChatList.filter(item => item.friendId === id)
-      if (isFriend.length) return router.push({name: 'MesPanel', params: {id: isFriend[0].id}})
-      router.push({name: 'FriendDetail', params: {id: id}})
+      const isFriend = allChatList.value.filter(item => item?.friendId === id)
+      if (isFriend.length) return router.push({ name: 'MesPanel', params: { id: isFriend[0].id }})
+      router.push({ name: 'FriendDetail', params: { id: id }})
     }
-    const getGroupInfo = async () => {
-      const params = {id: route.params.id}
+    const getGroupInfo = async() => {
+      const params = { id: route.params.id }
 
-      const res = await api.getGroupInfo(params)
+      const res = await getGroupInfoApi(params)
       state.groupInfo = res.data
       state.groupUsers = res.users
       state.imageList.push(state.groupInfo.img)
@@ -119,13 +125,13 @@ export default {
         confirmButtonText: '确定',
         confirmButtonColor: '#b532e9'
       })
-        .then(() => {
+        .then(async() => {
           // 删除groupUser && 删除会话列表
           const id = route.params.id
-          const obj = {userId: state.userInfo.id, groupId: id}
-          const {msg} = api.quitGroup(obj)
+          const obj = { userId: userInfo.value.id, groupId: id }
+          await quitGroup(obj)
           store.dispatch('getUserInfo')
-          router.push({name: 'Chat'})
+          router.push({ name: 'Chat' })
         })
         .catch(error => {
           console.log(error)

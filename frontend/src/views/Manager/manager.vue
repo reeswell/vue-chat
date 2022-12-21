@@ -1,58 +1,57 @@
 <template>
   <div class="setting">
-    <div class="blank"></div>
+    <div class="blank" />
     <div class="perspn-info" @click="goEdit">
       <div class="avatar">
-        <img v-lazy="IMG_URL + userInfo.avatar" alt="" />
+        <img v-lazy="IMG_URL + userInfo.avatar" alt="">
       </div>
       <div class="info-detail">
         <p class="name">账号: {{ userInfo.userName }}</p>
         <p class="phone">手机号: {{ userInfo.mobilePhone }}</p>
         <p class="email">邮箱: {{ userInfo.email }}</p>
       </div>
-      <i class="my-icon van-icon van-icon-arrow van-cell__right-icon"></i>
+      <i class="my-icon van-icon van-icon-arrow van-cell__right-icon" />
     </div>
 
     <div class="item-cell">
       <div class="cell van-hairline--bottom" @click="goSelf">
         <div class="pic">
-          <img v-lazy="imgList.memo" alt="" />
+          <img v-lazy="imgList.memo" alt="">
         </div>
         <p class="title">备忘录</p>
-        <i class="item-icon van-icon van-icon-arrow van-cell__right-icon"></i>
+        <i class="item-icon van-icon van-icon-arrow van-cell__right-icon" />
       </div>
       <div class="cell van-hairline--bottom" @click="goSafe">
         <div class="pic">
-          <img v-lazy="imgList.accountSafe" alt="" />
+          <img v-lazy="imgList.accountSafe" alt="">
         </div>
         <p class="title">账户安全</p>
-        <i class="item-icon van-icon van-icon-arrow van-cell__right-icon"></i>
+        <i class="item-icon van-icon van-icon-arrow van-cell__right-icon" />
       </div>
       <div class="cell" @click="goSysMes">
         <div class="pic">
-          <img v-lazy="imgList.sysMes" alt="" />
+          <img v-lazy="imgList.sysMes" alt="">
         </div>
         <p class="title">系统信息</p>
         <van-badge :content="getSysUnReadCount" max="99" class="my-badge" />
-        <i class="item-icon van-icon van-icon-arrow van-cell__right-icon"></i>
+        <i class="item-icon van-icon van-icon-arrow van-cell__right-icon" />
       </div>
     </div>
-    <footer-nav></footer-nav>
+    <footer-nav />
   </div>
 </template>
 
 <script>
-import {reactive, toRefs, computed} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { reactive, toRefs, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import footerNav from '@/components/footerNav'
 
 export default {
   name: 'Manager',
-  components: {footerNav},
+  components: { footerNav },
 
   setup() {
-    const route = useRoute()
     const router = useRouter()
     const store = useStore()
 
@@ -73,17 +72,17 @@ export default {
     })
 
     const goEdit = () => {
-      router.push({name: 'Edit'})
+      router.push({ name: 'Edit' })
     }
     const goSysMes = () => {
-      router.push({name: 'SysMes'})
+      router.push({ name: 'SysMes' })
     }
     const goSelf = () => {
       const id = state.userInfo.id
-      router.push({name: 'MesPanel', params: {id: id}})
+      router.push({ name: 'MesPanel', params: { id: id }})
     }
     const goSafe = () => {
-      router.push({name: 'AccountSafe'})
+      router.push({ name: 'AccountSafe' })
     }
     return {
       ...toRefs(state),

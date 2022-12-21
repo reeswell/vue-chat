@@ -16,22 +16,21 @@
       :deletable="false"
       :max-count="1"
     >
-      <img v-if="imgSrc" class="img" v-lazy="imgSrc" alt="" />
-      <img v-else class="img" v-lazy="errorImg" alt="" />
+      <img v-if="imgSrc" v-lazy="imgSrc" class="img" alt="">
+      <img v-else v-lazy="errorImg" class="img" alt="">
     </van-uploader>
     <div class="edit-container">
       <van-cell title="邮箱" is-link :value="userInfo.email" @click="goEmail" />
       <van-cell title="名字" is-link :value="userInfo.nickname" @click="goName" />
       <van-cell title="性别" is-link :value="userInfo.gender" @click="goGender" />
       <van-cell title="年龄" is-link :value="userInfo.age" @click="goAge" />
-      <van-cell title="城市" is-link @click="showPopup" :value="area"></van-cell>
+      <van-cell title="城市" is-link :value="area" @click="showPopup" />
       <div class="sign-out" @click="logout">退出登录</div>
-
       <van-popup v-model:show="show" position="bottom" :style="{height: '38%'}">
         <van-area
+          ref="myAreaRef"
           :area-list="areaList"
           :columns-num="2"
-          ref="myAreaRef"
           title="标题"
           @change="onChange"
           @confirm="onConfirm"
@@ -43,11 +42,12 @@
 </template>
 
 <script>
-import {reactive, toRefs, nextTick, ref, computed, inject, onBeforeMount} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
-import {Dialog} from 'vant'
+import { reactive, toRefs, nextTick, ref, computed, inject, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { updateUserConversations, updateUserInfo } from '@/api/user'
+import { uploadFile } from '@/api/upload'
+import { Dialog } from 'vant'
 import AreaList from '@/utils/area'
 
 export default {
@@ -97,7 +97,7 @@ export default {
         .then(() => {
           // 删除本地用户 token && 刷新组件
           store.dispatch('logOut')
-          router.push({name: 'Login'})
+          router.push({ name: 'Login' })
         })
         .catch(error => {
           console.log(error)
@@ -107,7 +107,7 @@ export default {
       const formdata = new window.FormData()
       formdata.append('file', file.file)
 
-      const {data} = await api.uploadFile(formdata)
+      const { data } = await uploadFile(formdata)
       state.urlName = data
       state.imgSrc = state.IMG_URL + data
       nextTick(() => {
@@ -118,24 +118,24 @@ export default {
     const showPopup = () => {
       state.show = true
     }
-    //value=0改变省，1改变市，2改变区
+    // value=0改变省，1改变市，2改变区
     const onChange = areaVal => {
       let areaName = ''
       for (var i = 0; i < areaVal.length; i++) {
-        areaName = areaName + (i == 0 ? '' : ' ') + areaVal[i].name
+        areaName = areaName + (i === 0 ? '' : ' ') + areaVal[i].name
       }
       state.area = areaName
     }
-    //确定选择城市
+    // 确定选择城市
     const onConfirm = val => {
-      state.show = false //关闭弹框
+      state.show = false // 关闭弹框
     }
-    //取消选中城市
+    // 取消选中城市
     const onCancel = () => {
       state.show = false
       myAreaRef.reset() // 重置城市列表
     }
-    const saveNewUserInfo = async () => {
+    const saveNewUserInfo = async() => {
       const unlink = state.userInfo.avatar
       try {
         const obj = {
@@ -143,15 +143,15 @@ export default {
           avatar: state.urlName,
           unlink
         }
-        const {data} = await api.updateUserInfo(obj)
-        const parma = {id: data.id}
-        await api.updateUserConversations(parma)
+        const { data } = await updateUserInfo(obj)
+        const parma = { id: data.id }
+        await updateUserConversations(parma)
 
         store.dispatch('setUserInfo', data)
         const roomArr = state.getAllChatListRoomId
         socket.emit('update', roomArr)
 
-        router.push({name: 'Manager'})
+        router.push({ name: 'Manager' })
       } catch (error) {
         console.log(error)
       }
@@ -161,16 +161,16 @@ export default {
     }
 
     const goEmail = () => {
-      router.push({name: 'EditEmail'})
+      router.push({ name: 'EditEmail' })
     }
     const goName = () => {
-      router.push({name: 'EditName'})
+      router.push({ name: 'EditName' })
     }
     const goGender = () => {
-      router.push({name: 'EditGender'})
+      router.push({ name: 'EditGender' })
     }
     const goAge = () => {
-      router.push({name: 'EditAge'})
+      router.push({ name: 'EditAge' })
     }
 
     return {

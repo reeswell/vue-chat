@@ -10,8 +10,8 @@
           <div class="first-line">
             <p class="name">{{ InfoList.nickname }}</p>
           </div>
-          <p class="lastmsg" v-if="InfoList.state === 'friend'">添加您为好友</p>
-          <p class="lastmsg" v-if="InfoList.state === 'group'">申请加入{{ InfoList.groupName }}群</p>
+          <p v-if="InfoList.state === 'friend'" class="lastmsg">添加您为好友</p>
+          <p v-if="InfoList.state === 'group'" class="lastmsg">申请加入{{ InfoList.groupName }}群</p>
         </div>
       </div>
     </div>
@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed, inject, onBeforeMount} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { reactive, toRefs, computed, inject, onBeforeMount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default {
   name: 'ApplyDetail',
   setup() {
@@ -64,14 +64,14 @@ export default {
 
       store.commit('updateSysNewsList', state.InfoList)
 
-      router.push({name: 'Chat'})
+      router.push({ name: 'Chat' })
     }
     const refuse = () => {
       state.InfoList.status = '2'
       socket.emit('refuse', state.InfoList)
 
       store.commit('updateSysNewsList', state.InfoList)
-      router.push({name: 'Chat'})
+      router.push({ name: 'Chat' })
     }
     onBeforeMount(() => {
       getInfoList()

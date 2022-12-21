@@ -25,7 +25,7 @@ export function trim(str) {
 
 export function check_user_name(str) {
   let str2 = '该用户名合法'
-  if ('' == str) {
+  if (str === '') {
     str2 = '用户名为空'
     return str2
   } else if (str.length < 6 || str.length > 20) {
@@ -39,10 +39,10 @@ export function check_user_name(str) {
 }
 // 验证用户名是否含有特殊字符
 function check_other_char(str) {
-  let arr = ['&', '\\', '/', '*', '>', '<', '@', '!']
+  const arr = ['&', '\\', '/', '*', '>', '<', '@', '!']
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < str.length; j++) {
-      if (arr[i] == str.charAt(j)) {
+      if (arr[i] === str.charAt(j)) {
         return true
       }
     }

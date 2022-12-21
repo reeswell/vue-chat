@@ -7,36 +7,37 @@
       @click-left="onClickLeft"
       @click-right="onClickRight"
     />
-    <div class="search-result" v-if="friendsInfo !== null">
+    <div v-if="friendsInfo !== null" class="search-result">
       <div class="seesion-list">
         <div class="list-left">
-          <van-image round width="56" height="56" :src="IMG_URL + friendsInfo.avatar"
-            ><template v-slot:error>加载失败</template></van-image
-          >
+          <van-image
+            round
+            width="56"
+            height="56"
+            :src="IMG_URL + friendsInfo.avatar"
+          ><template #error>加载失败</template></van-image>
         </div>
         <div class="list-right">
           <div class="first-line">
             <p class="name">{{ friendsInfo.nickname }}</p>
           </div>
           <p class="lastmsg">
-            {{ friendsInfo.province }} <span>{{ friendsInfo.city }}</span
-            ><span>{{ friendsInfo.gender }}</span
-            ><span>{{ friendsInfo.age }}</span>
+            {{ friendsInfo.province }} <span>{{ friendsInfo.city }}</span><span>{{ friendsInfo.gender }}</span><span>{{ friendsInfo.age }}</span>
           </p>
         </div>
       </div>
     </div>
     <div class="tip">填写验证信息</div>
-    <textarea class="text" maxlength="30" v-model="introduce"></textarea>
+    <textarea v-model="introduce" class="text" maxlength="30" />
   </div>
 </template>
 
 <script>
 import * as tools from '@/utils/tools'
-import {reactive, toRefs, computed, inject} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import {Notify} from 'vant'
+import { reactive, toRefs, computed, inject } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { Notify } from 'vant'
 export default {
   name: 'SendFriendValidate',
   setup() {
@@ -84,8 +85,8 @@ export default {
       }
       console.log(obj)
       socket.emit('sendValidate', obj)
-      Notify({type: 'success', message: '发送成功'})
-      router.push({name: 'Chat'})
+      Notify({ type: 'success', message: '发送成功' })
+      router.push({ name: 'Chat' })
     }
 
     return {

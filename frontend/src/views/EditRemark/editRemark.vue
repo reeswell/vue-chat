@@ -13,10 +13,11 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed, onBeforeMount} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import {Toast} from 'vant'
+import { reactive, toRefs, computed, onBeforeMount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { Toast } from 'vant'
+import { modifyFriendRemark } from '@/api/user'
 export default {
   name: 'EditName',
   setup() {
@@ -46,7 +47,7 @@ export default {
         }
       })
     }
-    const save = async () => {
+    const save = async() => {
       const id = route.params.id
       try {
         const obj = {
@@ -54,11 +55,11 @@ export default {
           friendId: id,
           remark: state.value
         }
-        const {msg} = await api.modifyFriendRemark(obj)
+        const { msg } = await modifyFriendRemark(obj)
         store.dispatch('getUserInfo')
         Toast(msg)
 
-        router.push({name: 'Chat'})
+        router.push({ name: 'Chat' })
       } catch (error) {
         console.log(error)
       }

@@ -1,17 +1,17 @@
 <template>
   <div class="foot van-hairline--top">
     <input
+      ref="chooseImageRef"
       type="file"
       class="img"
       title="选择图片"
-      @change="InmageChange"
-      ref="chooseInmageRef"
       accept="image/png, image/jpeg, image/gif, image/jpg"
-    />
-    <input type="file" class="img" title="选择图片" @change="fileChange" ref="fileRef" />
+      @change="handleImageChange"
+    >
+    <input ref="fileRef" type="file" class="img" title="选择图片" @change="fileChange">
 
     <div class="local-link" @click="show = true">
-      <i class="icon-attachment"></i>
+      <i class="icon-attachment" />
     </div>
     <van-action-sheet
       v-model:show="show"
@@ -20,38 +20,38 @@
       close-on-click-action
       @cancel="onCancel"
       @select="onSelect"
-    ></van-action-sheet>
+    />
     <div class="input">
-      <input type="text" placeholder="输入消息..." v-model="message" />
+      <input v-model="message" type="text" placeholder="输入消息...">
       <div class="more">
-        <van-icon name="smile-o" size="26px" color="#f9cc9d" @click="emojiClick"> </van-icon>
+        <van-icon name="smile-o" size="26px" color="#f9cc9d" @click="emojiClick" />
       </div>
     </div>
-    <div class="send icon-arrow-up-alt1" :class="upFlag ? 'active' : ''" @click="send(false)"></div>
+    <div class="send icon-arrow-up-alt1" :class="upFlag ? 'active' : ''" @click="send(false)" />
   </div>
 </template>
 
 <script>
-import {formatTime} from '@/utils/tools'
-import {reactive, toRefs, ref, watch, computed, inject} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
-import {Toast, Notify} from 'vant'
+import { formatTime } from '@/utils/tools'
+import { reactive, toRefs, ref, watch, computed, inject } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { uploadFile } from '@/api/upload'
+import { checkIsFriends } from '@/api/friendly'
+import { Toast, Notify } from 'vant'
 
 export default {
-  name: 'sendfoot',
-  setup(props, {emit}) {
+  name: 'Sendfoot',
+  setup(props, { emit }) {
     const socket = inject('socket')
     const route = useRoute()
-    const router = useRouter()
     const store = useStore()
     const fileRef = ref(null)
-    const chooseInmageRef = ref(null)
+    const chooseImageRef = ref(null)
     const state = reactive({
       message: '',
       show: false,
-      actions: [{name: '图片'}, {name: '文件'}],
+      actions: [{ name: '图片' }, { name: '文件' }],
       upFlag: false,
       isMyFriend: false,
       userInfo: computed(() => {
@@ -59,7 +59,7 @@ export default {
       })
     })
 
-    const fileChange = async () => {
+    const fileChange = async() => {
       const file = fileRef.value.files[0]
       if (file.type.indexOf('image') !== -1) {
         Toast('请选择图片上存!')
@@ -73,7 +73,7 @@ export default {
       try {
         const formdata = new FormData()
         formdata.append('file', file)
-        const result = await api.uploadFile(formdata)
+        const result = await uploadFile(formdata)
         if (result.code === 200) {
           send(result.data, 'file')
         } else {
@@ -81,7 +81,7 @@ export default {
         }
         fileRef.value.value = ''
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
     const emojiClick = () => {
@@ -98,21 +98,21 @@ export default {
       // 可以通过 close-on-click-action 属性开启自动收起
 
       if (item.name === '图片') {
-        chooseInmageRef.value.click()
+        chooseImageRef.value.click()
       } else if (item.name === '文件') {
         fileRef.value.click()
       }
     }
-    const checkIsMyfriends = async () => {
+    const checkIsMyFriends = async() => {
       const data = {
         roomId: route.params.id
       }
-      const res = await api.checkIsFriends(data)
+      const res = await checkIsFriends(data)
       state.isMyFriend = res.data.isFriends
       return state.isMyFriend
     }
-    const InmageChange = async () => {
-      const file = chooseInmageRef.value.files[0]
+    const handleImageChange = async() => {
+      const file = chooseImageRef.value.files[0]
       if (file.type.indexOf('image') === -1) {
         Toast('只能上传图片!')
         return
@@ -124,23 +124,23 @@ export default {
       }
       const formdata = new FormData()
       formdata.append('file', file)
-      const result = await api.uploadFile(formdata)
+      const result = await uploadFile(formdata)
       if (result.code === 200) {
         send(result.data, 'img')
       } else {
         Toast('上传失败')
       }
-      chooseInmageRef.value.value = ''
+      chooseImageRef.value.value = ''
     }
-    const send = async (params, type = 'mess') => {
+    const send = async(params, type = 'mess') => {
       // 发送消息
       if (!state.message && !params) {
         return
       }
       if (route.params.id.split('-').length > 1) {
-        const flag = await checkIsMyfriends()
+        const flag = await checkIsMyFriends()
         if (!flag) {
-          Notify({type: 'warning', message: '你已经不是对方好友了！', background: '#e00011'})
+          Notify({ type: 'warning', message: '你已经不是对方好友了！', background: '#e00011' })
           return
         }
       }
@@ -164,7 +164,7 @@ export default {
         val.mes = params.split('-')[params.split('-').length - 1]
         val.emoji = params
       }
-      emit('chatList', Object.assign({}, val, {type: 'mine'}))
+      emit('chatList', Object.assign({}, val, { type: 'mine' }))
       emit('emojiShow', false)
       socket.emit('mes', val)
       if (type === 'mess') {
@@ -175,7 +175,7 @@ export default {
     watch(
       () => state.message,
       (newval, oldval) => {
-        if (state.message == '') {
+        if (state.message === '') {
           state.upFlag = false
         } else {
           state.upFlag = true
@@ -188,10 +188,10 @@ export default {
       emojiClick,
       onCancel,
       onSelect,
-      InmageChange,
+      handleImageChange,
       send,
       addEmoji,
-      chooseInmageRef,
+      chooseImageRef,
       fileRef
     }
   }

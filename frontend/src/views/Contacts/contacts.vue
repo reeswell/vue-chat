@@ -6,10 +6,10 @@
 
     <div class="contact-wrapper">
       <van-tabs v-model="active" animated sticky swipeable>
-        <van-tab v-for="(item, index) in chatList" :title="item.name" :key="index">
+        <van-tab v-for="(item, index) in chatList" :key="index" :title="item.name">
           <div class="dialogue-container">
-            <ul>
-              <van-swipe-cell v-for="(i, index) in item.List" :key="index" v-if="item.List.length">
+            <ul v-if="item.List.length">
+              <van-swipe-cell v-for="(i, index) in item.List" :key="index">
                 <li class="seesion-list first-li van-hairline--bottom" @click="goMesPanel(i.id)">
                   <div class="list-left">
                     <van-image round :src="IMG_URL + i.avatar" class="avatar" />
@@ -24,20 +24,20 @@
         </van-tab>
       </van-tabs>
     </div>
-    <footer-nav></footer-nav>
+    <footer-nav />
   </div>
 </template>
 
 <script>
-import {reactive, toRefs, computed, onBeforeMount} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { reactive, toRefs, computed, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 import footerNav from '@/components/footerNav'
 
 export default {
   name: 'Contact',
-  components: {footerNav},
+  components: { footerNav },
 
   setup() {
     const router = useRouter()
@@ -62,8 +62,8 @@ export default {
 
     const init = () => {
       const arr = [
-        {name: '好友', List: []},
-        {name: '群组', List: []}
+        { name: '好友', List: [] },
+        { name: '群组', List: [] }
       ]
       arr[0].List = state.getFriendList
       arr[1].List = state.getGroupList
@@ -73,10 +73,10 @@ export default {
       store.dispatch('getSysInfo')
     }
     const goMesPanel = id => {
-      router.push({name: 'MesPanel', params: {id: id}})
+      router.push({ name: 'MesPanel', params: { id: id }})
     }
     const goSearch = () => {
-      router.push({name: 'SearchLocal'})
+      router.push({ name: 'SearchLocal' })
     }
 
     return {

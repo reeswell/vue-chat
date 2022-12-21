@@ -1,4 +1,4 @@
-import {createStore} from 'vuex'
+import { createStore } from 'vuex'
 import * as types from './types'
 import {
   tokenCache,
@@ -10,19 +10,21 @@ import {
   friendsListCache,
   groupsListCache
 } from '@/utils/cache'
-import api from '@/api/index'
 
+import { getUserInfo, getOfficialInfo } from '@/api/user'
+import { findMyFriendsList } from '@/api/friendly'
+import { findMyGroupList } from '@/api/group'
 export default createStore({
   state: {
     token: tokenCache.getCache(), // 用户 token
     userInfo: userInfoCache.getCache(), // 用户 信息
-    loginStatus: tokenCache.getCache() ? true : false,
+    loginStatus: !!tokenCache.getCache(),
     unRead: [],
     sysInfo: sysInfoCache.getCache(),
     friendsInfo: {},
     groupInfo: {},
     conversationsList: conversationsListCache.getCache(), // 会话列表,
-    curConversations: conversationsListCache.getCache()[0] || {}, //当前会话
+    curConversations: conversationsListCache.getCache()[0] || {}, // 当前会话
     OnlineUser: {}, // 在线人数
     sysNewsList: sysNewsListCache.getCache() || [], // 官方通知列表
     friendsList: friendsListCache.getCache() || [],
@@ -173,7 +175,7 @@ export default createStore({
           }
         })
       } else {
-        state.unRead.push({roomId: data.roomId, count: data.count})
+        state.unRead.push({ roomId: data.roomId, count: data.count })
       }
     },
     updateAllChatList(state, data) {
@@ -191,32 +193,32 @@ export default createStore({
   },
   actions: {
     // 设置用户 token
-    setUserToken({commit}, userToken) {
+    setUserToken({ commit }, userToken) {
       commit(types.TOKEN, userToken)
       commit(types.LOGIN_STATUS, true)
     },
     // 删除用户 token
-    deleteUserToken({commit}) {
+    deleteUserToken({ commit }) {
       commit(types.LOGIN_STATUS, false) // 登录状态改为 false
       tokenCache.deleteCache()
     },
     // 设置个人信息
-    setUserInfo({commit}, info) {
+    setUserInfo({ commit }, info) {
       commit(types.USER_INFO, info)
     },
 
-    setFriendsInfo({commit}, info) {
+    setFriendsInfo({ commit }, info) {
       commit(types.FRIENDS_INFO, info)
     },
-    setGroupInfo({commit}, info) {
+    setGroupInfo({ commit }, info) {
       commit(types.GROUP_INFO, info)
     },
-    setConversationsList({commit}, data) {
+    setConversationsList({ commit }, data) {
       commit(types.CONVERSATIONS_LIST, data)
     },
-    async getUserInfo({commit, dispatch}) {
+    async getUserInfo({ commit, dispatch }) {
       try {
-        const {code, data} = await api.getUserInfo()
+        const { code, data } = await getUserInfo()
         if (code !== 200) return
         commit(types.USER_INFO, data)
         commit(types.CONVERSATIONS_LIST, data.conversationsList)
@@ -225,12 +227,12 @@ export default createStore({
         console.log(error)
       }
     },
-    async getMyContactList({state, dispatch}) {
+    async getMyContactList({ state, dispatch }) {
       try {
-        const friendObj = {userId: state.userInfo.id}
-        const groupObj = {userName: state.userInfo.userName}
-        const {data} = await api.findMyFriendsList(friendObj)
-        const res = await api.findMyGroupList(groupObj)
+        const friendObj = { userId: state.userInfo.id }
+        const groupObj = { userName: state.userInfo.userName }
+        const { data } = await findMyFriendsList(friendObj)
+        const res = await findMyGroupList(groupObj)
         if (data.length) {
           dispatch('setFriendsList', data)
         }
@@ -241,12 +243,12 @@ export default createStore({
         console.log(error)
       }
     },
-    async getSysInfo({commit, state}) {
+    async getSysInfo({ commit, state }) {
       try {
-        const {code, data} = await api.getOfficialInfo()
+        const { code, data } = await getOfficialInfo()
         if (code !== 200) return
         const id = state.userInfo.id + '-' + data.id
-        state.sysInfo = Object.assign({}, data, {type: 'sysInfo'}, {id})
+        state.sysInfo = Object.assign({}, data, { type: 'sysInfo' }, { id })
         commit(types.SYS_INFO, state.sysInfo)
         commit(types.CONVERSATIONS_LIST, state.sysInfo)
       } catch (error) {
@@ -254,21 +256,21 @@ export default createStore({
       }
     },
 
-    setOnlineUser({commit}, data) {
+    setOnlineUser({ commit }, data) {
       commit(types.ONLINE_USER, data)
     },
 
-    setSysNewsList({commit}, data) {
+    setSysNewsList({ commit }, data) {
       commit(types.SYS_NEWS_LIST, data)
     },
-    setFriendsList({commit}, data) {
+    setFriendsList({ commit }, data) {
       commit(types.FRIENDS_LIST, data)
     },
-    setGroupsList({commit}, data) {
+    setGroupsList({ commit }, data) {
       commit(types.GROUPS_LIST, data)
     },
     // 退出登录
-    logOut({commit}) {
+    logOut({ commit }) {
       // 退出登录
       return new Promise((resolve, reject) => {
         commit(types.LOGIN_STATUS, false) // 登录状态改为 false// 清除 token

@@ -10,8 +10,8 @@
     />
 
     <van-field
-      type="email"
       v-model="value"
+      type="email"
       placeholder="请输入邮箱"
       :error-message="!emailValid ? '请输入正确的邮箱格式！' : ''"
     />
@@ -19,10 +19,11 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
+import { reactive, toRefs, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { updateUserInfo } from '@/api/user'
+
 const reg = /^[A-Za-z0-9._%-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$/
 export default {
   name: 'Editemail',
@@ -39,15 +40,15 @@ export default {
     const onClickLeft = () => {
       router.go(-1)
     }
-    const save = async () => {
+    const save = async() => {
       if (!emailValid) return
       try {
         const obj = {
           email: state.value
         }
-        const {data} = await api.updateUserInfo(obj)
+        const { data } = await updateUserInfo(obj)
         store.dispatch('setUserInfo', data)
-        router.push({name: 'Edit'})
+        router.push({ name: 'Edit' })
       } catch (error) {
         console.log(error)
       }

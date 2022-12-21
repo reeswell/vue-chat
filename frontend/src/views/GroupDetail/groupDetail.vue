@@ -1,24 +1,29 @@
 <template>
   <div class="groupDetail">
     <van-nav-bar left-text="返回" left-arrow @click-left="onClickLeft" />
-    <div
-      v-for="img in imageList"
-      v-lazy:background-image="IMG_URL + img"
-      :key="img"
-      class="lazy"
+    <template
       v-if="groupInfo !== null"
-    ></div>
+    >
+      <div v-for="img in imageList" :key="img" v-lazy:background-image="IMG_URL + img" class="lazy" />
+    </template>
 
-    <div class="groupDetail-container" v-if="groupInfo !== null">
+    <div v-if="groupInfo !== null" class="groupDetail-container">
       <van-cell title="群名称" :value="groupInfo.title" />
       <van-cell title="创建时间" :value="groupInfo.createDate.split('T')[0]" />
       <van-cell :value="'共' + managers.length + '人'" is-link class="my-van-cell">
         <!-- 使用 title 插槽来自定义标题 -->
         <template #title>
           <span class="custom-title">管理员</span>
-          <van-tag v-for="(item, index) in managers" :key="item._id"
-            ><img v-lazy="IMG_URL + item.userId.avatar" alt="" width="20" height="20" class="img"
-          /></van-tag>
+          <van-tag
+            v-for="item in managers"
+            :key="item._id"
+          ><img
+            v-lazy="IMG_URL + item.userId.avatar"
+            alt=""
+            width="20"
+            height="20"
+            class="img"
+          ></van-tag>
         </template>
       </van-cell>
       <div class="button-type">
@@ -29,10 +34,10 @@
 </template>
 
 <script>
-import {reactive, toRefs, inject, onBeforeMount} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import {useStore} from 'vuex'
-import api from '@/api'
+import { reactive, toRefs, onBeforeMount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { getGroupInfo as getGroupInfoApi } from '@/api/group'
 export default {
   name: 'GroupDetail',
   setup() {
@@ -52,14 +57,14 @@ export default {
     }
     const mesCheck = () => {
       console.log('mesCheck')
-      router.push({name: 'SendGroupValidate', params: {id: state.holderId}})
+      router.push({ name: 'SendGroupValidate', params: { id: state.holderId }})
     }
     const blockGroup = () => {
       console.log('blockFriend')
     }
-    const getGroupInfo = async () => {
-      const params = {id: route.params.id}
-      const res = await api.getGroupInfo(params)
+    const getGroupInfo = async() => {
+      const params = { id: route.params.id }
+      const res = await getGroupInfoApi(params)
       state.groupInfo = res.data
       state.groupUsers = res.users
       state.imageList.push(state.groupInfo.img)
