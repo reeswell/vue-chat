@@ -1,6 +1,6 @@
 # 前言
 该项目是我的毕业设计。
-主要技术栈为Vue3+MongoDB+Koa2。
+主要技术栈为Vue+MongoDB+Koa。
 
 
 
