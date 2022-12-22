@@ -68,17 +68,18 @@ export default {
       urlName: '',
       area: '',
       imgSrc: '',
-      errorImg: 'https://img.yzcdn.cn/vant/cat.jpeg',
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      getAllChatListRoomId: computed(() => {
-        return store.getters.getAllChatListRoomId
-      })
+      errorImg: 'https://img.yzcdn.cn/vant/cat.jpeg'
+
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const getAllChatListRoomId = computed(() => {
+      return store.getters.getAllChatListRoomId
     })
     onBeforeMount(() => {
-      state.area = state.userInfo.province + ' ' + state.userInfo.city
-      state.imgSrc = state.IMG_URL + state.userInfo.avatar
+      state.area = userInfo.province + ' ' + userInfo.city
+      state.imgSrc = state.IMG_URL + userInfo.avatar
     })
 
     const beforeRead = file => {
@@ -136,7 +137,7 @@ export default {
       myAreaRef.reset() // 重置城市列表
     }
     const saveNewUserInfo = async() => {
-      const unlink = state.userInfo.avatar
+      const unlink = userInfo.avatar
       try {
         const obj = {
           area: state.area.split(' '),
@@ -148,7 +149,7 @@ export default {
         await updateUserConversations(parma)
 
         store.dispatch('setUserInfo', data)
-        const roomArr = state.getAllChatListRoomId
+        const roomArr = getAllChatListRoomId.value
         socket.emit('update', roomArr)
 
         router.push({ name: 'Manager' })

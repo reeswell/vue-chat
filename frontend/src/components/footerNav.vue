@@ -34,38 +34,39 @@ export default {
         { title: '聊天', name: 'Chat', icon: 'chat', unread: null },
         { title: '我的', name: 'Manager', icon: 'manager', unread: null }
       ],
-      active: 1,
-      unRead: computed(() => {
-        return store.state.unRead
-      }),
-      getSysUnReadCount: computed(() => {
-        return store.getters.getSysUnReadCount
-      }),
-      getAllChatListUnread: computed(() => {
-        return store.getters.getAllChatListUnread
-      }),
-      activeNavIndex: computed(() =>
-        props.activeNavIndex
-      )
+      active: 1
+
     })
+    const unRead = computed(() => {
+      return store.state.unRead
+    })
+    const getSysUnReadCount = computed(() => {
+      return store.getters.getSysUnReadCount
+    })
+    const getAllChatListUnread = computed(() => {
+      return store.getters.getAllChatListUnread
+    })
+    const activeNavIndex = computed(() =>
+      props.activeNavIndex
+    )
     watch(
-      () => state.unRead,
+      () => unRead.value,
       item => {
-        if (item.length > 0 && state.getSysUnReadCount !== null) {
+        if (item.length > 0 && getSysUnReadCount.value !== null) {
           state.NavList.forEach((e, i) => {
             if (e.name === 'Manager') {
-              e.unread = state.getSysUnReadCount
+              e.unread = getSysUnReadCount.value
             }
           })
         }
-        if (item.length > 0 && state.getAllChatListUnread !== 0) {
+        if (item.length > 0 && getAllChatListUnread.value !== 0) {
           state.NavList.forEach((e, i) => {
             if (e.name === 'Chat') {
-              e.unread = state.getAllChatListUnread
+              e.unread = getAllChatListUnread.value
             }
           })
         }
-        if (!item.length || state.getAllChatListUnread === 0) {
+        if (!item.length || getAllChatListUnread.value === 0) {
           state.NavList.forEach((e, i) => {
             if (e.name === 'Chat') {
               e.unread = null
@@ -79,7 +80,7 @@ export default {
       }
     )
     const clickTab = (index, name) => {
-      if (state.activeNavIndex === index) return
+      if (activeNavIndex.value === index) return
       router.push({ name })
     }
     return {

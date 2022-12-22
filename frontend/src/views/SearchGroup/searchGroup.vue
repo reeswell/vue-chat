@@ -36,16 +36,17 @@ export default {
     const state = reactive({
       keyword: '',
       groupInfo: null,
-      IMG_URL: process.env.VUE_APP_IMG_URL,
-      allChatList: computed(() => {
-        return store.state.allChatList
-      })
+      IMG_URL: process.env.VUE_APP_IMG_URL
+
+    })
+    const allChatList = computed(() => {
+      return store.state.allChatList
     })
     const onCancel = () => {
       router.go(-1)
     }
     const previewGroup = id => {
-      const isGroup = state.allChatList.filter(item => item.id === id)
+      const isGroup = allChatList.value.filter(item => item.id === id)
       if (isGroup.length) return router.push({ name: 'MesPanel', params: { id: id }})
       router.push({ name: 'GroupDetail', params: { id: id }})
     }

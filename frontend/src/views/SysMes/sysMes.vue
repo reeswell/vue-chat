@@ -48,27 +48,27 @@ export default {
     const state = reactive({
       offset: 1,
       limit: 10,
-      IMG_URL: process.env.VUE_APP_IMG_URL,
-      sysNewsList: computed(() => {
-        return store.state.sysNewsList
-      }),
-      sysInfo: computed(() => {
-        return store.state.sysInfo
-      }),
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      getSysUnRead: computed(() => {
-        return store.getters.getSysUnRead
-      })
-    })
+      IMG_URL: process.env.VUE_APP_IMG_URL
 
+    })
+    const sysNewsList = computed(() => {
+      return store.state.sysNewsList
+    })
+    const sysInfo = computed(() => {
+      return store.state.sysInfo
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const getSysUnRead = computed(() => {
+      return store.getters.getSysUnRead
+    })
     const init = () => {
-      if (!state.getSysUnRead.length || state.getSysUnRead[0].count === 0) return
+      if (!getSysUnRead.value.length || getSysUnRead.value[0].count === 0) return
       console.log('333333')
-      store.commit('setUnRead', { roomId: state.sysInfo.id, clear: true })
-      socket.emit('setReadStatus', { roomId: state.sysInfo.id, userName: state.userInfo.userName })
-      socket.emit('getSysMeg', { roomId: state.sysInfo.id, offset: state.offset, limit: state.limit })
+      store.commit('setUnRead', { roomId: sysInfo.value.id, clear: true })
+      socket.emit('setReadStatus', { roomId: sysInfo.value.id, userName: userInfo.value.userName })
+      socket.emit('getSysMeg', { roomId: sysInfo.value.id, offset: state.offset, limit: state.limit })
     }
     const onClickLeft = () => {
       console.log('onClickLeft')
@@ -98,7 +98,7 @@ export default {
 
     return {
       ...toRefs(state),
-
+      sysNewsList,
       onClickLeft,
       goDetail
     }

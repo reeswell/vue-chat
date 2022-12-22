@@ -19,28 +19,22 @@ export default {
     const store = useStore()
     const socket = inject('socket')
     const state = reactive({
-      mainName: 'fade', // 内容区域动画名
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      conversationsList: computed(() => {
-        return store.state.conversationsList
-      }),
-      sysNewsList: computed(() => {
-        return store.state.sysNewsList
-      }),
-      allChatList: computed(() => {
-        return store.state.allChatList
-      })
-    })
+      mainName: 'fade' // 内容区域动画名
 
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const conversationsList = computed(() => {
+      return store.state.conversationsList
+    })
     const joinRoom = () => {
-      const user = state.userInfo
+      const user = userInfo.value
       if (!user.userName) {
         return
       }
 
-      state.conversationsList.forEach(item => {
+      conversationsList.value.forEach(item => {
         const val = {
           userName: user.userName,
           time: formatTime(new Date()),
@@ -54,7 +48,7 @@ export default {
       })
     }
     watch(
-      () => state.conversationsList,
+      () => conversationsList.value,
       () => joinRoom(),
       {
         deep: true,
@@ -76,7 +70,7 @@ export default {
       })
       socket.on('getHisMeg', mes => {
         // 获取未读消息数量
-        const data = mes.filter(item => item.read.indexOf(state.userInfo.userName) === -1)
+        const data = mes.filter(item => item.read.indexOf(userInfo.value.userName) === -1)
         if (data.length) {
           store.commit('setUnRead', { roomId: data[0].roomId, count: data.length })
         }

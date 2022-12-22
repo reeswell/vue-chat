@@ -35,7 +35,7 @@ export default {
       router.go(-1)
     }
     const save = async() => {
-      if (!ageValid) return
+      if (!ageValid.value) return
       try {
         const obj = {
           age: state.value

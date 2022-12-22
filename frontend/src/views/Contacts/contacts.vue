@@ -48,25 +48,25 @@ export default {
       IMG_URL: process.env.VUE_APP_IMG_URL,
       chatList: [], //  所有会话类型
       removeSation: {},
-      show: false,
-      getFriendList: computed(() => {
-        return store.getters.getFriendList
-      }),
-      getGroupList: computed(() => {
-        return store.getters.getGroupList
-      })
+      show: false
+
     })
     onBeforeMount(() => {
       init()
     })
-
+    const getFriendList = computed(() => {
+      return store.getters.getFriendList
+    })
+    const getGroupList = computed(() => {
+      return store.getters.getGroupList
+    })
     const init = () => {
       const arr = [
         { name: '好友', List: [] },
         { name: '群组', List: [] }
       ]
-      arr[0].List = state.getFriendList
-      arr[1].List = state.getGroupList
+      arr[0].List = getFriendList.value
+      arr[1].List = getGroupList.value
       state.chatList = arr
     }
     const onClickLeft = () => {

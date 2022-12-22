@@ -53,12 +53,12 @@ export default {
       show: false,
       actions: [{ name: '图片' }, { name: '文件' }],
       upFlag: false,
-      isMyFriend: false,
-      userInfo: computed(() => {
-        return store.state.userInfo
-      })
-    })
+      isMyFriend: false
 
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
     const fileChange = async() => {
       const file = fileRef.value.files[0]
       if (file.type.indexOf('image') !== -1) {
@@ -145,15 +145,15 @@ export default {
         }
       }
       const val = {
-        userName: state.userInfo.userName,
+        userName: userInfo.value.userName,
         mes: state.message,
         time: formatTime(new Date()),
-        avatar: state.userInfo.avatar,
-        nickname: state.userInfo.nickname,
-        read: [state.userInfo.userName],
+        avatar: userInfo.value.avatar,
+        nickname: userInfo.value.nickname,
+        read: [userInfo.value.userName],
         roomId: route.params.id,
         style: 'mess',
-        self: state.userInfo.id
+        self: userInfo.value.id
       }
       if (type === 'img') {
         val.style = 'img'

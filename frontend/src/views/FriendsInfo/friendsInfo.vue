@@ -40,24 +40,24 @@ export default {
       friendsInfo: null,
       isMyFriend: false,
       IMG_URL: process.env.VUE_APP_IMG_URL,
-      remark: '',
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      allChatList: computed(() => {
-        return store.state.allChatList
-      })
-    })
+      remark: ''
 
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const allChatList = computed(() => {
+      return store.state.allChatList
+    })
     const onClickLeft = () => {
       router.go(-1)
     }
     const blockFriend = async() => {
       console.log('blockFriend')
       const friendId = route.params.id
-      const arr = state.allChatList.filter(item => item.friendId === friendId)
+      const arr = allChatList.filter(item => item.friendId === friendId)
       const roomId = arr[0].id
-      const obj = { userId: state.userInfo.id, friendId, roomId }
+      const obj = { userId: userInfo.value.id, friendId, roomId }
       try {
         const { msg } = await deleteDialog(obj)
         await deleteFriend(obj)

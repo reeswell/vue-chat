@@ -46,24 +46,24 @@ export default {
     const store = useStore()
     const state = reactive({
       introduce: '',
-      IMG_URL: process.env.VUE_APP_IMG_URL,
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      friendsInfo: computed(() => {
-        return store.state.friendsInfo
-      }),
-      sysInfo: computed(() => {
-        return store.state.sysInfo
-      })
-    })
+      IMG_URL: process.env.VUE_APP_IMG_URL
 
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const friendsInfo = computed(() => {
+      return store.state.friendsInfo
+    })
+    const sysInfo = computed(() => {
+      return store.state.sysInfo
+    })
     const onClickLeft = () => {
       router.go(-1)
     }
     const onClickRight = () => {
-      const friend = state.friendsInfo
-      const user = state.userInfo
+      const friend = friendsInfo
+      const user = userInfo
       const obj = {
         userName: user.userName,
         mes: state.introduce,
@@ -78,12 +78,11 @@ export default {
         otherAvatar: friend.avatar,
         otherUserName: friend.userName,
         friendRoom: user.id + '-' + friend.id,
-        roomId: friend.id + '-' + state.sysInfo.id.split('-')[1],
+        roomId: friend.id + '-' + sysInfo.id.split('-')[1],
         state: 'friend',
         type: 'validate',
         status: '0'
       }
-      console.log(obj)
       socket.emit('sendValidate', obj)
       Notify({ type: 'success', message: '发送成功' })
       router.push({ name: 'Chat' })
@@ -92,7 +91,8 @@ export default {
     return {
       ...toRefs(state),
       onClickLeft,
-      onClickRight
+      onClickRight,
+      friendsInfo
     }
   }
 }

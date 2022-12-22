@@ -61,16 +61,16 @@ export default {
         memo: 'https://cdn.jsdelivr.net/gh/xxydrr/my_pic/img/20210606172321.png',
         accountSafe: 'https://cdn.jsdelivr.net/gh/xxydrr/my_pic/img/20210606172320.png',
         sysMes: 'https://cdn.jsdelivr.net/gh/xxydrr/my_pic/img/20210606172319.png'
-      },
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
+      }
 
-      getSysUnReadCount: computed(() => {
-        return store.getters.getSysUnReadCount
-      })
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
     })
 
+    const getSysUnReadCount = computed(() => {
+      return store.getters.getSysUnReadCount
+    })
     const goEdit = () => {
       router.push({ name: 'Edit' })
     }
@@ -78,7 +78,7 @@ export default {
       router.push({ name: 'SysMes' })
     }
     const goSelf = () => {
-      const id = state.userInfo.id
+      const id = userInfo.value.id
       router.push({ name: 'MesPanel', params: { id: id }})
     }
     const goSafe = () => {
@@ -89,7 +89,9 @@ export default {
       goEdit,
       goSysMes,
       goSelf,
-      goSafe
+      goSafe,
+      userInfo,
+      getSysUnReadCount
     }
   }
 }

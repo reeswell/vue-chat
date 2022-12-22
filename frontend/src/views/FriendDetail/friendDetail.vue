@@ -30,17 +30,16 @@ export default {
     const state = reactive({
       friendsInfo: null,
       isMyFriend: false,
-      IMG_URL: process.env.VUE_APP_IMG_URL,
-      userInfo: computed(() => {
-        return store.state.userInfo
-      })
-    })
+      IMG_URL: process.env.VUE_APP_IMG_URL
 
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
     const onClickLeft = () => {
       router.go(-1)
     }
     const mesCheck = () => {
-      console.log('mesCheck')
       router.push({ name: 'SendFriendValidate', params: { id: route.params.id }})
     }
     const blockFriend = () => {
@@ -60,7 +59,8 @@ export default {
       onClickLeft,
       mesCheck,
       blockFriend,
-      getUserInfo
+      getUserInfo,
+      userInfo
     }
   }
 }

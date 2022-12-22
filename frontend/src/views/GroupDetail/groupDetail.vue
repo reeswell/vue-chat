@@ -56,7 +56,6 @@ export default {
       router.go(-1)
     }
     const mesCheck = () => {
-      console.log('mesCheck')
       router.push({ name: 'SendGroupValidate', params: { id: state.holderId }})
     }
     const blockGroup = () => {

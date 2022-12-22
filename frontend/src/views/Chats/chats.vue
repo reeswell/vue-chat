@@ -74,34 +74,26 @@ export default {
       groupUnread: null,
       contactsList: [], // 会话列表
       removeSation: {},
-      show: false,
-      unRead: computed(() => {
-        return store.state.unRead
-      }),
-      conversationsList: computed(() => {
-        return store.state.conversationsList
-      }),
-      allChatList: computed(() => {
-        return store.state.allChatList
-      }),
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      getConversationsList: computed(() => {
-        return store.getters.getConversationsList
-      }),
-      getGroupUnread: computed(() => {
-        return store.getters.getGroupUnread
-      }),
-      getAllChatListUnread: computed(() => {
-        return store.getters.getAllChatListUnread
-      })
+      show: false
+
+    })
+    const unRead = computed(() => {
+      return store.state.unRead
     })
 
+    const allChatList = computed(() => {
+      return store.state.allChatList
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const getAllChatListUnread = computed(() => {
+      return store.getters.getAllChatListUnread
+    })
     watch(
-      () => state.unRead,
+      () => unRead.value,
       (list, oldList) => {
-        const chatList = state.allChatList
+        const chatList = allChatList.value
         const arr = [
           { name: 'all', List: [] },
           { name: 'group', List: [] },
@@ -180,7 +172,7 @@ export default {
     }
     const readFlag = id => {
       // 设置服务器信息为已读状态也本地设置为已读
-      socket.emit('setReadStatus', { roomId: id, userName: state.userInfo.userName })
+      socket.emit('setReadStatus', { roomId: id, userName: userInfo.value.userName })
       store.commit('setUnRead', { roomId: id, clear: true })
     }
     const tabScroll = () => {
@@ -189,7 +181,6 @@ export default {
 
     return {
       ...toRefs(state),
-
       onClickLeft,
       goSearch,
       onClickRight,
@@ -199,7 +190,8 @@ export default {
       createChannel,
       goMesPanel,
       readFlag,
-      tabScroll
+      tabScroll,
+      getAllChatListUnread
     }
   }
 }
@@ -212,11 +204,14 @@ export default {
   position: relative;
   background-color: $deepBgc;
   height: 100%;
+
   .van-overlay {
     background-color: rgba(0, 0, 0, 0);
   }
+
   .box-wrapper {
     z-index: 2;
+
     .right-box {
       position: absolute;
       right: 40px;
@@ -224,6 +219,7 @@ export default {
       border-radius: 8px;
       width: 110px;
       background-color: #4c4c4c;
+
       &.right-box::after {
         content: '';
         display: block;
@@ -237,8 +233,10 @@ export default {
         transform: skewX(30deg);
         transform: rotate(0.2turn);
       }
+
       ul {
         padding: 4px 0 4px 5px;
+
         li {
           padding: 6px;
           vertical-align: bottom;
@@ -250,21 +248,27 @@ export default {
 
   :deep(.van-nav-bar) {
     background-color: $lightBgc;
+
     &.van-hairline--bottom::after {
       display: none;
     }
   }
+
   .van-hairline--bottom::after {
     display: block;
   }
+
   .van-search {
     background-color: $lightBgc;
+
     .van-search__content {
       background-color: $deepBgc;
+
       :deep(.van-field__control::placeholder) {
         text-align: center;
         color: $fontGray;
       }
+
       :deep(.van-field__left-icon) {
         position: relative;
         left: 42%;
@@ -272,30 +276,37 @@ export default {
       }
     }
   }
+
   :deep(.van-tabs__wrap) {
     background-color: $lightBgc;
   }
+
   :deep(.van-tabs__nav) {
     width: 250px;
     background-color: $lightBgc;
   }
+
   .chat-wrapper {
     position: relative;
+
     .all-badge {
       position: absolute;
       left: 52px;
       top: 6px;
       z-index: 1;
+
       .van-badge--dot {
         background-color: $blueBgc;
       }
     }
+
     .group-badge {
       position: absolute;
       left: 142px;
       top: 6px;
       z-index: 1;
     }
+
     .unread-badge {
       position: absolute;
       left: 230px;
@@ -305,6 +316,7 @@ export default {
   }
 
   .van-swipe-cell {
+
     .van-swipe-cell__right,
     .van-swipe-cell__left {
       button {
@@ -313,6 +325,7 @@ export default {
       }
     }
   }
+
   .dialogue-container {
     position: relative;
     left: 0;
@@ -325,9 +338,11 @@ export default {
       display: flex;
       box-sizing: border-box;
       padding: 10px 12px;
+
       .avatar {
         margin-right: 12px;
       }
+
       .list-right {
         flex: 1;
         display: flex;
@@ -338,6 +353,7 @@ export default {
         .first-line {
           display: inline-flex;
           margin-top: 0;
+
           .name {
             flex: 1;
             margin-top: 0;
@@ -345,17 +361,20 @@ export default {
             color: $fontWhite;
             font-weight: 700;
           }
+
           .time {
             width: 50px;
             color: $fontGray;
             font-size: 10px;
           }
+
           .van-badge {
             position: absolute;
             top: 30px;
             right: 18px;
           }
         }
+
         .lastmsg {
           white-space: nowrap;
           width: 100%;
@@ -373,6 +392,7 @@ export default {
         }
       }
     }
+
     .seesion-list:first-of-type {
       margin-top: 10px;
     }

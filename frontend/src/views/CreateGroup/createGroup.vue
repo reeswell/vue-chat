@@ -72,7 +72,7 @@ export default {
       return state.groupInfo.groupDesc && state.groupInfo.groupDesc.length < 100
     })
     const onSubmit = async values => {
-      if (!groupnameValid && !groupnameValid && !validateDesc) return
+      if (!groupnameValid.value && !groupCodeValid.value && !validateDesc.value) return
       const obj = {
         groupCode: state.groupInfo.groupCode,
         groupImage: state.groupInfo.groupImage,

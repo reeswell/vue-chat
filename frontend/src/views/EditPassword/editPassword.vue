@@ -63,7 +63,7 @@ export default {
     }
     const submit = async() => {
       try {
-        if (!passwordValid && !passwordValid2 && !surePwdValid) return
+        if (!passwordValid.value && !passwordValid2.value && !surePwdValid.value) return
         const obj = { password: state.password, newPassword: state.newPassword }
         const { msg } = await updatedUserPassword(obj)
         Toast(msg)

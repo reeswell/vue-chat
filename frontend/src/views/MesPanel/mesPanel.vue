@@ -66,19 +66,16 @@ export default {
       IMG_URL: process.env.VUE_APP_IMG_URL,
       isLoading: false,
       Loading: false,
-      count: 0,
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
+      count: 0
 
-      OnlineUser: computed(() => {
-        return store.state.OnlineUser
-      }),
-      allChatList: computed(() => {
-        return store.state.allChatList
-      })
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
     })
 
+    const allChatList = computed(() => {
+      return store.state.allChatList
+    })
     onBeforeMount(() => {
       init()
       checkIsMyChannel()
@@ -92,7 +89,7 @@ export default {
       socket.on('mes', mes => {
         if (mes.roomId === route.params.id) {
           state.chatList.push(Object.assign({}, mes, { type: 'other' }))
-          socket.emit('setReadStatus', { roomId: mes.roomId, userName: state.userInfo.userName })
+          socket.emit('setReadStatus', { roomId: mes.roomId, userName: userInfo.value.userName })
           store.commit('setUnRead', { roomId: mes.roomId, clear: true })
         }
       })
@@ -102,7 +99,7 @@ export default {
         }
         state.chatList = mes.map(item => {
           if (item.type !== 'org') {
-            if (item.userName === state.userInfo.userName) {
+            if (item.userName === userInfo.value.userName) {
               item.type = 'mine'
             } else {
               item.type = 'other'
@@ -115,7 +112,7 @@ export default {
     const init = () => {
       state.Loading = true
       // 设置服务器信息为已读状态也本地设置为已读,获取聊天记录
-      socket.emit('setReadStatus', { roomId: route.params.id, userName: state.userInfo.userName })
+      socket.emit('setReadStatus', { roomId: route.params.id, userName: userInfo.value.userName })
       store.commit('setUnRead', { roomId: route.params.id, clear: true })
       socket.emit('getHisMeg', { roomId: route.params.id, offset: 1, limit: 100 })
       state.Loading = false
@@ -123,13 +120,13 @@ export default {
       // 头部信息初始化
       const id = route.params.id
 
-      if (state.userInfo.id === id) {
+      if (userInfo.value.id === id) {
         // this.avatar = this.userInfo.avatar
         state.name = '备忘录'
         state.hide = true
         return
       }
-      const arr = state.allChatList.filter(item => item.id === id)
+      const arr = allChatList.filter(item => item.id === id)
       state.avatar = arr[0].avatar
       state.name = arr[0].userName
       state.friendId = arr[0].friendId
@@ -138,14 +135,14 @@ export default {
     const checkIsMyChannel = async() => {
       const params = { id: route.params.id }
       if (params.id.split('-').length > 1) return
-      if (params.id === state.userInfo.id) return
-      const userId = state.userInfo.id
+      if (params.id === userInfo.value.id) return
+      const userId = userInfo.value.id
 
       const res = await getGroupInfo(params)
       const groupUsers = res.users
       const holderId = groupUsers.filter(item => item.holder === 1)[0].userId['_id']
 
-      const channelArr = state.allChatList.filter(item => item.type === 'channel' && item.id === params.id)
+      const channelArr = allChatList.filter(item => item.type === 'channel' && item.id === params.id)
       if (channelArr.length && userId !== holderId) {
         state.isShowSend = false
       } else {

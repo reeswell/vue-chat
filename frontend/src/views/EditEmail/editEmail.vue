@@ -41,7 +41,7 @@ export default {
       router.go(-1)
     }
     const save = async() => {
-      if (!emailValid) return
+      if (!emailValid.value) return
       try {
         const obj = {
           email: state.value

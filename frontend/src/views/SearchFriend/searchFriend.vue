@@ -38,15 +38,15 @@ export default {
     const state = reactive({
       keyword: '',
       IMG_URL: process.env.VUE_APP_IMG_URL,
-      friendsInfo: null,
-      allChatList: computed(() => {
-        return store.state.allChatList
-      }),
-      userInfo: computed(() => {
-        return store.state.userInfo
-      })
-    })
+      friendsInfo: null
 
+    })
+    const allChatList = computed(() => {
+      return store.state.allChatList
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
     const onCancel = () => {
       router.go(-1)
     }
@@ -59,10 +59,10 @@ export default {
       return isMyFriend
     }
     const previewUser = async id => {
-      if (id === state.userInfo.id) {
+      if (id === userInfo.value.id) {
         return router.push({ name: 'MesPanel', params: { id: id }})
       }
-      const isFriend = state.allChatList.filter(item => item.friendId === id)
+      const isFriend = allChatList.value.filter(item => item.friendId === id)
       const isMyFriends = await checkIsFriends()
       if (isFriend.length && isMyFriends) return router.push({ name: 'MesPanel', params: { id: isFriend[0].id }})
       router.push({ name: 'FriendDetail', params: { id: id }})

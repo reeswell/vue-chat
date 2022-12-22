@@ -25,13 +25,14 @@ export default {
     const router = useRouter()
     const store = useStore()
     const state = reactive({
-      value: '',
-      allChatList: computed(() => {
-        return store.state.allChatList
-      }),
-      userInfo: computed(() => {
-        return store.state.userInfo
-      })
+      value: ''
+
+    })
+    const allChatList = computed(() => {
+      return store.state.allChatList
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
     })
     onBeforeMount(() => {
       init()
@@ -41,7 +42,7 @@ export default {
     }
     const init = () => {
       const id = route.params.id
-      state.allChatList.forEach(item => {
+      allChatList.value.forEach(item => {
         if (item.friendId === id) {
           state.value = item.userName
         }
@@ -51,7 +52,7 @@ export default {
       const id = route.params.id
       try {
         const obj = {
-          userId: state.userInfo.id,
+          userId: userInfo.value.id,
           friendId: id,
           remark: state.value
         }

@@ -42,17 +42,15 @@ export default {
     const store = useStore()
     const state = reactive({
       InfoList: {},
-      IMG_URL: process.env.VUE_APP_IMG_URL,
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      sysNewsList: computed(() => {
-        return store.state.sysNewsList
-      })
+      IMG_URL: process.env.VUE_APP_IMG_URL
+
     })
 
+    const sysNewsList = computed(() => {
+      return store.state.sysNewsList
+    })
     const getInfoList = () => {
-      state.InfoList = state.sysNewsList.filter(item => (item.self = route.params.id))[0]
+      state.InfoList = sysNewsList.value.filter(item => (item.self = route.params.id))[0]
     }
     const onClickLeft = () => {
       console.log('onClickLeft')

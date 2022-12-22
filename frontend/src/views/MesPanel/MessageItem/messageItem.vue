@@ -46,19 +46,20 @@ export default {
       IMG_URL: process.env.VUE_APP_IMG_URL,
       name: '',
       isshowName: false,
-      fileImg: 'https://cdn.jsdelivr.net/gh/xxydrr/my_pic/img/20210606172318.png',
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      allChatList: computed(() => {
-        return store.state.allChatList
-      })
+      fileImg: 'https://cdn.jsdelivr.net/gh/xxydrr/my_pic/img/20210606172318.png'
+
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const allChatList = computed(() => {
+      return store.state.allChatList
     })
     const init = () => {
       // 头部信息初始化
       const id = route.params.id
-      if (state.userInfo.id === id) return
-      const arr = state.allChatList.filter(item => item.id === id && item.type !== 'friend')
+      if (userInfo.value.id === id) return
+      const arr = allChatList.value.filter(item => item.id === id && item.type !== 'friend')
       if (arr.length) {
         state.isshowName = true
       }
@@ -67,7 +68,8 @@ export default {
       init()
     })
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      userInfo
     }
   }
 }

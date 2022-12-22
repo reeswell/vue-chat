@@ -47,26 +47,24 @@ export default {
     const store = useStore()
     const state = reactive({
       IMG_URL: process.env.VUE_APP_IMG_URL,
-      introduce: '',
-      userInfo: computed(() => {
-        return store.state.userInfo
-      }),
-      groupInfo: computed(() => {
-        return store.state.groupInfo
-      }),
-      sysInfo: computed(() => {
-        return store.state.sysInfo
-      })
-    })
+      introduce: ''
 
+    })
+    const userInfo = computed(() => {
+      return store.state.userInfo
+    })
+    const groupInfo = computed(() => {
+      return store.state.groupInfo
+    })
+    const sysInfo = computed(() => {
+      return store.state.sysInfo
+    })
     const onClickLeft = () => {
       router.go(-1)
     }
     const onClickRight = () => {
-      console.log('onClickRight')
-
-      const group = state.groupInfo
-      const user = state.userInfo
+      const group = groupInfo.value
+      const user = userInfo.value
       const obj = {
         userName: user.userName,
         mes: state.introduce,
@@ -81,19 +79,18 @@ export default {
         groupName: group.title,
         groupId: group._id,
         groupPhoto: group.img,
-        roomId: route.params.id + '-' + state.sysInfo.id.split('-')[1],
+        roomId: route.params.id + '-' + sysInfo.value.id.split('-')[1],
         state: group.type,
         type: 'validate',
         status: '0'
       }
-      console.log(obj)
       socket.emit('sendValidate', obj)
       Notify({ type: 'success', message: '发送成功' })
       router.push({ name: 'Chat' })
     }
     return {
       ...toRefs(state),
-
+      groupInfo,
       onClickLeft,
       onClickRight
     }
