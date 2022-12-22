@@ -39,7 +39,7 @@ import '@/assets/scss/my-vant.scss'
 const app = createApp(App) // 创建实例
 
 app.use(Socketio, {
-  connection: '/',
+  connection: process.env.VUE_APP_SOCKET_API,
   options: {
     transports: ['websocket'],
     debug: true,
