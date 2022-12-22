@@ -126,7 +126,7 @@ export default {
         state.hide = true
         return
       }
-      const arr = allChatList.filter(item => item.id === id)
+      const arr = allChatList.value.filter(item => item.id === id)
       state.avatar = arr[0].avatar
       state.name = arr[0].userName
       state.friendId = arr[0].friendId
@@ -142,7 +142,7 @@ export default {
       const groupUsers = res.users
       const holderId = groupUsers.filter(item => item.holder === 1)[0].userId['_id']
 
-      const channelArr = allChatList.filter(item => item.type === 'channel' && item.id === params.id)
+      const channelArr = allChatList.value.filter(item => item.type === 'channel' && item.id === params.id)
       if (channelArr.length && userId !== holderId) {
         state.isShowSend = false
       } else {

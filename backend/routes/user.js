@@ -15,26 +15,26 @@ router.get("/sendPicCode", sendPicCode);
 // 测试接口
 // router.get("/getUser", api.);
 // 更新个人信息
-router.post("/updateUserInfo", authJwt, api.updateUserInfo);
+router.put("/updateUserInfo", authJwt, api.updateUserInfo);
 // 获取用户详细信息
 router.get("/getUserInfo", authJwt, api.getUserInfo);
 // 获取官方账号的信息
 router.get("/getOfficialInfo", authJwt, api.getOfficialInfo);
 // 获取个人以及好友列表信息 分组状态
-router.post("/previewUser", authJwt, api.previewUser);
+router.get("/previewUser", authJwt, api.previewUser);
 // 添加会话
 router.post("/addConversationList", authJwt, api.addConversationList);
 // 移除会话
 router.post("/removeConversationList", authJwt, api.removeConversationList);
 // 搜索用户
-router.post("/searchFriends", authJwt, api.searchFriends);
+router.get("/searchFriends", authJwt, api.searchFriends);
 // router.post("/modifyFriendRemark", api.modifyFriendRemark);
 
-router.post("/updatedUserPhone", authJwt, api.updatedUserPhone);
-router.post("/updatedUserPassword", authJwt, api.updatedUserPassword);
+router.put("/updatedUserPhone", authJwt, api.updatedUserPhone);
+router.put("/updatedUserPassword", authJwt, api.updatedUserPassword);
 
-router.post("/modifyFriendRemark", api.modifyFriendRemark);
-router.post("/updateUserConversations", api.updateUserConversations);
+router.put("/modifyFriendRemark", api.modifyFriendRemark);
+router.put("/updateUserConversations", api.updateUserConversations);
 router.post("/deleteDialog", api.deleteDialog);
 
 // 检查是是否是自己的好友

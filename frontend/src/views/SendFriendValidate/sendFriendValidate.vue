@@ -62,8 +62,8 @@ export default {
       router.go(-1)
     }
     const onClickRight = () => {
-      const friend = friendsInfo
-      const user = userInfo
+      const friend = friendsInfo.value
+      const user = userInfo.value
       const obj = {
         userName: user.userName,
         mes: state.introduce,
@@ -78,7 +78,7 @@ export default {
         otherAvatar: friend.avatar,
         otherUserName: friend.userName,
         friendRoom: user.id + '-' + friend.id,
-        roomId: friend.id + '-' + sysInfo.id.split('-')[1],
+        roomId: friend.id + '-' + sysInfo.value.id.split('-')[1],
         state: 'friend',
         type: 'validate',
         status: '0'

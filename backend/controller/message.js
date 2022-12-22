@@ -80,7 +80,7 @@ const getHistoryMessage = async (obj, reverse) => {
 };
 
 const loadMoreMessages = (ctx) => {
-  const data = ctx.request.body;
+  const data = ctx.query;
   getHistoryMessage(data, 2, (item) => {
     if (item.code !== 200)
       return (ctx.body = {

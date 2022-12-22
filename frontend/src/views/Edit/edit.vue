@@ -78,8 +78,8 @@ export default {
       return store.getters.getAllChatListRoomId
     })
     onBeforeMount(() => {
-      state.area = userInfo.province + ' ' + userInfo.city
-      state.imgSrc = state.IMG_URL + userInfo.avatar
+      state.area = userInfo.value.province + ' ' + userInfo.value.city
+      state.imgSrc = state.IMG_URL + userInfo.value.avatar
     })
 
     const beforeRead = file => {
@@ -137,7 +137,7 @@ export default {
       myAreaRef.reset() // 重置城市列表
     }
     const saveNewUserInfo = async() => {
-      const unlink = userInfo.avatar
+      const unlink = userInfo.value.avatar
       try {
         const obj = {
           area: state.area.split(' '),
@@ -190,7 +190,8 @@ export default {
       goEmail,
       goName,
       goGender,
-      goAge
+      goAge,
+      userInfo
     }
   }
 }

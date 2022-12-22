@@ -65,18 +65,15 @@ export default {
     })
     const init = () => {
       if (!getSysUnRead.value.length || getSysUnRead.value[0].count === 0) return
-      console.log('333333')
       store.commit('setUnRead', { roomId: sysInfo.value.id, clear: true })
       socket.emit('setReadStatus', { roomId: sysInfo.value.id, userName: userInfo.value.userName })
       socket.emit('getSysMeg', { roomId: sysInfo.value.id, offset: state.offset, limit: state.limit })
     }
     const onClickLeft = () => {
-      console.log('onClickLeft')
       router.go(-1)
     }
 
     const goDetail = id => {
-      console.log('goDetail')
       router.push({ name: 'ApplyDetail', params: { id: id }})
     }
 
@@ -91,7 +88,6 @@ export default {
     onMounted(() => {
       // 获取系统消息
       socket.on('getSysMeg', mes => {
-        console.log(mes)
         store.dispatch('setSysNewsList', mes)
       })
     })

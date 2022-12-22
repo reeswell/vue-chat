@@ -373,7 +373,7 @@ const getUserInfo = async (ctx) => {
 };
 // 获取个人以及好友列表信息 分组状态
 const previewUser = async (ctx) => {
-  const { id } = ctx.request.body;
+  const { id } = ctx.query;
   // console.log(id);
   try {
     const userDoc = await UserModel.findById(id);
@@ -474,7 +474,7 @@ const removeConversationList = async (ctx) => {
 
 // 搜索用户
 const searchFriends = async (ctx) => {
-  const { keyword } = ctx.request.body; //
+  const { keyword } = ctx.query; //
 
   const arr = [
     {

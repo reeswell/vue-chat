@@ -4,7 +4,7 @@ const GroupUserModel = require("../models/groupUser");
 const { log } = require("debug");
 // 获取我的群聊
 const getMyGroup = async (ctx) => {
-  const { userName } = ctx.request.body;
+  const { userName } = ctx.query;
   try {
     const groupUserDoc = await GroupUserModel.findGroupByUserName(userName);
     console.log(groupUserDoc);
@@ -16,7 +16,7 @@ const getMyGroup = async (ctx) => {
 };
 // 获取群聊详情
 const getGroupInfo = async (ctx) => {
-  const { id } = ctx.request.body;
+  const { id } = ctx.query;
   try {
     const groupResult = await GroupModel.findById(id);
     const groupUser = await GroupUserModel.findGroupUsersByGroupId(id);
@@ -30,7 +30,7 @@ const getGroupInfo = async (ctx) => {
 };
 // 搜索群聊
 const huntGroups = async (ctx) => {
-  const { keyword } = ctx.request.body; // 关键字，页数
+  const { keyword } = ctx.query; // 关键字，页数
 
   try {
     const groupDoc = await GroupModel.findOne({
@@ -127,7 +127,7 @@ const createGroup = async (ctx) => {
 // 查找指定群聊成员
 
 const getGroupUsers = async (ctx) => {
-  const { groupId } = ctx.request.body;
+  const { groupId } = ctx.query;
   try {
     const groupUserDoc = await GroupUserModel.findGroupUsersByGroupId(groupId);
     if (groupUserDoc === null)

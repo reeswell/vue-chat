@@ -37,7 +37,7 @@ export default {
   name: 'MessageItem',
   props: {
     type: String,
-    v: String
+    v: Object
   },
   setup(props) {
     const route = useRoute()

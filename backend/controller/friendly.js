@@ -1,4 +1,3 @@
-const { log } = require("debug");
 const FriendlyModel = require("../models/friendly");
 
 const checkIsFriends = async (ctx) => {
@@ -25,7 +24,7 @@ const checkIsFriends = async (ctx) => {
 // 查看我的好友列表
 
 const findMyFriendsList = async (ctx) => {
-  const { userId } = ctx.request.body;
+  const { userId } = ctx.query;
   try {
     const self = await FriendlyModel.findFriendBySelf(userId);
     const other = await FriendlyModel.findFriendByOther(userId);

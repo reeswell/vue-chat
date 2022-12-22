@@ -79,7 +79,6 @@ export default {
         store.commit('setUnRead', { roomId: obj.roomId, add: true, count: 1 })
       })
       socket.on('takeValidate', obj => {
-        console.log(obj)
         store.commit('setUnRead', { roomId: obj.roomId, add: true, count: 1 })
 
         if (obj.type === 'info' || obj.type === 'validate') {
