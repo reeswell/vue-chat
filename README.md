@@ -4,7 +4,7 @@
 
 该项目代码不再维护，欢迎关注我的新项目[story](https://github.com/xxydrr/story)
 
-- [开源地址](https://github.com/xxydrr/vue3-chat)
+- [在线地址](http://119.23.209.109:8001)
 - [vue2版本](https://github.com/xxydrr/vue3-chat/tree/vue2)
 
 ### 技术栈
