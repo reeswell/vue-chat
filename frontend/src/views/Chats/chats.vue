@@ -26,7 +26,7 @@
       <van-tabs v-model="active" animated sticky :scroll="tabScroll">
         <van-tab v-for="(item, index) in contactsList" :key="index" :title="item.name">
           <div v-if="item.List.length" class="dialogue-container">
-            <van-swipe-cell v-for="(i, index) in item.List" :key="index">
+            <van-swipe-cell v-for="(i, index2) in item.List" :key="index2">
               <li class="seesion-list first-li" @click="goMesPanel(i.id)">
                 <div class="list-left">
                   <van-image round width="56px" height="56px" :src="IMG_URL + i.avatar" class="avatar" />

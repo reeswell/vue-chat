@@ -6,7 +6,7 @@
         :key="item.name"
         :to="item.name"
         class="van-tab"
-        :class="{active: $route.name === item.name}"
+        :class="{ active: $route.name === item.name }"
       >
         <van-icon :name="item.icon" :badge="item.unread" />
         <div class="nav-name">{{ item.title }}</div>
@@ -16,23 +16,23 @@
 </template>
 
 <script>
-import {reactive, toRefs, computed, watch} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+import { reactive, toRefs, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default {
   name: 'FooterNav',
 
   props: {
-    activeNavIndex: {type: Number, default: 0}
+    activeNavIndex: { type: Number, default: 0 }
   },
   setup(props) {
     const router = useRouter()
     const store = useStore()
     const state = reactive({
       NavList: [
-        {title: '联系人', name: 'Contact', icon: 'friends', unread: null},
-        {title: '聊天', name: 'Chat', icon: 'chat', unread: null},
-        {title: '我的', name: 'Manager', icon: 'manager', unread: null}
+        { title: '联系人', name: 'Contact', icon: 'friends', unread: null },
+        { title: '聊天', name: 'Chat', icon: 'chat', unread: null },
+        { title: '我的', name: 'Manager', icon: 'manager', unread: null }
       ],
       active: 1,
       unRead: computed(() => {
@@ -44,9 +44,9 @@ export default {
       getAllChatListUnread: computed(() => {
         return store.getters.getAllChatListUnread
       }),
-      activeNavIndex: computed(() => {
+      activeNavIndex: computed(() =>
         props.activeNavIndex
-      })
+      )
     })
     watch(
       () => state.unRead,
@@ -80,7 +80,7 @@ export default {
     )
     const clickTab = (index, name) => {
       if (state.activeNavIndex === index) return
-      router.push({name})
+      router.push({ name })
     }
     return {
       ...toRefs(state),
@@ -106,15 +106,19 @@ export default {
     width: 100%;
     height: 100%;
     flex-direction: row;
+
     .active {
       color: $blueBgc;
     }
+
     :deep(.van-tab) {
       flex-direction: column;
     }
+
     i {
       font-size: 18px;
     }
+
     :deep(.van-badge) {
       background-color: $redBadge;
     }

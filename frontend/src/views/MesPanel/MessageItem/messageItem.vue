@@ -79,6 +79,7 @@ export default {
 .mes-box {
   width: 100%;
   display: flex;
+
   .avatar {
     width: 42px;
     height: 42px;
@@ -88,16 +89,20 @@ export default {
     line-height: 42px;
     border-radius: 50%;
     overflow: hidden;
+
     img {
       width: 100%;
     }
   }
+
   .messageInfo {
     max-width: 250px;
+
     p.info {
       font-size: 14px;
       color: #000;
       margin-bottom: 0;
+
       i {
         font-size: 10px;
         color: #b3b3b3;
@@ -105,6 +110,7 @@ export default {
         margin-left: 5px;
       }
     }
+
     p.mes {
       margin-bottom: 0;
       margin-top: 8px;
@@ -126,10 +132,12 @@ export default {
       max-width: 150px;
       overflow: hidden;
       border-radius: 5px;
+
       img {
         width: 100%;
       }
     }
+
     div.file {
       width: 150px;
       height: 80px;
@@ -142,15 +150,18 @@ export default {
       padding: 10px;
       box-sizing: border-box;
       border-radius: 5px;
+
       img {
         width: 60px;
         height: 60px;
         margin-right: 10px;
       }
+
       p:nth-of-type(1) {
         font-size: 16px;
         margin-bottom: -4px;
       }
+
       p:nth-of-type(2) {
         font-size: 12px;
         line-height: 13px;
@@ -161,6 +172,7 @@ export default {
           vertical-align: text-bottom;
         }
       }
+
       a {
         color: #27cac7;
         font-size: 12px;
@@ -170,35 +182,45 @@ export default {
     }
   }
 }
+
 .other.mes-box .messageInfo {
   text-align: left;
   margin-left: 10px;
+
   p.emoji {
     margin-left: 20px;
   }
+
   .nickname {
     color: #26c5dd;
   }
 }
+
 .other.mes-box {
   justify-content: flex-start;
 }
+
 .mine.mes-box {
   justify-content: flex-end;
 }
+
 .mine.mes-box .messageInfo {
   text-align: right;
   margin-right: 10px;
+
   p.emoji {
     margin-right: 20px;
   }
 }
+
 .mine.mes-box {
   justify-content: flex-end;
 }
+
 .other.mes-box .messageInfo p.mes {
   background-color: $lightBgc;
 }
+
 .other p.mes:before,
 .mine p.mes:after {
   width: 0;
@@ -208,6 +230,7 @@ export default {
   position: absolute;
   top: 10px;
 }
+
 .other p.mes:before {
   left: -11px;
   border-bottom: 5px solid $lightBgc;
@@ -216,6 +239,7 @@ export default {
   border-top: 0;
   transform: rotate(45deg);
 }
+
 .mine p.mes:after {
   right: -10px;
   border-bottom: 5px solid $blueBgc;
