@@ -1,15 +1,6 @@
 # Vue Chat
 
-![image-20221222061850885](https://cdn.jsdelivr.net/gh/xxydrr/my_pic/img/image-20221222061850885.png)
-
-​           手机扫一扫即可体验。         账号：111     密码：111
-
-- [在线地址](http://119.23.209.109:8001)
-- [vue2版本](https://github.com/xxydrr/vue3-chat/tree/vue2)
-
-## 技术栈
-
-Vue3全家桶+MongoDB+Koa2+socket.io+vant 3+ES6/7
+项目搭建于2020年未，已经不再维护！
 
 ## 项目启动
 
