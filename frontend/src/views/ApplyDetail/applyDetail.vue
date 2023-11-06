@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed, inject, onBeforeMount } from 'vue'
+import { ref, toRefs, computed, inject, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default {
@@ -40,7 +40,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const state = reactive({
+    const state = ref({
       InfoList: {},
       IMG_URL: process.env.VUE_APP_IMG_URL
 

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Toast } from 'vant'
@@ -56,7 +56,7 @@ export default {
   setup() {
     const router = useRouter()
     const store = useStore()
-    const state = reactive({
+    const state = ref({
       value: '',
       smsCode: '', // 短信验证码
       mobilePhone: store.state.userInfo.mobilePhone || '', // 手机号

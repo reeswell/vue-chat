@@ -39,7 +39,7 @@ import FooterSend from './FooterSend/footerSend'
 import loading from '@/components/loading'
 
 import MesList from './MesList/mesList'
-import { reactive, toRefs, ref, computed, onMounted, inject, onBeforeMount } from 'vue'
+import { ref, toRefs, ref, computed, onMounted, inject, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getGroupInfo } from '@/api/group'
@@ -53,7 +53,7 @@ export default {
     const router = useRouter()
     const store = useStore()
     const send = ref(null)
-    const state = reactive({
+    const state = ref({
       chatList: [],
       offset: 1,
       limit: 50,

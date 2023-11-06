@@ -10,12 +10,12 @@
 
 <script>
 import emojiJson from '@/utils/emoji'
-import { reactive, toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 
 export default {
   name: 'Emoji',
   setup(props, { emit }) {
-    const state = reactive({
+    const state = ref({
       emojiJson: emojiJson.data.split(',')
     })
     const chooseEmoji = me => {

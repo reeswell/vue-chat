@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { updateUserInfo } from '@/api/user'
@@ -23,7 +23,7 @@ export default {
   setup() {
     const router = useRouter()
     const store = useStore()
-    const state = reactive({
+    const state = ref({
       value: ''
     })
     state.value = store.state.userInfo.nickname

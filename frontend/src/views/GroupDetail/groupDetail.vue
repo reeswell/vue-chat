@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, onBeforeMount } from 'vue'
+import { ref, toRefs, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getGroupInfo as getGroupInfoApi } from '@/api/group'
@@ -44,7 +44,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const state = reactive({
+    const state = ref({
       imageList: [],
       groupInfo: null,
       managers: [],

@@ -175,7 +175,7 @@
 
 <script>
 let timer
-import { reactive, toRefs, nextTick, onMounted } from 'vue'
+import { ref, toRefs, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { register, login, sendSMSCode } from '@/api/user'
@@ -188,7 +188,7 @@ export default {
     const router = useRouter()
     const store = useStore()
 
-    const state = reactive({
+    const state = ref({
       switchFlag: 'login', // 登录: 1, 注册: 2
       focusIndex: 0, // 输入框聚焦索引
       userName: '', // 用户名

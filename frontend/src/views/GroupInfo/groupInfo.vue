@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed, onBeforeMount } from 'vue'
+import { ref, toRefs, computed, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -72,7 +72,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const state = reactive({
+    const state = ref({
       imageList: [],
       groupInfo: null,
       managers: [],

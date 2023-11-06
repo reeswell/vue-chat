@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed, watch } from 'vue'
+import { ref, toRefs, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default {
@@ -28,7 +28,7 @@ export default {
   setup(props) {
     const router = useRouter()
     const store = useStore()
-    const state = reactive({
+    const state = ref({
       NavList: [
         { title: '联系人', name: 'Contact', icon: 'friends', unread: null },
         { title: '聊天', name: 'Chat', icon: 'chat', unread: null },
