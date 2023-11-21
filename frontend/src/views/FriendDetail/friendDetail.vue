@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed, onBeforeMount } from 'vue'
+import { reactive, toRefs, computed, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { previewUser } from '@/api/user'
@@ -27,7 +27,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       friendsInfo: null,
       isMyFriend: false,
       IMG_URL: process.env.VUE_APP_IMG_URL

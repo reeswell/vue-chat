@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { ref, toRefs } from 'vue'
+import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { updateUserInfo } from '@/api/user'
@@ -28,7 +28,7 @@ export default {
   setup() {
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       radio: store.state.userInfo.gender
     })
     const onClickLeft = () => {

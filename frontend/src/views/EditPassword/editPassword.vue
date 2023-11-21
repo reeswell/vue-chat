@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed } from 'vue'
+import { reactive, toRefs, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Toast } from 'vant'
 import { updatedUserPassword } from '@/api/user'
@@ -43,7 +43,7 @@ export default {
   name: 'EditPassword',
   setup() {
     const router = useRouter()
-    const state = ref({
+    const state = reactive({
       password: '',
       newPassword: '',
       surePassword: ''

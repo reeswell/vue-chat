@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed, onBeforeMount } from 'vue'
+import { reactive, toRefs, computed, onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Toast } from 'vant'
@@ -24,7 +24,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       value: ''
 
     })

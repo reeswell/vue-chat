@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed } from 'vue'
+import { reactive, toRefs, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { addConversationList } from '@/api/user'
@@ -53,7 +53,7 @@ export default {
   setup() {
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       groupInfo: {
         groupCode: '',
         groupName: '',

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed } from 'vue'
+import { reactive, toRefs, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { updateUserInfo } from '@/api/user'
@@ -31,7 +31,7 @@ export default {
   setup() {
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       value: store.state.userInfo.email
     })
     const emailValid = computed(() => {

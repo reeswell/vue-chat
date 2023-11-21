@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { ref, toRefs, watch, computed, onMounted, inject } from 'vue'
+import { reactive, toRefs, watch, computed, onMounted, inject } from 'vue'
 import { useStore } from 'vuex'
 
 import { formatTime } from '@/utils/tools'
@@ -18,7 +18,7 @@ export default {
   setup() {
     const store = useStore()
     const socket = inject('socket')
-    const state = ref({
+    const state = reactive({
       mainName: 'fade' // 内容区域动画名
 
     })

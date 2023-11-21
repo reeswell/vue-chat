@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { ref, toRefs, inject, watch, computed } from 'vue'
+import { reactive, toRefs, inject, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -67,7 +67,7 @@ export default {
     const router = useRouter()
     const store = useStore()
     const socket = inject('socket')
-    const state = ref({
+    const state = reactive({
       value: '',
       active: '',
       IMG_URL: process.env.VUE_APP_IMG_URL,

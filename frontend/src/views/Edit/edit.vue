@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref, toRefs, nextTick, ref, computed, inject, onBeforeMount } from 'vue'
+import { reactive, toRefs, nextTick, ref, computed, inject, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { updateUserConversations, updateUserInfo } from '@/api/user'
@@ -59,7 +59,7 @@ export default {
     const socket = inject('socket')
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       show: false,
       areaList: AreaList,
       IMG_URL: process.env.VUE_APP_IMG_URL,

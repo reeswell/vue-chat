@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed } from 'vue'
+import { reactive, toRefs, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default {
@@ -25,7 +25,7 @@ export default {
   setup() {
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       keyword: '',
       active: '',
       IMG_URL: process.env.VUE_APP_IMG_URL,

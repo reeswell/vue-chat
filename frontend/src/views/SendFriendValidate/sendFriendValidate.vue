@@ -34,7 +34,7 @@
 
 <script>
 import * as tools from '@/utils/tools'
-import { ref, toRefs, computed, inject } from 'vue'
+import { reactive, toRefs, computed, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Notify } from 'vant'
@@ -44,7 +44,7 @@ export default {
     const socket = inject('socket')
     const router = useRouter()
     const store = useStore()
-    const state = ref({
+    const state = reactive({
       introduce: '',
       IMG_URL: process.env.VUE_APP_IMG_URL
 

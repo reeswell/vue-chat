@@ -33,7 +33,7 @@
 
 <script>
 import { formatTime } from '@/utils/tools'
-import { ref, toRefs, ref, watch, computed, inject } from 'vue'
+import { reactive, toRefs, ref, watch, computed, inject } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { uploadFile } from '@/api/upload'
@@ -48,7 +48,7 @@ export default {
     const store = useStore()
     const fileRef = ref(null)
     const chooseImageRef = ref(null)
-    const state = ref({
+    const state = reactive({
       message: '',
       show: false,
       actions: [{ name: '图片' }, { name: '文件' }],
